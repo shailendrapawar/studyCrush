@@ -3,6 +3,9 @@ import connectDb from "./configs/dbConnect.js";
 import express from "express"
 import { configDotenv } from "dotenv";
 import cors from "cors"
+import cookieParser from "cookie-parser";
+
+app.use(cookieParser());
 
 // ===========importing routes=============
 import userRouter from "./routes/userRoutes.js";
@@ -12,6 +15,8 @@ import resourceRouter from "./routes/resourceRoutes.js";
 configDotenv()
 
 
+
+app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
     origin: ["*"],
