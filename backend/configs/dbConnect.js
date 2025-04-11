@@ -4,7 +4,6 @@ configDotenv();
 
 
 const connectDb = async () => {
-
     try {
         const res = await mongoose.connect(process.env.MONGO_URL);
         if(res){

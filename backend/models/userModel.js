@@ -27,6 +27,7 @@ const userSchema=new mongoose.Schema({
     },
     bio:{
         type:String,
+        default:"Hey everyone, lets prepare... "
     },
     savedResources:[
         {

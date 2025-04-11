@@ -9,14 +9,14 @@ import userRouter from "./routes/userRoutes.js";
 import resourceRouter from "./routes/resourceRoutes.js";
 // =========================================
 
-
 configDotenv()
+
 
 app.use(express.json());
 app.use(cors({
     origin: ["*"],
 }))
-app.use("/user", userRouter);
+app.use("/auth", userRouter);
 app.use("/resource", resourceRouter);
 
 
@@ -33,5 +33,7 @@ connectDb().then((res) => {
                 console.log(`server listening at ${PORT}`)
             })
         }
+}).catch((err)=>{
+    console.log("error in listening server")
 })
 
