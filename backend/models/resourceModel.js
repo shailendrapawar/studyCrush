@@ -22,38 +22,32 @@ const resourceSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-
     description: {
         type: String,
         trim: true
     },
-
     link: {
         type: String,
         required: true
     },
-
     thumbnail: {
         type: String,
         default: "" // optional thumbnail if applicable
     },
-
     uploadedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
     },
-
     tags: [{
         type: String,
         trim: true
     }],
-
     likes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
-
+    
     comments:[commentSchema],
 
     createdAt:{

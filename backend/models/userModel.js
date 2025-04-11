@@ -30,7 +30,8 @@ const userSchema=new mongoose.Schema({
     },
     savedResources:[
         {
-            
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Resource"
         }
     ],
 
