@@ -1,6 +1,10 @@
+import { Outlet } from "react-router"
+
 const RootLayout = () => {
   return (
-    <div className="w-full h-full bg-green-300">RootLayout</div>
+    <div className="w-full h-screen ">
+        <Outlet/>
+    </div>
   )
 }
 export default RootLayout
