@@ -1,6 +1,8 @@
 import resourceModel from "../models/resourceModel/resourceModel.js";
 import ResourceModel from "../models/resourceModel/resourceModel.js";
 import CommentModel from "../models/resourceModel/commentModel.js"
+import NotificationModel from "../models/notificationModel.js";
+import UserModel from "../models/userModel.js";
 class ResourceController {
 
     static createResource = async (req, res) => {
@@ -66,7 +68,7 @@ class ResourceController {
                     success: false
                 })
             }
-            
+
 
             //   check if user is owner of reosurce========
             if (isExist.uploadedBy.toString() == !userId) throw new Error(" not allowed");
@@ -101,29 +103,55 @@ class ResourceController {
                 })
             }
 
+
+            // 1:-  == making comment ================
             const newComment = new CommentModel({
                 user: userId,
                 resourceId,
                 comment
             })
-
-            // adding new comment ======================
             const isSaved = await newComment.save().then((doc) => {
                 return doc.populate({
                     path: "user",
                     select: " name profilePicture"
                 })
             });
-
             if (!isSaved) throw new Error(" some error in comment save");
 
-            //  Pushing commentId to resource===============
+
+
+
+            //2:-   Pushing comment to resource===============
             const isUpdated = await ResourceModel.findByIdAndUpdate({ _id: resourceId }, {
                 $push: { comments: isSaved._id }
             })
 
             if (!isUpdated) throw new Error(" comment id not added in resource");
 
+
+
+            //3:- making notification=======================
+            const newNotification = new NotificationModel({
+                type: "comment",
+                sender: userId,
+                receiver: isUpdated.uploadedBy,
+                notifyText: " commented on your resource ",
+                resource: resourceId,
+            })
+
+            const isNotificationSaved = await newNotification.save()
+            if(!isNotificationSaved) throw new Error("notification document not saved");
+            
+
+            const isNotified = await UserModel.findByIdAndUpdate({ _id: isUpdated.uploadedBy }, {
+                $push: { notifications: isNotificationSaved._id }
+            })
+
+            // 4:- socket event for real time update============
+
+
+
+            // 5:- finish ========================
             return res.status(200).json({
                 msg: "comment added",
                 success: true,
@@ -139,6 +167,8 @@ class ResourceController {
         }
     }
 
+    
+
     static toggleLike = async (req, res) => {
         try {
 
@@ -148,8 +178,8 @@ class ResourceController {
 
             const resource = await ResourceModel.findById(resourceId);
 
-            if(!resource) throw new Error("Resource not found");
-            
+            if (!resource) throw new Error("Resource not found");
+
 
             const hasLike = resource.likes.includes(userId);
 
@@ -160,13 +190,13 @@ class ResourceController {
             }
 
 
-            const isToggled=await resource.save();
+            const isToggled = await resource.save();
 
-            if(!isToggled) throw new Error(" error in toggling like");
-            
+            if (!isToggled) throw new Error(" error in toggling like");
+
             res.status(200).json({
                 msg: "toggled successfully",
-                success:true
+                success: true
             })
 
 
@@ -174,7 +204,7 @@ class ResourceController {
             console.log(err)
             res.status(400).json({
                 msg: "something went wrong",
-                success:true
+                success: true
             })
         }
 

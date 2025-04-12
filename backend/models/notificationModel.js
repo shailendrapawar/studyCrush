@@ -17,6 +17,10 @@ const notificationSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
+    notifyText:{
+        type:String,
+        required:true
+    },
     resource: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Resource",
