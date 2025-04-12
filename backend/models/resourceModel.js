@@ -11,7 +11,8 @@ const commentSchema=new mongoose.Schema({
     createdAt:{
         type:Date,
         default:Date.now
-    }
+    },
+    default:[]
 
 })
 
@@ -41,11 +42,13 @@ const resourceSchema = new mongoose.Schema({
     },
     tags: [{
         type: String,
-        trim: true
+        trim: true,
+        default:[]
     }],
     likes: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        default:[]
     }],
     
     comments:[commentSchema],
