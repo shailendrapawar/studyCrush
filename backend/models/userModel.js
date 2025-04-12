@@ -40,6 +40,10 @@ const userSchema=new mongoose.Schema({
         }
     ],
 
+    notifications:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Notification"
+    },
     joinedAt:{
         type:Date,
         default:Date.now

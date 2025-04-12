@@ -66,6 +66,7 @@ class ResourceController {
                     success: false
                 })
             }
+            
 
             //   check if user is owner of reosurce========
             if (isExist.uploadedBy.toString() == !userId) throw new Error(" not allowed");
@@ -84,6 +85,7 @@ class ResourceController {
 
         }
     }
+
 
 
     static addComment = async (req, res) => {

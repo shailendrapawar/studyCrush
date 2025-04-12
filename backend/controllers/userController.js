@@ -9,6 +9,7 @@ configDotenv();
 class UserController {
 
 
+    // 1:- register api =================
     static register = async (req, res) => {
 
         try {
@@ -58,6 +59,7 @@ class UserController {
         }
     }
 
+    // 2:- login api =====================
     static login = async (req, res) => {
 
         try {
@@ -114,15 +116,19 @@ class UserController {
                 msg: "Something went wrong",
                 success: false
             })
-
         }
-
     }
 
+
+
+    // 3:-  saving or unsaving resource ==================
     static toggleSaveResource = async (req, res) => {
         try {
             const userId = req.id;
             const { resourceId } = req.params;
+
+            if(!resourceId) throw new Error("Resource id missing");
+            
 
             const user = await UserModel.findById(userId);
 
@@ -148,7 +154,6 @@ class UserController {
                 success: false
             })
         }
-
     }
 
 
