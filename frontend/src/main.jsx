@@ -8,6 +8,9 @@ import Login from './pages/authPages/Login.jsx'
 import Register from './pages/authPages/Register.jsx'
 import Home from './pages/homePage/Home.jsx'
 import PageLayout from './pages/PageLayout.jsx'
+import SearchPage from './pages/searchPage/SearchPage.jsx'
+import UploadPage from './pages/uploadPage/UploadPage.jsx'
+import NotificationPage from './pages/notificationPage/NotificationPage.jsx'
 const myRouter=createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout/>}>
@@ -22,7 +25,11 @@ const myRouter=createBrowserRouter(
 
       <Route path='/user' element={<PageLayout/>}>
         <Route path="/user/home" element={<Home/>}></Route>
-      
+        <Route path="/user/search" element={<SearchPage/>}></Route>
+        <Route path="/user/upload" element={<UploadPage/>}></Route>
+        <Route path="/user/notification" element={<NotificationPage/>
+      }></Route>
+  
       </Route>
      
     </Route>
