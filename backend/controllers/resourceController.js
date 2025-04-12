@@ -6,12 +6,11 @@ import UserModel from "../models/userModel.js";
 class ResourceController {
 
     static createResource = async (req, res) => {
-
         try {
             // console.log(req.id)
-            const { title, description, link, tags } = req.body;
+            const { title, description, link, tags, subject } = req.body;
 
-            if (!title || !description || !link || !tags) {
+            if (!title || !description || !link || !tags || !subject) {
 
                 return res.status(400).json({
                     msg: "Input feilds are missing",
@@ -24,6 +23,7 @@ class ResourceController {
                 description,
                 link,
                 tags,
+                subject,
                 uploadedBy: req.id
             })
 
@@ -54,7 +54,6 @@ class ResourceController {
     static deleteResource = async (req, res) => {
 
         try {
-
             const userId = req.id;
             const { resourceId } = req.params
 
@@ -92,7 +91,6 @@ class ResourceController {
 
     static addComment = async (req, res) => {
         try {
-
             const userId = req.id;
             const { resourceId, comment } = req.body;
 
@@ -148,7 +146,7 @@ class ResourceController {
             })
 
             // 4:- socket event for real time update============
-
+            // populate before sending notification in real time ======
 
 
             // 5:- finish ========================

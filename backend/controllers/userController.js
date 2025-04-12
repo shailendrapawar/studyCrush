@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { json } from "express";
 import jwt from "jsonwebtoken"
 import { configDotenv } from "dotenv";
+import NotificationModel from "../models/notificationModel.js";
 configDotenv();
 
 
@@ -127,8 +128,8 @@ class UserController {
             const userId = req.id;
             const { resourceId } = req.params;
 
-            if(!resourceId) throw new Error("Resource id missing");
-            
+            if (!resourceId) throw new Error("Resource id missing");
+
 
             const user = await UserModel.findById(userId);
 
@@ -140,10 +141,10 @@ class UserController {
                 user.savedResources.push(resourceId);
             }
 
-             await user.save();
+            await user.save();
             // console.log(isUpdated)
             return res.status(200).json({
-                msg:isExist?"resource unsave":"resource saved",
+                msg: isExist ? "resource unsave" : "resource saved",
                 success: true
             })
 
@@ -155,6 +156,34 @@ class UserController {
             })
         }
     }
+
+    
+    // 4:- mark all notification read===========
+
+    static markAllRead = async (req, res) => {
+        try {
+            const userId = req.id;
+
+            await NotificationModel.updateMany({ receiver: userId }, {
+                $set: { isRead: true }
+            })
+
+            res.status(200).json({ msg: "All notifications marked as read." });
+
+        } catch (err) {
+            console.log(err)
+            res.status(400).json({ msg: "Something went wrong." });
+        }
+    }
+
+    // 5:-====== get all notifications==============
+
+    static getAllNotifications = async (req, res) => {
+        const userId = req.id;
+
+    }
+
+
 
 
 
