@@ -11,35 +11,47 @@ import PageLayout from './pages/PageLayout.jsx'
 import SearchPage from './pages/searchPage/SearchPage.jsx'
 import UploadPage from './pages/uploadPage/UploadPage.jsx'
 import NotificationPage from './pages/notificationPage/NotificationPage.jsx'
-const myRouter=createBrowserRouter(
+
+import { store, persistor } from "./store/store.js"
+import { Provider } from "react-redux"
+import { PersistGate } from 'redux-persist/integration/react'
+
+
+const myRouter = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<RootLayout/>}>
+    <Route path='/' element={<RootLayout />}>
 
-{/* =============auth routes========================== */}
-      <Route path='' element={<Landing/>}></Route>
-      <Route path='/login' element={<Login/>}></Route>
-      <Route path='/register' element={<Register/>}></Route>
+      {/* =============auth routes========================== */}
+      <Route path='' element={<Landing />}></Route>
+      <Route path='/login' element={<Login />}></Route>
+      <Route path='/register' element={<Register />}></Route>
 
 
-{/* ================user routes================================== */}
+      {/* ================user routes================================== */}
 
-      <Route path='/user' element={<PageLayout/>}>
-        <Route path="/user/home" element={<Home/>}></Route>
-        <Route path="/user/search" element={<SearchPage/>}></Route>
-        <Route path="/user/upload" element={<UploadPage/>}></Route>
-        <Route path="/user/notification" element={<NotificationPage/>
-      }></Route>
-  
+      <Route path='/user' element={<PageLayout />}>
+        <Route path="/user/home" element={<Home />}></Route>
+        <Route path="/user/search" element={<SearchPage />}></Route>
+        <Route path="/user/upload" element={<UploadPage />}></Route>
+        <Route path="/user/notification" element={<NotificationPage />
+        }></Route>
+
       </Route>
-     
+
     </Route>
   )
 )
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={myRouter}>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
 
-    </RouterProvider>
+        <RouterProvider router={myRouter}>
+
+        </RouterProvider>
+
+      </PersistGate>
+    </Provider>
   </StrictMode>,
 )

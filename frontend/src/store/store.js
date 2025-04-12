@@ -1,7 +1,20 @@
-import {configureStore} from "@reduxjs/toolkit"
+import {configureStore,combineReducers} from "@reduxjs/toolkit"
 import themeReducer from "./slices/themeSlice"
-const rootReducer={
-    "theme":themeReducer
+
+import {persistReducer, persistStore} from "redux-persist"
+import sessionStorage from "redux-persist/lib/storage/session"
+const persistConfig={
+    key:"root",
+    storage:sessionStorage
 }
 
-export const store=configureStore({reducer:rootReducer});
+const rootReducer=combineReducers({
+    theme:themeReducer
+})
+
+const persistedReducer=persistReducer(persistConfig,rootReducer)
+
+
+export const store=configureStore({reducer:persistedReducer});
+
+export const persistor=persistStore(store);
