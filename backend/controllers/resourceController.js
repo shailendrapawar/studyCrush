@@ -55,11 +55,13 @@ class ResourceController {
             const userId = req.id;
             const { resourceId } = req.params
 
+            if(!resourceId) throw new Error(" resource id not found");
+            
             const isExist = await ResourceModel.findById(resourceId);
 
             if (!isExist) {
                 return res.status(400).json({
-                    msg: "resource not found",
+                    msg: "resource not found or deleted",
                     success: false
                 })
             }
