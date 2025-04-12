@@ -119,6 +119,38 @@ class UserController {
 
     }
 
+    static toggleSaveResource = async (req, res) => {
+        try {
+            const userId = req.id;
+            const { resourceId } = req.params;
+
+            const user = await UserModel.findById(userId);
+
+            const isExist = user.savedResources.includes(resourceId);
+
+            if (isExist) {
+                user.savedResources.pull(resourceId);
+            } else {
+                user.savedResources.push(resourceId);
+            }
+
+             await user.save();
+            // console.log(isUpdated)
+            return res.status(200).json({
+                msg:isExist?"resource unsave":"resource saved",
+                success: true
+            })
+
+        } catch (err) {
+            console.log(err)
+            return res.status(400).json({
+                msg: "something went wrong",
+                success: false
+            })
+        }
+
+    }
+
 
 
 }

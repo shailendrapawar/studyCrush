@@ -1,20 +1,19 @@
 import mongoose from "mongoose"
 
-const commentSchema=new mongoose.Schema({
-    user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User"
-    },
-    comment:{
-        type:String,
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
-    default:[]
-
-})
+//  const commentSchema=new mongoose.Schema({
+//     user:{
+//         type:mongoose.Schema.Types.ObjectId,
+//         ref:"User"
+//     },
+//     comment:{
+//         type:String,
+//     },
+//     createdAt:{
+//         type:Date,
+//         default:Date.now
+//     },
+//     default:[]
+// })
 
 
 const resourceSchema = new mongoose.Schema({
@@ -51,8 +50,13 @@ const resourceSchema = new mongoose.Schema({
         default:[]
     }],
     
-    comments:[commentSchema],
-
+    comments:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Comment",
+            default:[]
+        },
+    ],
     createdAt:{
         type:Date,
         default:Date.now
