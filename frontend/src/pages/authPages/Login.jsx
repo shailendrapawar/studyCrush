@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { FaUserAlt } from "react-icons/fa";
-import { RiLockPasswordFill } from "react-icons/ri";
 
 import { useSelector } from "react-redux"
-
+import { useNavigate } from "react-router"
 const Login = () => {
+  const navigate=useNavigate();
+
   const { currentTheme } = useSelector(s => s.theme)
-  console.log(currentTheme)
+  // console.log(currentTheme)
 
   return (
     <div className={` h-full flex justify-center items-center`} style={{ backgroundColor: currentTheme.background }}>
@@ -21,7 +21,9 @@ const Login = () => {
           <button className='h-10 w-[90%] rounded-md mt-2' style={{backgroundColor:currentTheme.accent}}>Log in</button>
         </form>
 
-        <span className='text-sm underline text-center' style={{color:currentTheme.textPrimary}}>Not registered? Sign up</span>
+        <span className='text-sm underline text-center' style={{color:currentTheme.textPrimary}}
+        onClick={()=>navigate("/register")}
+        >Not registered? Sign up</span>
       </section>
     </div>
   )

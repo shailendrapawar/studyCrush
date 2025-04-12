@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-
+import { useNavigate } from "react-router"
 
 import { useSelector } from "react-redux"
 
 const Register = () => {
+  const navigate=useNavigate();
+
 
   const { currentTheme } = useSelector(s => s.theme)
-  console.log(currentTheme)
+  // console.log(currentTheme)
 
   return (
     <div className={` h-full flex justify-center items-center`} style={{ backgroundColor: currentTheme.background }}>
@@ -24,7 +26,9 @@ const Register = () => {
           <button className='h-10 w-[90%] rounded-md mt-2' style={{backgroundColor:currentTheme.accent}}>Sign up</button>
         </form>
 
-        <span className='text-sm underline text-center' style={{color:currentTheme.textPrimary}}>Already a user? Log in instead</span>
+        <span className='text-sm underline text-center' style={{color:currentTheme.textPrimary}}
+        onClick={()=>navigate("/login")}
+        >Already a user? Log in instead</span>
       </section>
     </div>
   )
