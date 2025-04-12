@@ -24,7 +24,7 @@ const slice=createSlice({
             line:"#334155"
 
         },
-        current:{
+        currentTheme:{
             name:"dark",
             background:"#0F172A",
             cardBackground:"#1E293B",
@@ -38,10 +38,10 @@ const slice=createSlice({
     reducers:{
         
         toggleTheme:(state,action)=>{
-            if(state.current.name==="light"){
-                state.current=state.dark;
+            if(state.currentTheme.name==="light"){
+                state.currentTheme=state.dark;
             }else{
-                state.current=state.light;
+                state.currentTheme=state.light;
             }
         }
 
