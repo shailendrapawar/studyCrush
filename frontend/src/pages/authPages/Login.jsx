@@ -5,7 +5,6 @@ import { useNavigate } from "react-router"
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-import{} from "react-router"
 import { setAuthUser, setUserNotification } from '../../store/slices/userSlice';
 
 const Login = () => {

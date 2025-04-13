@@ -15,6 +15,7 @@ import NotificationPage from './pages/notificationPage/NotificationPage.jsx'
 import { store, persistor } from "./store/store.js"
 import { Provider } from "react-redux"
 import { PersistGate } from 'redux-persist/integration/react'
+import UserProfile from './pages/userProfile/UserProfile.jsx'
 
 
 const myRouter = createBrowserRouter(
@@ -33,9 +34,8 @@ const myRouter = createBrowserRouter(
         <Route path="/user/home" element={<Home />}></Route>
         <Route path="/user/search" element={<SearchPage />}></Route>
         <Route path="/user/upload" element={<UploadPage />}></Route>
-        <Route path="/user/notification" element={<NotificationPage />
-        }></Route>
-
+        <Route path="/user/notification" element={<NotificationPage />}></Route>
+        <Route path='/user/userProfile' element={<UserProfile/>}></Route>
       </Route>
 
     </Route>

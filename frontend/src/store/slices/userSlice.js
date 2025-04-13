@@ -12,7 +12,7 @@ const slice=createSlice({
             state.authUser=action.payload;
         },
         setUserNotification:(state,action)=>{
-            state.userNotifications=[...state.userNotifications,action.payload];
+            state.userNotifications=action.payload;
         }
     }
 })
