@@ -28,11 +28,11 @@ const resourceSchema = new mongoose.Schema({
         trim: true,
         default:[]
     }],
-    subject:[{
+    subject:{
         type:"String",
         trim:true
 
-    }],
+    },
     likes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

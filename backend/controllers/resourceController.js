@@ -25,6 +25,7 @@ class ResourceController {
                 tags,
                 subject,
                 uploadedBy: req.id
+                
             })
 
             const isCreated = await newResource.save();
