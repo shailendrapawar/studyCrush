@@ -1,15 +1,18 @@
 import {configureStore,combineReducers} from "@reduxjs/toolkit"
-import themeReducer from "./slices/themeSlice"
+import themeReducer from "./slices/themeSlice.js"
+import userReducer from "./slices/userSlice.js"
 
 import {persistReducer, persistStore} from "redux-persist"
 import sessionStorage from "redux-persist/lib/storage/session"
+
 const persistConfig={
     key:"root",
     storage:sessionStorage
 }
 
 const rootReducer=combineReducers({
-    theme:themeReducer
+    theme:themeReducer,
+    user:userReducer
 })
 
 const persistedReducer=persistReducer(persistConfig,rootReducer)

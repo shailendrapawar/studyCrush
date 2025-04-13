@@ -52,11 +52,9 @@ const Register = () => {
       }
 
     } catch (err) {
-      
-      console.log("error==",err)
+      // console.log("error==",err)
       toast.error(err.response.data.msg)
     }
-
   }
 
   return (

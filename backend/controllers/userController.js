@@ -41,7 +41,8 @@ class UserController {
                 username,
                 name,
                 email,
-                password: hashPass
+                password: hashPass,
+                // notifications:[]
             })
 
             await newUser.save();

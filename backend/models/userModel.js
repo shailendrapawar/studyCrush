@@ -42,7 +42,8 @@ const userSchema=new mongoose.Schema({
 
     notifications:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Notification"
+        ref:"Notification",
+        // default:[]
     },
     joinedAt:{
         type:Date,
