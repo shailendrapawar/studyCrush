@@ -15,7 +15,8 @@ const Navbar = () => {
 
 
   return (
-    <nav className=" h-16 flex justify-between pl-4 pr-4 items-center relative" style={{backgroundColor:currentTheme.background, color:currentTheme.textPrimary}}>
+    <nav className=" h-16 flex justify-between pl-4 pr-4 items-center relative " style={{backgroundColor:currentTheme.background, color:currentTheme.textPrimary,borderBottom:`1px solid ${currentTheme.line}`}}
+    >
 
       <span className="text-md font"><b className="text-blue-500 text-xl">S</b>tudy  <b className="text-blue-500 text-xl">C</b>rush</span>
 
@@ -37,7 +38,7 @@ const Navbar = () => {
       </nav>
 
 
-      <span className=" absolute right-25" onClick={() => navigate("/user/notification")}>
+      <span className=" absolute right-25" onClick={() =>{ navigate("/user/notification");setToggle(false)}}>
         <IoIosNotifications className="w-5 h-5" />
         <i className="absolute text-xs -top-1 -right-1">4</i>
       </span>

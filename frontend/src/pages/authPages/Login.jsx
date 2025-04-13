@@ -14,8 +14,8 @@ const Login = () => {
   const { currentTheme } = useSelector(s => s.theme)
   // console.log(currentTheme)
 
-  const [identifier, setIdentifier] = useState("")
-  const [password, setPassword] = useState("")
+  const [identifier, setIdentifier] = useState("shailu")
+  const [password, setPassword] = useState("shailu")
 
 
   const handleLogin = async (e) => {
