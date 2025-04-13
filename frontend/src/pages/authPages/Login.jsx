@@ -10,7 +10,7 @@ const Login = () => {
 
   return (
     <div className={` h-full flex justify-center items-center`} style={{ backgroundColor: currentTheme.background }}>
-      <section className="h-100 w-[95%] max-w-100 rounded-md flex flex-col justify-evenly pl-2 pr-2" style={{ backgroundColor: currentTheme.cardBackground, border: `none` }}>
+      <section className="h-100 w-[95%] max-w-100 rounded-md flex flex-col justify-evenly pl-2 pr-2" style={{ backgroundColor: currentTheme.cardBackground, border: `1px solid ${currentTheme.line}` }}>
 
         <h3 className=' text-4xl text-center'><b className='text-blue-500'>L</b>ogin</h3>
 
