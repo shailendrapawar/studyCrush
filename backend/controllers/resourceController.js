@@ -8,9 +8,9 @@ class ResourceController {
     static createResource = async (req, res) => {
         try {
             // console.log(req.id)
-            const { title, description, link, tags, subject } = req.body;
+            const { title, description, link, tags, subject,thumbnail } = req.body;
 
-            if (!title || !description || !link || !tags || !subject) {
+            if (!title || !description || !link || !tags || !subject|| !thumbnail) {
 
                 return res.status(400).json({
                     msg: "Input feilds are missing",
@@ -24,8 +24,8 @@ class ResourceController {
                 link,
                 tags,
                 subject,
-                uploadedBy: req.id
-                
+                uploadedBy: req.id,
+                thumbnail
             })
 
             const isCreated = await newResource.save();
