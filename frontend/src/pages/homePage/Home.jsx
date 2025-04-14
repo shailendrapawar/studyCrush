@@ -19,7 +19,7 @@ const Home = () => {
     >
       
 
-      <section className=" h-auto w-full flex flex-col bg-green-50">
+      <section className=" h-auto w-full flex flex-col pt-3 pb-3 p-2 gap-5  items-center">
         {
           homeResources?.list?.map((item,i)=>{
             return <HomeResourceCard key={i} data={item} />
