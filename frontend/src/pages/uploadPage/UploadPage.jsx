@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 import TagsBar from "../../components/tagsBar/TagsBar"
 import { useEffect, useState } from "react"
-import getYoutubeThumbnailFromURL from "../../utils/thumbnailGenerator"
+import getThumbnailFromURL from "../../utils/thumbnailGenerator.js"
 import { RxCross2 } from "react-icons/rx";
 import toast from "react-hot-toast";
 
@@ -19,7 +19,8 @@ const UploadPage = () => {
     link: "",
     description: "",
     tags: taglist,
-    thumbnail: ""
+    thumbnail: "",
+    linkType:""
   })
 
 
@@ -27,18 +28,25 @@ const UploadPage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    // handle  change for link type
+    if(name=="linkType"){
+      resourceData.link=""
+      resourceData.thumbnail=""
+    }
 
     // handling link for youtbe change
     if (name == "link") {
-      const thumbnail = getYoutubeThumbnailFromURL(value);
+      
+      const thumbnail = getThumbnailFromURL(value,resourceData.linkType);
       if (thumbnail) {
-        console.log(thumbnail)
+        // console.log(thumbnail)
         setResourceData(prev => ({
           ...prev,
           thumbnail: thumbnail,
           link: value
         }))
       }
+      // console.log(resourceData)
       return
     }
 
@@ -46,12 +54,12 @@ const UploadPage = () => {
       ...prev,
       [name]: value
     }))
+    // console.log(resourceData)
   }
 
 
   // 2:- ===== handling tags =====================
   useEffect(() => {
-    console.log(taglist)
     setResourceData(prev => ({
       ...prev,
       tags: taglist
@@ -61,39 +69,40 @@ const UploadPage = () => {
 
   // 3:-==============handling submit==================
   const handleSubmit = async () => {
-    if (!resourceData.title || !resourceData.subject || !resourceData.link || !resourceData.description || !resourceData.tags || !resourceData.thumbnail) {
+    if (!resourceData.title || !resourceData.subject || !resourceData.link || !resourceData.description || !resourceData.tags || !resourceData.thumbnail || !resourceData.linkType) {
       toast.error(" All fields required");
       return
     }
     console.log("all fields filled");
     console.log(resourceData)
 
-    try{
+    try {
 
-      const res=await axios.post(import.meta.env.VITE_API_URL+`/resource/createResource`,resourceData,{
-        withCredentials:true
-     })
-     console.log(res)
-     if(res){
-       toast.success(res.data.msg)
-       setResourceData({
-        title: "",
-        subject: "",
-        link: "",
-        description: "",
-        tags: taglist,
-        thumbnail: ""
+      const res = await axios.post(import.meta.env.VITE_API_URL + `/resource/createResource`, resourceData, {
+        withCredentials: true
       })
-      setTaglist([])
+      console.log(res)
+      if (res) {
+        toast.success(res.data.msg)
+        setResourceData({
+          title: "",
+          subject: "",
+          link: "",
+          description: "",
+          tags: taglist,
+          thumbnail: "",
+          linkType:""
+        })
+        setTaglist([])
 
-     }
+      }
 
-    }catch(err){
+    } catch (err) {
       console.log(err)
     }
   }
 
-
+ 
   return (
     <div className="h-full w-full flex justify-center items-center   pl-2 pr-2" style={{ backgroundColor: currentTheme?.background }}>
 
@@ -102,13 +111,31 @@ const UploadPage = () => {
       >
         <h2 className="text-2xl "> <b className="text-blue-500">U</b>pload <b className="text-blue-500">R</b>esource</h2>
 
-        <input value={resourceData.title}
-          onChange={(e) => handleChange(e)}
-          type="text" name="title" className="h-10 w-full outline-none pl-2 pr-1  text-xs mt-3" placeholder="enter title" style={{ backgroundColor: currentTheme.background }}></input>
+        <div className="w-full flex gap-1">
+          <input value={resourceData.title}
+            onChange={(e) => handleChange(e)}
+            type="text" name="title" className="h-10 w-full outline-none pl-2 pr-1  text-xs mt-3" placeholder="enter title" 
+            style={{ backgroundColor: currentTheme.background }}>
+          </input>
+
+          <select
+          className="h-10 w-full outline-none pl-2 pr-1  text-xs mt-3" name="linkType"
+          style={{ backgroundColor: currentTheme.background }}
+          value={resourceData.linkType}
+          onChange={(e)=>handleChange(e)}
+          >
+            <option value="">select link type</option>
+            <option value="google">google</option>
+            <option value="youtube">youtube</option>
+          </select>
+
+        </div>
 
         <div className="w-full flex gap-1">
           <input value={resourceData.subject} onChange={(e) => handleChange(e)} name="subject" type="text" className="h-10 w-1/2 outline-none pl-2 pr-1  text-xs" placeholder="enter subject" style={{ backgroundColor: currentTheme.background }}></input>
-          <input value={resourceData.link} onChange={(e) => handleChange(e)} name="link" type="text" className="h-10 w-1/2 outline-none pl-2 pr-1  text-xs" placeholder="enter link" style={{ backgroundColor: currentTheme.background }}></input>
+          {resourceData?.linkType && (
+            <input value={resourceData.link} onChange={(e) => handleChange(e)} name="link" type="text" className="h-10 w-1/2 outline-none pl-2 pr-1  text-xs" placeholder="enter link" style={{ backgroundColor: currentTheme.background }}></input>
+           )}
         </div>
 
         {resourceData?.thumbnail && (
