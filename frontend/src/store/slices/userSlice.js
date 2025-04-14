@@ -13,10 +13,24 @@ const slice=createSlice({
         },
         setUserNotification:(state,action)=>{
             state.userNotifications=action.payload;
-        }
+        },
+
+        saveResource:(state,action)=>{
+            console.log("save called")
+            const postId=action.payload;
+            state.authUser.savedResources.push(postId)
+            
+        },
+        unsaveResource:(state,action)=>{
+            console.log("unsave called")
+            const postId=action.payload;
+            const filteredResources=state.authUser.savedResources.filter((item)=>item!=postId);
+            state.authUser.savedResources=filteredResources
+        },
+
     }
 })
 
-export const {setAuthUser,setUserNotification}=slice.actions
+export const {setAuthUser,setUserNotification,unsaveResource,saveResource}=slice.actions
 
 export default slice.reducer;
