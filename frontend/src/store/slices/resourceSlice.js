@@ -3,19 +3,26 @@ import {createSlice} from "@reduxjs/toolkit"
 const slice=createSlice({
     name:"resource",
     initialState:{
-        homeResources:[],
+        homeResources:{
+            list:[],
+            hasMore:true
+        },
         userResources:[],
     },
+
     reducers:{
         setHomeResources:(state,action)=>{
-            state.homeList=action.payload;
+            const{list,hasMore}=action.payload;
+            state.homeResources.list=list
+            state.homeResources.hasMore=hasMore
         },
+        
         addHomeResources:(state,action)=>{
-            state.homeList=[...state.homeResources,action.payload];
+            state.homeResources.list=[...state.homeResources,action.payload];
         },
 
         setUserResources:(state,action)=>{
-            state.homeList=action.payload;
+            state.userResources=action.payload;
         },
         addUserResources:(state,action)=>{
             state.userResources=[...state.userResources,action.payload];

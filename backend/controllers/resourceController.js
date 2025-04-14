@@ -7,7 +7,7 @@ class ResourceController {
 
     static createResource = async (req, res) => {
         try {
-            // console.log(req.id)
+            const userId=req.id
             const { title, description, link, tags, subject,thumbnail } = req.body;
 
             if (!title || !description || !link || !tags || !subject|| !thumbnail) {
@@ -24,7 +24,7 @@ class ResourceController {
                 link,
                 tags,
                 subject,
-                uploadedBy: req.id,
+                uploadedBy:userId, 
                 thumbnail
             })
 
@@ -88,9 +88,48 @@ class ResourceController {
         }
     }
 
-    // static getResources=async(req,res)=>{
-    //     const  {page=0,limit}=req.query
-    // }
+
+    static getAllResources=async(req,res)=>{
+        try{
+            const limit=10;
+            const  {page=1}=req.query
+    
+            const skip=(limit*page)-limit;
+    
+            const resources=await ResourceModel.find({}).skip(skip).limit(limit+1).populate({
+                path:"uploadedBy",
+                select:" name profilePicture",
+            })
+    
+            if(!resources){
+                return res.status(400).json({
+                    msg:"no resources found",
+                    success:false
+                })
+            }
+    
+            if(resources.length>limit){
+                resources.splice(limit,1);
+                return res.status(200).json({
+                    msg:"resources found",
+                    hasMore:true,
+                    resources
+                })
+            }
+    
+            return res.status(200).json({
+                msg:"resources found",
+                hasMore:false,
+                resources
+            })
+
+        }catch(err){
+            return res.status(400).json({
+                msg:"somthing went wrong",
+                success:false
+            })
+        }
+    }
 
 
 

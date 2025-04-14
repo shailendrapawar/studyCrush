@@ -15,7 +15,6 @@ const authMiddleware = async (req, res, next) => {
         // console.log(decode)
 
         req.id = decode.userId
-
         next()
     } catch (err) {
         console.log(err)

@@ -3,10 +3,13 @@ import Navbar from "../components/navbar/Navbar"
 import { useEffect } from "react"
 import {Toaster} from "react-hot-toast"
 import { useSelector } from "react-redux"
+import useGetHomeResources from "../hooks/useGetHomeResources"
 const PageLayout = () => {
 
   const navigate=useNavigate();
   const {currentTheme}=useSelector(s=>s.theme)
+
+  useGetHomeResources(1)
 
   useEffect(()=>{
     navigate("/user/home")

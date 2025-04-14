@@ -94,8 +94,9 @@ class UserController {
             }
 
             // creating JWT token============
-            const token = await jwt.sign({ userId: isExist._id }, process.env.JWT_SECRET_TOKEN, {
-                expiresIn: 7 * 24 * 60 * 60 * 1000
+            // console.log(isExist._id)
+            const token = await jwt.sign({ userId:isExist._id }, process.env.JWT_SECRET_TOKEN, {
+                expiresIn: "7d"
             })
 
             const userData = isExist.toObject();
@@ -103,12 +104,15 @@ class UserController {
 
             res.cookie("token", token, {
                 httpOnly: true,
+                secure:true,
                 sameSite: "none",
-                maxAge: 7 * 24 * 60 * 60 * 1000
+                maxAge: 7 * 24 * 60 * 60 * 1000,
+                overwrite:true
             }).json({
 
                 msg: "Login successfull",
-                user: userData
+                user: userData,
+                id:isExist._id
             })
 
         } catch (err) {

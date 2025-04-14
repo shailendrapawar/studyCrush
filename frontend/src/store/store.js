@@ -17,6 +17,7 @@ const rootReducer=combineReducers({
     resource:resourceReducer
 })
 
+
 const persistedReducer=persistReducer(persistConfig,rootReducer)
 
 export const store=configureStore({reducer:persistedReducer
