@@ -95,9 +95,9 @@ const UploadPage = () => {
 
 
   return (
-    <div className="h-full w-full flex justify-center items-center pl-2 pr-2">
+    <div className="h-full w-full flex justify-center items-center   pl-2 pr-2" style={{ backgroundColor: currentTheme?.background }}>
 
-      <section className="h-auto max-w-120 w-full rounded-xl p-2 pt-5 flex flex-col gap-2 items-center"
+      <section className=" h-auto max-w-120 w-full rounded-xl p-2 pt-5 flex flex-col gap-2 items-center"
         style={{ backgroundColor: currentTheme?.cardBackground }}
       >
         <h2 className="text-2xl "> <b className="text-blue-500">U</b>pload <b className="text-blue-500">R</b>esource</h2>
@@ -112,7 +112,7 @@ const UploadPage = () => {
         </div>
 
         {resourceData?.thumbnail && (
-          <div className="h-30 w-50 relative">
+          <div className="h-40 w-55 relative">
             <RxCross2 className=" absolute h-8 w-8 -right-10" onClick={() => {
               setResourceData((prev) => ({
                 ...prev,
@@ -120,7 +120,7 @@ const UploadPage = () => {
                 link: ""
               }))
             }} />
-            <img src={resourceData?.thumbnail} className="w-50 h-30">
+            <img src={resourceData?.thumbnail} className="w-55 h-40 rounded-xl object-cover">
             </img>
           </div>
         )}

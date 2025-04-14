@@ -13,7 +13,7 @@ const PageLayout = () => {
   },[])
   
   return (
-    <div className=" w-full h-full flex justify-center" style={{backgroundColor:currentTheme.background, color:currentTheme.textPrimary}}>
+    <div className=" w-full h-full  flex justify-center" style={{backgroundColor:currentTheme.background, color:currentTheme.textPrimary}}>
         <main className="w-full min-h-full max-w-250">
           <Navbar/>
           

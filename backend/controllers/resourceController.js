@@ -88,6 +88,10 @@ class ResourceController {
         }
     }
 
+    // static getResources=async(req,res)=>{
+    //     const  {page=0,limit}=req.query
+    // }
+
 
 
     static addComment = async (req, res) => {

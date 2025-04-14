@@ -1,9 +1,12 @@
 import { Toaster } from "react-hot-toast"
+import { useSelector } from "react-redux"
 import { Outlet } from "react-router"
 
 const RootLayout = () => {
+
+    const {currentTheme}=useSelector(s=>s.theme)
   return (
-    <div className="w-full h-screen ">
+    <div className="w-full h-screen " style={{backgroundColor:currentTheme.background, color:currentTheme.textPrimary}}>
       <Toaster position="top-center" reverseOrder={true}/>
         <Outlet/>
     </div>
