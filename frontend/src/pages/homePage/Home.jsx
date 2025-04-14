@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux"
 import HomeResourceCard from "../../components/HomeResourceCard/HomeResourceCard";
+import useGetHomeResources from "../../hooks/useGetHomeResources";
 
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
   const {homeResources}=useSelector(s=>s.resource)
   // console.log(homeResources)
 
+   useGetHomeResources(1)
   return (
     <div className="h-full" 
     style={{ backgroundColor: currentTheme?.background }}

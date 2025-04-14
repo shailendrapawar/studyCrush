@@ -1,5 +1,5 @@
 import "./homeResourceCard.css"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 import { GoHeart } from "react-icons/go";
 import { GoHeartFill } from "react-icons/go";
@@ -10,12 +10,39 @@ import { HiOutlineChatBubbleLeftEllipsis } from "react-icons/hi2";
 
 import { FaBookmark } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa";
+import axios from "axios";
 
-import useGetHomeResources from "../../hooks/useGetHomeResources";
+import { likePost,  unlikePost} from "../../store/slices/resourceSlice";
 const HomeResourceCard = ({ data }) => {
+    const dispatch=useDispatch();
 
     const { currentTheme } = useSelector(s => s.theme);
     const {authUser}=useSelector(s=>s.user)
+
+    const toggleLike=async()=>{
+        try{
+            const isToggled=await axios.post(import.meta.env.VITE_API_URL+`/resource/toggleLike/${data._id}`,{},{
+                withCredentials:true
+            });
+            console.log(isToggled)
+            if(isToggled){
+    
+                if(isLiked){
+                    dispatch(unlikePost({postId:data._id,userId:authUser._id}))
+                }else{
+                    dispatch(likePost({postId:data._id,userId:authUser._id}))
+    
+                }
+    
+            }
+        }catch(err){
+            console.log(err)
+        }
+
+    }
+
+
+
 
 
 
@@ -26,11 +53,9 @@ const HomeResourceCard = ({ data }) => {
             day: "numeric",
           });  
     }
-
     const isLiked=data?.likes?.includes(authUser?._id)
     const isSaved=authUser?.savedResources?.includes(data?._id)
 
-    useGetHomeResources(1)
     return (
         <div className=" homeResource-card h-40 w-full max-w-150 bg-green-500 rounded-md p-1.5 flex gap-2 cursor-pointer" style={{backgroundColor:currentTheme.cardBackground, border:`1px solid ${currentTheme.line}`}}>
 
@@ -50,7 +75,7 @@ const HomeResourceCard = ({ data }) => {
 
 
                 <div className="h-8 flex flex-row items-center justify-start gap-5 relative pl-2 mt-2 ">
-                    {isLiked?<GoHeartFill className=" h-6 w-6 text-red-500"/>:<GoHeart className=" h-6 w-6"/>}
+                    {isLiked?<GoHeartFill onClick={toggleLike} className=" h-6 w-6 text-red-500"/>:<GoHeart onClick={toggleLike} className=" h-6 w-6"/>}
 
                     <HiOutlineChatBubbleLeftEllipsis className="h-6 w-6"/>
 

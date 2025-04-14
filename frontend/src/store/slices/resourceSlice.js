@@ -27,8 +27,22 @@ const slice=createSlice({
         addUserResources:(state,action)=>{
             state.userResources=[...state.userResources,action.payload];
         },
+
+        // reducers for handling post update=
+
+        likePost:(state,action)=>{
+            const{postId,userId}=action.payload
+            const post=state.homeResources.list.find((item)=>item._id===postId)
+            post.likes.push(userId)
+        },
+
+        unlikePost:(state,action)=>{
+            const{postId,userId}=action.payload
+            const post=state.homeResources.list.find((item)=>item._id===postId)
+            post.likes=post.likes.filter((item)=>item!=userId)
+        },
     }
 })
 
-export const {setHomeResources,addHomeResources,setUserResources,addUserResources}=slice.actions
+export const {setHomeResources,addHomeResources,setUserResources,addUserResources,likePost,unlikePost}=slice.actions
 export default  slice.reducer;
