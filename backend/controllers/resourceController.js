@@ -7,10 +7,10 @@ class ResourceController {
 
     static createResource = async (req, res) => {
         try {
-            const userId=req.id
-            const { title, description, link, tags, subject,thumbnail } = req.body;
+            const userId = req.id
+            const { title, description, link, tags, subject, thumbnail } = req.body;
 
-            if (!title || !description || !link || !tags || !subject|| !thumbnail) {
+            if (!title || !description || !link || !tags || !subject || !thumbnail) {
 
                 return res.status(400).json({
                     msg: "Input feilds are missing",
@@ -24,7 +24,7 @@ class ResourceController {
                 link,
                 tags,
                 subject,
-                uploadedBy:userId, 
+                uploadedBy: userId,
                 thumbnail
             })
 
@@ -89,44 +89,44 @@ class ResourceController {
     }
 
 
-    static getAllResources=async(req,res)=>{
-        try{
-            const limit=10;
-            const  {page=1}=req.query
-    
-            const skip=(limit*page)-limit;
-    
-            const resources=await ResourceModel.find({}).skip(skip).limit(limit+1).populate({
-                path:"uploadedBy",
-                select:" name profilePicture",
+    static getAllResources = async (req, res) => {
+        try {
+            const limit = 10;
+            const { page = 1 } = req.query
+
+            const skip = (limit * page) - limit;
+
+            const resources = await ResourceModel.find({}).skip(skip).limit(limit + 1).populate({
+                path: "uploadedBy",
+                select: " name profilePicture",
             })
-    
-            if(!resources){
+
+            if (!resources) {
                 return res.status(400).json({
-                    msg:"no resources found",
-                    success:false
+                    msg: "no resources found",
+                    success: false
                 })
             }
-    
-            if(resources.length>limit){
-                resources.splice(limit,1);
+
+            if (resources.length > limit) {
+                resources.splice(limit, 1);
                 return res.status(200).json({
-                    msg:"resources found",
-                    hasMore:true,
+                    msg: "resources found",
+                    hasMore: true,
                     resources
                 })
             }
-    
+
             return res.status(200).json({
-                msg:"resources found",
-                hasMore:false,
+                msg: "resources found",
+                hasMore: false,
                 resources
             })
 
-        }catch(err){
+        } catch (err) {
             return res.status(400).json({
-                msg:"somthing went wrong",
-                success:false
+                msg: "somthing went wrong",
+                success: false
             })
         }
     }
@@ -182,8 +182,8 @@ class ResourceController {
             })
 
             const isNotificationSaved = await newNotification.save()
-            if(!isNotificationSaved) throw new Error("notification document not saved");
-            
+            if (!isNotificationSaved) throw new Error("notification document not saved");
+
 
             const isNotified = await UserModel.findByIdAndUpdate({ _id: isUpdated.uploadedBy }, {
                 $push: { notifications: isNotificationSaved._id }
@@ -209,7 +209,34 @@ class ResourceController {
         }
     }
 
-    
+    static getResourceComments = async (req, res) => {
+
+        try {
+            const { resourceId } = req.params;
+
+            if(!resourceId) throw new Error("  resource id not found");
+            
+            const comments = await CommentModel.find({ resourceId }).populate({
+                path: "user",
+                select: " profilePicture name"
+            })
+
+            return res.status(200).json({
+                msg:" comments found",
+                success:true,
+                comments
+            })
+
+        } catch (err) {
+            return res.status(400).json({
+                msg:" comments not found",
+                success:false,
+
+            })
+        }
+    }
+
+
 
     static toggleLike = async (req, res) => {
         try {

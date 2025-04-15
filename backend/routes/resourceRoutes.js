@@ -10,6 +10,7 @@ resourceRouter.post("/createResource",authMiddleware,ResourceController.createRe
 resourceRouter.post("/deleteResource/:resourceId",authMiddleware,ResourceController.deleteResource);
 
 resourceRouter.get("/getAllResources",authMiddleware,ResourceController.getAllResources);
+resourceRouter.get("/getResourceComments/:resourceId",authMiddleware,ResourceController.getResourceComments);
 
 resourceRouter.post("/addComment",authMiddleware,ResourceController.addComment)
 resourceRouter.post("/toggleLike/:resourceId",authMiddleware,ResourceController.toggleLike);
