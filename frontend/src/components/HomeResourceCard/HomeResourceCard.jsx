@@ -10,14 +10,17 @@ import { HiOutlineChatBubbleLeftEllipsis } from "react-icons/hi2";
 
 import { FaBookmark } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa";
+import { IoArrowBackCircle } from "react-icons/io5";
 import axios from "axios";
 
 import { likePost, setResourceComments, unlikePost } from "../../store/slices/resourceSlice";
 import { saveResource,unsaveResource } from "../../store/slices/userSlice";
 import { useEffect, useState } from "react";
+import SingleComment from "../singleComment/SingleComment";
 
 const HomeResourceCard = ({ data }) => {
     const dispatch = useDispatch();
+    // console.log(data)
 
     const { currentTheme } = useSelector(s => s.theme);
     const { authUser } = useSelector(s => s.user)
@@ -75,7 +78,7 @@ const HomeResourceCard = ({ data }) => {
                     withCredentials:true
                });
                if(commentRes){
-                   dispatch(setResourceComments({resourceId:data._id,comments:commentRes.data.comments}))
+                   dispatch(setResourceComments({resourceId:data._id,comments:commentRes?.data?.comments}))
                }
 
             }catch(err){
@@ -83,7 +86,6 @@ const HomeResourceCard = ({ data }) => {
             }
             // console.log(comments)
         }
-
     }
 
     const formatDate = (date) => {
@@ -102,7 +104,7 @@ useEffect(()=>{
 },[commentToggle])
 
     return (
-        <div className=" homeResource-card h-50 w-full max-w-150 bg-green-500 rounded-md p-1.5 flex gap-2 cursor-pointer" style={{ backgroundColor: currentTheme.cardBackground, border: `1px solid ${currentTheme.line}` }}>
+        <div className=" homeResource-card h-65 w-full max-w-150 bg-green-500 rounded-md p-1.5 flex gap-2 cursor-pointer" style={{ backgroundColor: currentTheme.cardBackground, border: `1px solid ${currentTheme.line}` }}>
 
             <section className="image-container w-[40%] h-full" style={commentToggle?{display:"none"}:{display:"block"}}>
                 <img src={data?.thumbnail} className="bg-trasparent h-full w-full object-cover">
@@ -139,20 +141,31 @@ useEffect(()=>{
 
 
             {/* // comment section ============== */}
-            <section className="h-full w-full rounded-md flex flex-col gap-2"
+            <section className="h-full w-full rounded-md flex items-center flex-col gap-2"
             style={commentToggle?{display:"flex"}:{display:"none"}}
             >
+                <IoArrowBackCircle className="h-10 w-10 self-start" onClick={()=>setCommentToggle(false)}/>
 
-                <main className="h-[80%] bg-red-500 rounded-xl"
+                <main className=" comments-list max-h-40 h-auto w-full max-w-120 bg-red-500 gap-2 flex flex-col overflow-y-scroll"
                 style={{background:currentTheme.background,color:currentTheme.textPrimary}}
-
                 >
-                    comments array
+                    {
+                        data?.commentsData&& (
+                            <>
+                            {
+                                data?.commentsData?.map((item,i)=>{
+                                    return <SingleComment data={item} key={i}/>
+                                })
+                            }
+                            </>
+                        )
+                    }
+                    
                 </main>
 
 
-                <div className="h-[20%]  flex items-center justify-evenly">
-                    <input className=" rounded-md h-full w-[70%] max-h-10 outline-none pl-1 pr-1 text-sm" placeholder="enter comment"
+                <div className="h-[20%] min-h-10 w-full  flex items-center justify-evenly">
+                    <input className=" rounded-md h-full w-[70%]  max-h-10 outline-none pl-1 pr-1 text-sm" placeholder="enter comment"
                     style={{background:currentTheme.background,color:currentTheme.textPrimary}}
                     ></input>
 

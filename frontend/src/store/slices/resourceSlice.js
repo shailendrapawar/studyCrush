@@ -43,7 +43,7 @@ const slice = createSlice({
         },
 
         setResourceComments: (state, action) => {
-
+            const{resourceId,comments}=action.payload
             const resource = state.homeResources.list.find((item) => item._id === resourceId);
             if (resource) {
                 resource.commentsData = comments;
