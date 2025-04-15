@@ -1,48 +1,57 @@
-import {createSlice} from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
-const slice=createSlice({
-    name:"resource",
-    initialState:{
-        homeResources:{
-            list:[],
-            hasMore:true
+const slice = createSlice({
+    name: "resource",
+    initialState: {
+        homeResources: {
+            list: [],
+            hasMore: true
         },
-        userResources:[],
+        userResources: [],
     },
 
-    reducers:{
-        setHomeResources:(state,action)=>{
-            const{list,hasMore}=action.payload;
-            state.homeResources.list=list
-            state.homeResources.hasMore=hasMore
-        },
-        
-        addHomeResources:(state,action)=>{
-            state.homeResources.list=[...state.homeResources,action.payload];
+    reducers: {
+        setHomeResources: (state, action) => {
+            const { list, hasMore } = action.payload;
+            state.homeResources.list = list
+            state.homeResources.hasMore = hasMore
         },
 
-        setUserResources:(state,action)=>{
-            state.userResources=action.payload;
+        addHomeResources: (state, action) => {
+            state.homeResources.list = [...state.homeResources, action.payload];
         },
-        addUserResources:(state,action)=>{
-            state.userResources=[...state.userResources,action.payload];
+
+        setUserResources: (state, action) => {
+            state.userResources = action.payload;
+        },
+        addUserResources: (state, action) => {
+            state.userResources = [...state.userResources, action.payload];
         },
 
         // reducers for handling post update=
 
-        likePost:(state,action)=>{
-            const{postId,userId}=action.payload
-            const post=state.homeResources.list.find((item)=>item._id===postId)
+        likePost: (state, action) => {
+            const { postId, userId } = action.payload
+            const post = state.homeResources.list.find((item) => item._id === postId)
             post.likes.push(userId)
         },
 
-        unlikePost:(state,action)=>{
-            const{postId,userId}=action.payload
-            const post=state.homeResources.list.find((item)=>item._id===postId)
-            post.likes=post.likes.filter((item)=>item!=userId)
+        unlikePost: (state, action) => {
+            const { postId, userId } = action.payload
+            const post = state.homeResources.list.find((item) => item._id === postId)
+            post.likes = post.likes.filter((item) => item != userId)
         },
+
+        setResourceComments: (state, action) => {
+
+            const resource = state.homeResources.list.find((item) => item._id === resourceId);
+            if (resource) {
+                resource.commentsData = comments;
+                return
+            }
+        }
     }
 })
 
-export const {setHomeResources,addHomeResources,setUserResources,addUserResources,likePost,unlikePost}=slice.actions
-export default  slice.reducer;
+export const { setHomeResources, addHomeResources, setUserResources, addUserResources, likePost, unlikePost, setResourceComments } = slice.actions
+export default slice.reducer;

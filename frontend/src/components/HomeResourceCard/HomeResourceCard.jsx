@@ -12,9 +12,9 @@ import { FaBookmark } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa";
 import axios from "axios";
 
-import { likePost, unlikePost } from "../../store/slices/resourceSlice";
+import { likePost, setResourceComments, unlikePost } from "../../store/slices/resourceSlice";
 import { saveResource,unsaveResource } from "../../store/slices/userSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const HomeResourceCard = ({ data }) => {
     const dispatch = useDispatch();
@@ -24,6 +24,10 @@ const HomeResourceCard = ({ data }) => {
 
     const [commentToggle,setCommentToggle]=useState(false)
 
+
+
+
+    // toggle like for resource
     const toggleLike = async () => {
         try {
             const isToggled = await axios.post(import.meta.env.VITE_API_URL + `/resource/toggleLike/${data._id}`, {}, {
@@ -46,6 +50,7 @@ const HomeResourceCard = ({ data }) => {
     }
 
 
+    // toggle resource save/unsave============
     const toggleSave = async () => {
         const isToggled=await axios.post(import.meta.env.VITE_API_URL+`/auth/toggleSaveResource/${data._id}`,{},{
             withCredentials:true
@@ -61,6 +66,25 @@ const HomeResourceCard = ({ data }) => {
         }
     }
 
+    const getAllComments=async()=>{
+
+        if(commentToggle){
+
+            try{
+                const commentRes=await axios.get(import.meta.env.VITE_API_URL+`/resource/getResourceComments/${data._id}`,{
+                    withCredentials:true
+               });
+               if(commentRes){
+                   dispatch(setResourceComments({resourceId:data._id,comments:commentRes.data.comments}))
+               }
+
+            }catch(err){
+                console.log(err)
+            }
+            // console.log(comments)
+        }
+
+    }
 
     const formatDate = (date) => {
         return new Date(date).toLocaleDateString("en-US", {
@@ -72,6 +96,10 @@ const HomeResourceCard = ({ data }) => {
     const isLiked = data?.likes?.includes(authUser?._id)
     const isSaved = authUser?.savedResources?.includes(data?._id)
 // console.log(isSaved)
+
+useEffect(()=>{
+    getAllComments()
+},[commentToggle])
 
     return (
         <div className=" homeResource-card h-50 w-full max-w-150 bg-green-500 rounded-md p-1.5 flex gap-2 cursor-pointer" style={{ backgroundColor: currentTheme.cardBackground, border: `1px solid ${currentTheme.line}` }}>

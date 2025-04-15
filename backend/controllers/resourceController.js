@@ -213,9 +213,9 @@ class ResourceController {
 
         try {
             const { resourceId } = req.params;
-
-            if(!resourceId) throw new Error("  resource id not found");
             
+            if(!resourceId) throw new Error("  resource id not found");
+        
             const comments = await CommentModel.find({ resourceId }).populate({
                 path: "user",
                 select: " profilePicture name"
