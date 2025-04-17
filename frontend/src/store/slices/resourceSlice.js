@@ -49,9 +49,18 @@ const slice = createSlice({
                 resource.commentsData = comments;
                 return
             }
+        },
+
+        addResourceComment:(state,action)=>{
+            const {resourceId,newComment}=action.payload;
+
+            const resource=state.homeResources.list.find((item)=>item._id===resourceId);
+
+            resource.commentsData.unshift(newComment);
+            resource.comments.push(newComment._id)
         }
     }
 })
 
-export const { setHomeResources, addHomeResources, setUserResources, addUserResources, likePost, unlikePost, setResourceComments } = slice.actions
+export const { setHomeResources, addHomeResources, setUserResources, addUserResources, likePost, unlikePost, setResourceComments,addResourceComment } = slice.actions
 export default slice.reducer;

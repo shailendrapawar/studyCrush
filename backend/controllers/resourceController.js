@@ -197,7 +197,7 @@ class ResourceController {
             return res.status(200).json({
                 msg: "comment added",
                 success: true,
-                newComment: isSaved
+                newComment: await isSaved.populate({path:"user",select:" name profilePicture "})
             })
 
         } catch (err) {
@@ -219,7 +219,7 @@ class ResourceController {
             const comments = await CommentModel.find({ resourceId }).populate({
                 path: "user",
                 select: " profilePicture name"
-            })
+            }).sort({createdAt:-1})
 
             return res.status(200).json({
                 msg:" comments found",
