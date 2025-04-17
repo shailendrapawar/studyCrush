@@ -104,6 +104,7 @@ const HomeResourceCard = ({ data }) => {
             // console.log(isCommented.data.newComment);
             if (isCommented) {
                 dispatch(addResourceComment({ resourceId: data._id, newComment: isCommented.data.newComment }))
+                setInputComment("")
             }
 
         } catch (err) {
@@ -169,19 +170,23 @@ const HomeResourceCard = ({ data }) => {
             >
                 <IoArrowBackCircle className="h-10 w-10 self-start" onClick={() => setCommentToggle(false)} />
 
-                <main className=" comments-list max-h-40 h-auto w-full max-w-120 bg-red-500 gap-2 flex flex-col overflow-y-scroll"
-                    style={{ background: currentTheme.background, color: currentTheme.textPrimary }}
+                <main className=" comments-list max-h-40 h-40  w-full max-w-120  gap-2 flex flex-col overflow-y-scroll"
+
                 >
                     {
-                        data?.commentsData && (
-                            <>
-                                {
-                                    data?.commentsData?.map((item, i) => {
-                                        return <SingleComment data={item} key={i} />
-                                    })
-                                }
-                            </>
-                        )
+                       
+                        data?.commentsData?.length > 0 ? (<>
+                            {
+                                data?.commentsData?.map((item, i) => {
+                                    return <SingleComment data={item} key={i} />
+                                })
+
+                            }
+                        </>) : (<span className="h-full w-full flex justify-center items-center">
+
+                            <h1 style={{ color: currentTheme.textSecondary }}>Be first one to comment</h1>
+
+                        </span>)
                     }
 
                 </main>

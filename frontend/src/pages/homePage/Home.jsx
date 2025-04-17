@@ -16,7 +16,7 @@ const Home = () => {
 
   useGetHomeResources(1)
   return (
-    <div className="h-auto"
+    <div className="h-auto "
       style={{ backgroundColor: currentTheme?.background }}
     >
 
