@@ -88,6 +88,41 @@ class ResourceController {
         }
     }
 
+    static searchResource=async(req,res)=>{
+        try{
+
+            const{search}=req.body;
+
+        if(!search){
+            return res.status(400).json({
+                msg:"search query missing",
+                succes:false
+            })
+        }
+
+        const resources=await ResourceModel.find({
+            $or:[
+                {title:{$regex:search}},
+                {subject:{$regex:search}},
+                { tags:{$regex:search }}
+            ]
+        })
+
+        return res.status(200).json({
+            msg:" resources found",
+            success:true,
+            result:resources
+        })
+
+        }catch(err){
+            console.log(err)
+            return res.status(400).json({
+                msg:" resources not  found",
+                success:false
+            })
+        }
+    }
+
 
     static getAllResources = async (req, res) => {
         try {

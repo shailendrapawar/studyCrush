@@ -11,6 +11,8 @@ resourceRouter.post("/deleteResource/:resourceId",authMiddleware,ResourceControl
 
 resourceRouter.get("/getAllResources",authMiddleware,ResourceController.getAllResources);
 resourceRouter.get("/getResourceComments/:resourceId",authMiddleware,ResourceController.getResourceComments);
+resourceRouter.get("/searchResource",authMiddleware,ResourceController.searchResource);
+
 
 resourceRouter.post("/addComment",authMiddleware,ResourceController.addComment)
 resourceRouter.post("/toggleLike/:resourceId",authMiddleware,ResourceController.toggleLike);
