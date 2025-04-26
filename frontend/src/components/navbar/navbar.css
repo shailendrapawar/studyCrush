@@ -1,0 +1,26 @@
+.web-nav{
+    display: none;
+}
+.mobile-nav{
+
+}
+.userProfile-icon{
+    display: none;
+}
+.mobileNav-icon{
+
+}
+@media  screen and (min-width:600px) {
+    .web-nav{
+        display: flex;
+    }
+    .mobile-nav{
+    display: none;
+    }
+    .userProfile-icon{
+        display: block;
+    }
+    .mobileNav-icon{
+        display: none;
+    }
+}
