@@ -125,7 +125,7 @@ const SingleResourcePage = () => {
   return (
     <div className="min-h-screen pb-10" style={{ backgroundColor: currentTheme?.background }}>
 
-      <IoArrowBackCircle className=" mt-5 h-8 w-8 ml-5 rounded-tl-xl rounded-bl-xl shadow-md shadow-black active:shadow-none"
+      <IoArrowBackCircle className=" mt-5 h-8 w-8 ml-5 rounded-full shadow-md shadow-black active:shadow-none"
         style={{ color: currentTheme.accent }}
         onClick={() => navigate(-1)}
       />
@@ -186,9 +186,10 @@ const SingleResourcePage = () => {
           <div className="flex items-center gap-3">
             <img
               src={currentResource?.uploadedBy.profilePicture?.url || defaultUserAvatar}
-              className="h-10 w-10 rounded-full object-scale-down"
+              className="h-10 w-10 rounded-full object-scale-down shadow-black shadow-sm"
               alt="Author"
             />
+
             <div>
               <p className="text-sm font-medium" style={{ color: currentTheme?.textPrimary }}>
                 {currentResource?.uploadedBy?.name}
@@ -257,8 +258,8 @@ const SingleResourcePage = () => {
                 <SingleComment data={comment} key={i} />
               ))
             ) : (
-              <p className="text-center py-4 text-sm" style={{ color: currentTheme?.textSecondary }}>
-                No comments yet
+              <p className="text-center py-4 text-2xl" style={{ color: currentTheme?.textSecondary }}>
+                No comments yet 😜
               </p>
             )}
           </div>

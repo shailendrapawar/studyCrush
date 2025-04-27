@@ -91,7 +91,7 @@ const UserProfile = () => {
 
   return (
     <div
-      className="min-h-screen w-full p-6 relative max-w-2xl mx-auto"
+      className="min-h-screen w-full p-2 sm:p-6 relative max-w-2xl mx-auto"
       style={{ backgroundColor: currentTheme?.background }}
     >
       {/* Header Section */}
@@ -234,10 +234,11 @@ const UserProfile = () => {
         </div>
       </nav>
 
+
       {/* Content Section */}
       <section className="max-w-6xl mx-auto mt-6">
         <div
-          className="bg-white/10 backdrop-blur-lg rounded-xl p-6 shadow-lg"
+          className="bg-white/10 min-h-10 backdrop-blur-lg rounded-xl p-2 sm:p-6 shadow-lg"
           style={{
             backgroundColor: currentTheme?.cardBackground,
             border: `1px solid ${currentTheme?.line}`,
@@ -246,6 +247,7 @@ const UserProfile = () => {
           <Outlet />
         </div>
       </section>
+      
     </div>
   );
 };

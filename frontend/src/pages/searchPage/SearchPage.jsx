@@ -70,12 +70,12 @@ const SearchPage = () => {
       <div className="h-10 w-[80%] max-w-150 flex  justify-between rounded-md  overflow-hidden"
 
       >
-        <input className="h-full w-[80%] pl-2 pr-2 outline-none" type="text" placeholder="enter tag, subject, title"
+        <input className="h-full w-[80%] pl-2 pr-2 outline-none text-sm md:text-lg" type="text" placeholder="enter tag, subject, title"
           style={{ backgroundColor: currentTheme.cardBackground }}
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
         ></input>
-        <button className="h-full w-[20%]"
+        <button className="h-full w-[20%] text-sm sm:text-xl"
           onClick={handleSearch}
           style={{ backgroundColor: currentTheme.accent }}
         >Search</button>
@@ -85,7 +85,7 @@ const SearchPage = () => {
       {/* ==========searched item body============ */}
 
       <section className=" h-auto w-full max-w-150 mt-10 flex flex-col gap-5 pl-2 pr-2 z-0">
-        {list.length <= 0 ? (<h2 className="text-center">Enter some keyword</h2>) : (<>{
+        {list.length <= 0 ? (<h2 className="text-center text-xl">Enter some keyword 🤔</h2>) : (<>{
 
           list?.map((item,i)=>{
             return <SearchItem data={item} key={i}/>

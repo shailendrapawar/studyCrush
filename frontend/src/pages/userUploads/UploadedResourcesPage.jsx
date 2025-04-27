@@ -31,6 +31,10 @@ const UploadedResourcesPage = () => {
       searchUserUploads()
     }
   }, [])
+
+  if(userUploadedResources?.length<=0){
+    return <h1 className="text-center text-lg md:text-2xl">No Resource Uploaded 🥹</h1>
+  }
   return (
     <div className="w-full h-auto grid grid-cols-2 gap-1 sm:grid-cols-3 ">
 

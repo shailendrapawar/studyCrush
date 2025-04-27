@@ -14,7 +14,7 @@ class UserController {
     // 1:- register api =================
     static register = async (req, res) => {
 
-        console.log("inside register api")
+        // console.log("inside register api")
         try {
             const { name, username, email, password } = req.body;
 
@@ -339,7 +339,7 @@ class UserController {
    static getUserUploads = async (req, res) => {
         try {
             const { userId } = req.params;
-            console.log(userId)
+            // console.log(userId)
 
             const userUploads = await ResourceModel.find({ uploadedBy: userId }).select("thumbnail likes comments")
 
