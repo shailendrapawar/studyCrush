@@ -144,6 +144,7 @@ const UserProfile = () => {
                   className="p-2 rounded-full hover:bg-white/10 transition-colors"
                   style={{ color: currentTheme?.textPrimary }}
                   title="Edit Profile"
+                  onClick={()=>navigate("/user/userProfileEdit")}
                 >
                   <FiEdit className="h-5 w-5" />
                 </button>

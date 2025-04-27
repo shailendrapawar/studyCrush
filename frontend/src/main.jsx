@@ -19,6 +19,7 @@ import UserProfile from './pages/userProfile/UserProfile.jsx'
 import SingleResourcePage from './pages/singleResourcePage/SingleResourcePage.jsx'
 import UploadedResourcesPage from './pages/userUploads/UploadedResourcesPage.jsx'
 import SavedResourcesPage from './pages/savedResourcePage/SavedResourcesPage.jsx'
+import UserProfileEditPage from './pages/userProfile/UserProfileEditPage.jsx'
 
 
 const myRouter = createBrowserRouter(
@@ -45,6 +46,8 @@ const myRouter = createBrowserRouter(
           <Route path='/user/userProfile/uploadedResources' element={<UploadedResourcesPage />} />
 
         </Route>
+
+        <Route path='/user/userProfileEdit' element={<UserProfileEditPage/>}></Route>
 
 
         <Route path="/user/resource/:resourceId" element={<SingleResourcePage />}></Route>
