@@ -223,7 +223,7 @@ const HomeResourceCard = ({ data }) => {
                         data?.commentsData?.length > 0 ? (<>
                             {
                                 data?.commentsData?.map((item, i) => {
-                                    return <SingleComment data={item} key={i} />
+                                    return <SingleComment data={item} key={i} isNew={i===0} />
                                 })
 
                             }

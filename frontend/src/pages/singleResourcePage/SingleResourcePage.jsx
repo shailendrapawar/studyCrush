@@ -255,7 +255,7 @@ const SingleResourcePage = () => {
           <div className="max-h-96 overflow-y-auto p-4">
             {currentResource?.comments?.length > 0 ? (
               currentResource.comments.map((comment, i) => (
-                <SingleComment data={comment} key={i} />
+                <SingleComment data={comment} key={i} isNew={i===0} />
               ))
             ) : (
               <p className="text-center py-4 text-2xl" style={{ color: currentTheme?.textSecondary }}>

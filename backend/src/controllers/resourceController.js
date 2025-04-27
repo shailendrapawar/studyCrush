@@ -250,12 +250,9 @@ class ResourceController {
                 resourceId:isUpdated._id
             })
 
-            console.log(newNotification)
+            // console.log(newNotification)
 
             // 4:- socket event for notification=============
-
-
-
 
 
 

@@ -1,15 +1,20 @@
 
-.anime{
-    animation: load 2s ease-in  ;
+.loadCommentAnime{
+    animation: loadComment 0.2s linear   ;
 }
-@keyframes load{
+@keyframes loadComment{
     0%{
-        translate: -20px 0px;
+        transform: translateX(30px);
         opacity: 0;
+        background-color: aliceblue;
+    }
+    50%{
+        transform: translateX(10px);
+        opacity: 1;
     }
 
     100%{
-        translate: 0px 0px;
+        transform: translateX(0px);
         opacity: 1;
     }
 }

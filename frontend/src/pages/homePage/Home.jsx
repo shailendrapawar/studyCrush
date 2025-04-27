@@ -25,9 +25,9 @@ const Home = () => {
 
       <section className=" h-auto w-full flex flex-col pt-3 pb-3 p-2 gap-5  items-center">
         {
-          homeResources?.list?.map((item, i) => {
+          homeResources?.list?.length>0?homeResources?.list?.map((item, i) => {
             return <HomeResourceCard key={i} data={item} />
-          })
+          }):<h2>No resources available 🥺</h2>
         }
       </section>
 

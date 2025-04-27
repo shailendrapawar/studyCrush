@@ -6,8 +6,9 @@ import "./navbar.css"
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-import { FaCloudUploadAlt } from "react-icons/fa";
+// import { FaCloudUploadAlt } from "react-icons/fa";
 
+import { RxCross1 } from "react-icons/rx";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ const Navbar = () => {
       </span>
 
 
-      <CgMenuCheese className=" mobileNav-icon h-8 w-8" onClick={() => setToggle(!toggle)} />
+      {toggle?<RxCross1 className=" nav-toggle mobile Nav-icon h-8 w-8" onClick={() => setToggle(!toggle)} />:<CgMenuCheese className="nav-toggle mobileNav-icon h-8 w-8" onClick={() => setToggle(!toggle)} />}
       <FaUserCircle className=" userProfile-icon h-8 w-8" onClick={() => navigate("/user/userProfile")} />
     </nav>
   )

@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
 import defaultAvatar from "./defaultAvatar.avif";
+import "./singleComment.css"
+import { useEffect, useRef } from "react";
 
-const SingleComment = ({ data }) => {
+const SingleComment = ({ data,isNew }) => {
   const { currentTheme } = useSelector((s) => s.theme);
 
   const formatDate = (date) => {
@@ -12,13 +14,30 @@ const SingleComment = ({ data }) => {
     });
   };
 
+  const commentRef=useRef()
+
+  useEffect(()=>{
+    if(isNew && commentRef){
+      commentRef.current.classList.remove("loadCommentAnime");
+      
+    // Force reflow
+    void commentRef.current.offsetWidth;
+    
+    commentRef.current.classList.add("loadCommentAnime");
+  
+
+    }
+  },[data])
+
+
   return (
     <div 
-      className={` anime flex gap-3 p-4 hover:bg-opacity-50 transition-colors`}
+      className={` flex gap-3 p-4 hover:bg-opacity-50 transition-colors`}
       style={{
         backgroundColor: currentTheme.cardBackground,
         borderBottom: `1px solid ${currentTheme.line}`
       }}
+      ref={commentRef}
     >
       {/* Avatar */}
       <div className="flex-shrink-0">
