@@ -43,8 +43,8 @@ const Login = () => {
 
 
   return (
-    <div className={` h-full flex justify-center items-center`} style={{ backgroundColor: currentTheme.background }}>
-      <section className="h-100 w-[95%] max-w-100 rounded-md flex flex-col justify-evenly pl-2 pr-2" style={{ backgroundColor: currentTheme.cardBackground, border: `1px solid ${currentTheme.line}` }}>
+    <div className={` h-screen flex justify-center items-center`} style={{ backgroundColor: currentTheme.background }}>
+      <section className="h-100  w-[95%] max-w-100 rounded-md flex flex-col justify-evenly pl-2 pr-2" style={{ backgroundColor: currentTheme.cardBackground, border: `1px solid ${currentTheme.line}` }}>
 
         <h3 className=' text-4xl text-center'><b className='text-blue-500'>L</b>ogin</h3>
 
@@ -55,7 +55,7 @@ const Login = () => {
           <button className='h-10 w-[90%] rounded-md mt-2' style={{ backgroundColor: currentTheme.accent }}>Log in</button>
         </form>
 
-        <span className='text-sm underline text-center' style={{ color: currentTheme.textPrimary }}
+        <span className='text-sm underline text-center cursor-pointer' style={{ color: currentTheme.textPrimary }}
           onClick={() => navigate("/register")}
         >Not registered? Sign up</span>
       </section>

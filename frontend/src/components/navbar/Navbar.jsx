@@ -22,7 +22,7 @@ const Navbar = () => {
     <nav className=" h-16 flex justify-between pl-4 pr-4 items-center relative z-10 " style={{ backgroundColor: currentTheme.background, color: currentTheme.textPrimary, borderBottom: `1px solid ${currentTheme.line}` }}
     >
 
-      <span className="text-md font"><b className="text-blue-500 text-xl">S</b>tudy  <b className="text-blue-500 text-xl">C</b>rush</span>
+      <span className="text-md font lg:text-2xl"><b className="text-blue-500 text-xl lg:text-3xl">S</b>tudy  <b className="text-blue-500 text-xl lg:text-3xl">C</b>rush</span>
 
       <nav className=" web-nav w-1/2 h-8 max-w-100 flex justify-evenly items-center gap-1.5" style={{}} >
         <NavLink to={"/user/home"} className={({ isActive }) => isActive ? "w-1/3 text-center text-blue-600" : "w-1/3 text-center"}>HOME</NavLink>

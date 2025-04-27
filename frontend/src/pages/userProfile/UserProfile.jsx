@@ -194,7 +194,7 @@ const UserProfile = () => {
           <NavLink
             to="/user/userProfile/savedResources"
             className={({ isActive }) =>
-              `px-4 py-2 font-medium rounded-t-lg transition-colors ${
+              `text-sm px-4 py-3 md:text-lg font-medium rounded-t-lg transition-colors ${
                 isActive
                   ? "text-white border-b-2"
                   : "text-gray-500 hover:text-white"
@@ -214,7 +214,7 @@ const UserProfile = () => {
           <NavLink
             to="/user/userProfile/uploadedResources"
             className={({ isActive }) =>
-              `px-4 py-2 font-medium rounded-t-lg transition-colors ${
+              `text-sm px-4 py-3 md:text-lg font-medium rounded-t-lg transition-colors ${
                 isActive
                   ? "text-white border-b-2"
                   : "text-gray-500 hover:text-white"

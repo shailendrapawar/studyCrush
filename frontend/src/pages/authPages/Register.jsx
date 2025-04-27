@@ -58,7 +58,7 @@ const Register = () => {
   }
 
   return (
-    <div className={` h-full flex justify-center items-center`} style={{ backgroundColor: currentTheme.background }}>
+    <div className={` h-screen flex justify-center items-center`} style={{ backgroundColor: currentTheme.background }}>
 
       <section className="h-130 w-[95%] max-w-100 rounded-md flex flex-col justify-evenly pl-2 pr-2" style={{ backgroundColor: currentTheme.cardBackground, border: ` 1px solid ${currentTheme.line}` }}>
 
@@ -72,7 +72,7 @@ const Register = () => {
           <button className='h-10 w-[90%] rounded-md mt-2' style={{ backgroundColor: currentTheme.accent }}>Sign up</button>
         </form>
 
-        <span className='text-sm underline text-center active:' style={{ color: currentTheme.textPrimary }}
+        <span className='text-sm underline text-center cursor-pointer' style={{ color: currentTheme.textPrimary }}
           onClick={() => navigate("/login")}
         >Already a user? Log in instead</span>
       </section>
