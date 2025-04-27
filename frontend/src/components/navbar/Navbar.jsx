@@ -14,12 +14,12 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
 
-  const{currentTheme}=useSelector(s=>s.theme)
-  const {userNotifications}=useSelector(s=>s.user)
+  const { currentTheme } = useSelector(s => s.theme)
+  const { userNotifications } = useSelector(s => s.user)
 
 
   return (
-    <nav className=" h-16 flex justify-between pl-4 pr-4 items-center relative z-10 " style={{backgroundColor:currentTheme.background, color:currentTheme.textPrimary,borderBottom:`1px solid ${currentTheme.line}`}}
+    <nav className=" h-16 flex justify-between pl-4 pr-4 items-center relative z-10 " style={{ backgroundColor: currentTheme.background, color: currentTheme.textPrimary, borderBottom: `1px solid ${currentTheme.line}` }}
     >
 
       <span className="text-md font"><b className="text-blue-500 text-xl">S</b>tudy  <b className="text-blue-500 text-xl">C</b>rush</span>
@@ -31,9 +31,9 @@ const Navbar = () => {
       </nav>
 
 
-      <nav className={`mobile-nav h-55 w-2/3 max-w-70 rounded-bl-3xl bg-black  flex flex-col items-center justify-center gap-5 absolute top-16 right-0 ${toggle ? "flex" : "hidden"}`} 
-      onClick={()=>setToggle(false)}
-      style={{backgroundColor:currentTheme.background,border:`1px solid ${currentTheme.line}`}}
+      <nav className={`slideAnime mobile-nav h-55 w-2/3 max-w-70 rounded-bl-3xl bg-black  flex flex-col items-center justify-center gap-5 absolute top-16 right-0 ${toggle ? "flex" : "hidden"}`}
+        onClick={() => setToggle(false)}
+        style={{ backgroundColor: currentTheme.background, border: `1px solid ${currentTheme.line}` }}
       >
         <NavLink to={"/user/home"} className={({ isActive }) => isActive ? "w-20 text-center text-blue-600" : "w-20 text-center"}>HOME</NavLink>
         <NavLink to={"/user/search"} className={({ isActive }) => isActive ? "w-20 text-center text-blue-600" : "w-20 text-center"} >SEARCH</NavLink>
@@ -42,13 +42,13 @@ const Navbar = () => {
       </nav>
 
 
-      <span className=" absolute right-20" onClick={() =>{ navigate("/user/notification");setToggle(false)}}>
+      <span className=" absolute right-20" onClick={() => { navigate("/user/notification"); setToggle(false) }}>
         <IoIosNotifications className="w-5 h-5" />
         <i className="absolute text-xs -top-1 -right-2">{userNotifications?.length}</i>
       </span>
 
 
-      {toggle?<RxCross1 className=" nav-toggle mobile Nav-icon h-8 w-8" onClick={() => setToggle(!toggle)} />:<CgMenuCheese className="nav-toggle mobileNav-icon h-8 w-8" onClick={() => setToggle(!toggle)} />}
+      {toggle ? <RxCross1 className=" nav-toggle mobileNav-icon h-8 w-8" onClick={() => setToggle(!toggle)} /> : <CgMenuCheese className="nav-toggle mobileNav-icon h-8 w-8" onClick={() => setToggle(!toggle)} />}
       <FaUserCircle className=" userProfile-icon h-8 w-8" onClick={() => navigate("/user/userProfile")} />
     </nav>
   )

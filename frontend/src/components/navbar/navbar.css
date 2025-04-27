@@ -9,8 +9,13 @@
 }
 .mobileNav-icon{
 }
+
 .nav-toggle{
     animation: rotate 0.1s  linear ;
+}
+
+.slideAnime{
+    animation: slideAnime 0.1s linear;
 }
 
 @media  screen and (min-width:600px) {
@@ -34,5 +39,16 @@
     }
     100%{
         transform: rotate(0deg);
+    } 
+}
+
+@keyframes slideAnime {
+    0%{
+        transform:translateX(100px);
+        opacity: 0;
+    }
+    100%{
+        transform:translateX(0px);
+        opacity: 1;
     } 
 }
