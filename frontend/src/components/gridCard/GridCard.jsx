@@ -29,13 +29,13 @@ const GridCard = ({ data, source }) => {
         }
     }
 
-    const deleteResource=async()=>{
+    const deleteResource = async () => {
         alert("resource delted")
     }
 
-    
+
     return (
-        <div className="h-40 w-auto sm:h-45 relative rounded-md overflow-hidden "
+        <div className="h-40 w-auto sm:h-45 relative rounded-md overflow-hidden cursor-pointer "
             onClick={() => navigate(`/user/resource/${data._id}`)}
         >
             <img src={data?.thumbnail} className="h-full w-full object-cover"></img>
@@ -48,7 +48,7 @@ const GridCard = ({ data, source }) => {
                 <HiOutlineChatBubbleLeftEllipsis className="h-4 w-4 text-pink-600" /><b className="text-black text-xs">{data?.comments?.length}</b>
             </span>
 
-            <span className="bg-white rounded-full w-5 h-8 absolute p-1 right-2 top-2 flex justify-center items-center hover:shadow-md hover:scale-110 shadow-black ">
+            {source != "public" && <span className="bg-white rounded-full w-5 h-8 absolute p-1 right-2 top-2 flex justify-center items-center hover:shadow-md hover:scale-110 shadow-black ">
                 {source === "saved" && (<FaBookmark onClick={(e) => {
                     e.stopPropagation();
                     removeSavedResource()
@@ -60,7 +60,7 @@ const GridCard = ({ data, source }) => {
                     deleteResource()
                 }} className="h-full w-full text-red-500" />)}
             </span>
-
+            }
 
         </div>
     )
