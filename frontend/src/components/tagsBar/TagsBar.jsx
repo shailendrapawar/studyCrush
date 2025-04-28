@@ -53,4 +53,4 @@ const TagsBar = ({list,setList}) => {
         </div>
     )
 }
-export default React.memo(SingleComment)
+export default React.memo(TagsBar)

@@ -14,9 +14,10 @@
     animation: rotate 0.1s  linear ;
 }
 
-.slideAnime{
-    animation: slideAnime 0.1s linear;
+.slideLeft{
+    animation: slideLeft 0.1s linear;
 }
+
 
 @media  screen and (min-width:600px) {
     .web-nav{
@@ -42,7 +43,9 @@
     } 
 }
 
-@keyframes slideAnime {
+
+
+@keyframes slideLeft {
     0%{
         transform:translateX(100px);
         opacity: 0;
@@ -52,3 +55,4 @@
         opacity: 1;
     } 
 }
+
