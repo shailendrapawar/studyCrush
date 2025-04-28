@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux"
 import defaultUserAvatar from "../../assets/defaultAvatar.avif"
 import { getTimeAgo } from "../../utils/timeAgo"
+import React from "react"
 
 function NotificationCard({notify}) {
   // console.log(notify)
@@ -49,4 +50,4 @@ function NotificationCard({notify}) {
     </div>
   )
 }
-export default NotificationCard
+export default React.memo(NotificationCard)

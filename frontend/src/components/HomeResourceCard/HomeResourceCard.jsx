@@ -16,7 +16,7 @@ import axios from "axios";
 
 import { likePost, setResourceComments, unlikePost, addResourceComment } from "../../store/slices/resourceSlice";
 import { saveResource, unsaveResource, } from "../../store/slices/userSlice";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import SingleComment from "../singleComment/SingleComment";
 import { useNavigate } from "react-router";
 
@@ -258,4 +258,4 @@ const HomeResourceCard = ({ data }) => {
         </div>
     )
 }
-export default HomeResourceCard
+export default React.memo(HomeResourceCard)

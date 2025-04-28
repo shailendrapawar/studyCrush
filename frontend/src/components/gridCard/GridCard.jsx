@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { unsaveResource } from "../../store/slices/userSlice";
 
 import { AiFillDelete } from "react-icons/ai";
+import React from "react";
 const GridCard = ({ data, source }) => {
     // console.log(data)
     const dispatch = useDispatch();
@@ -65,4 +66,4 @@ const GridCard = ({ data, source }) => {
         </div>
     )
 }
-export default GridCard
+export default React.memo(GridCard)
