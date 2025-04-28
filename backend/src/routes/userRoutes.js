@@ -54,4 +54,14 @@ userRouter.delete(
   UserController.deleteUserProfileImage
 );
 
+
+
+//get user public profile and related resources
+
+userRouter.get(
+ "/userPublicProfile/:userId",
+  authMiddleware,
+  UserController.getUserPublicProfile
+)
+
 export default userRouter;

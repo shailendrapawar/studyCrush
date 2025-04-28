@@ -2,10 +2,11 @@ import { useSelector } from "react-redux";
 import defaultAvatar from "./defaultAvatar.avif";
 import "./singleComment.css"
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router";
 
 const SingleComment = ({ data,isNew }) => {
   const { currentTheme } = useSelector((s) => s.theme);
-
+const navigate=useNavigate()
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString("en-US", {
       year: "numeric",
@@ -29,7 +30,7 @@ const SingleComment = ({ data,isNew }) => {
     }
   },[data])
 
-
+// console.log(data)
   return (
     <div 
       className={` flex gap-3 p-4 hover:bg-opacity-50 transition-colors`}
@@ -45,6 +46,7 @@ const SingleComment = ({ data,isNew }) => {
           src={data?.user?.profilePicture?.url || defaultAvatar}
           alt={data?.user?.name}
           className="w-10 h-10 rounded-full object-cover bg-gray-200"
+          onClick={()=>navigate(`/user/publicProfile/${data?.user?._id}`)}
         />
       </div>
 
