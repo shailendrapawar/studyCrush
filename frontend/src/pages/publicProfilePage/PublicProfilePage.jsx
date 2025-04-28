@@ -1,9 +1,12 @@
 import { useSelector } from "react-redux"
-import { useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import axios from "axios"
 import { useEffect, useState } from "react";
 import defaultAvatar from "../../assets/defaultAvatar.avif"
 import GridCard from "../../components/gridCard/GridCard";
+
+import { IoArrowBackCircle } from "react-icons/io5";
+
 const PublicProfilePage = () => {
 
   const { currentTheme } = useSelector(s => s.theme);
@@ -12,6 +15,8 @@ const PublicProfilePage = () => {
   const [resourceList, setResourceList] = useState([]);
 
   const { userId } = useParams();
+
+  const navigate=useNavigate()
   // console.log(userId)
 
   const fetchPublicProfile = async () => {
@@ -40,7 +45,11 @@ const PublicProfilePage = () => {
   }, [userId])
 
   return (
-    <div className="h-auto min-h-screen w-full flex flex-col items-center px-1">
+    <div className="h-auto min-h-screen w-full flex flex-col items-center px-2 relative">
+     
+      <IoArrowBackCircle className="self-start mt-5 h-8 w-8 cursor-pointer"
+      onClick={()=>navigate(-1)}
+      />
 
       <section className="max-w-100 w-full h-70 rounded-lg flex flex-col items-center justify-evenly mt-5"
         style={{ backgroundColor: currentTheme.cardBackground }}

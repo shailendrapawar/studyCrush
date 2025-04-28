@@ -126,8 +126,7 @@ const SingleResourcePage = () => {
   return (
     <div className="min-h-screen pb-10" style={{ backgroundColor: currentTheme?.background }}>
 
-      <IoArrowBackCircle className=" mt-5 h-8 w-8 ml-5 rounded-full shadow-md shadow-black active:shadow-none"
-        style={{ color: currentTheme.accent }}
+      <IoArrowBackCircle className=" mt-5 h-8 w-8 ml-5 rounded-full shadow-md shadow-black active:shadow-none cursor-pointer"
         onClick={() => navigate(-1)}
       />
 
@@ -182,7 +181,7 @@ const SingleResourcePage = () => {
 
 
         {/* Author and Date */}
-        <div className="flex items-center justify-between mb-6 p-4 rounded-lg"
+        <div className="flex items-center justify-between mb-6 p-4 rounded-lg cursor-pointer"
           style={{ backgroundColor: currentTheme?.cardBackground }}
           onClick={()=>navigate(`/user/publicProfile/${currentResource?.uploadedBy?._id}`)}
           >

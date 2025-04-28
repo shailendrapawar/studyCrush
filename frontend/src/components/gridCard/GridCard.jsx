@@ -4,7 +4,7 @@ import { HiOutlineChatBubbleLeftEllipsis } from "react-icons/hi2";
 import { useNavigate } from "react-router";
 
 import { FaBookmark } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+// import { MdDelete } from "react-icons/md";
 
 import axios from "axios"
 import { useDispatch } from "react-redux";
