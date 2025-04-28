@@ -26,6 +26,7 @@ const SingleResourcePage = () => {
 
   const [inputComment, setInputComment] = useState("")
 
+
   // ==fetching resources data===========
   const fetchResourceData = async () => {
     const resource = await axios.get(import.meta.env.VITE_API_URL + `/resource/getSingleResource/${resourceId}`, {
@@ -182,7 +183,10 @@ const SingleResourcePage = () => {
 
         {/* Author and Date */}
         <div className="flex items-center justify-between mb-6 p-4 rounded-lg"
-          style={{ backgroundColor: currentTheme?.cardBackground }}>
+          style={{ backgroundColor: currentTheme?.cardBackground }}
+          onClick={()=>navigate(`/user/publicProfile/${currentResource?.uploadedBy?._id}`)}
+          >
+            
           <div className="flex items-center gap-3">
             <img
               src={currentResource?.uploadedBy.profilePicture?.url || defaultUserAvatar}

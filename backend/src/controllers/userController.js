@@ -238,9 +238,9 @@ class UserController {
     }
 
     // update user profile image
-    static updateUserProfileImage = async(req, res) => {
+    static updateUserProfileImage = async (req, res) => {
         try {
-            
+
             // get the local path
             const coverImageLocalPath = req.file?.path
             // if cover image local path is not available then throw an error
@@ -248,45 +248,45 @@ class UserController {
                 throw new Error("No image found")
             }
             console.log("cover image local path is: ", coverImageLocalPath)
-            
+
             // upload image on cloudinary
             const coverImage = await uploadOnCloudinary(coverImageLocalPath)
-            
+
             // if coverImage does not has url throw error
             if (!coverImage.url) {
                 throw new ApiError(400, "Error while uploading on avatar")
-                
+
             }
 
             // extract the public id and url
-            const {public_id, url} = coverImage
+            const { public_id, url } = coverImage
             // find the user by Id and update
 
             const user = await UserModel.findByIdAndUpdate(
                 req.id,
                 {
-                    $set:{
+                    $set: {
                         profilePicture: {
                             public_id,
                             url
                         }
                     }
                 },
-                {new: true}
+                { new: true }
             ).select("-password")
-            
+
             // sedn back the updated user with update profile image
             return res
-            .status(200)
-            .json({
-                msg: "Profile image updated successfully",
-                success: true,
-                user
-            }
-            )
-            
+                .status(200)
+                .json({
+                    msg: "Profile image updated successfully",
+                    success: true,
+                    user
+                }
+                )
+
         } catch (error) {
-            return res.status(500).json({   
+            return res.status(500).json({
                 msg: error.message,
                 success: false
             })
@@ -294,14 +294,14 @@ class UserController {
     }
 
     // delete user profile image
-    static deleteUserProfileImage = async(req, res) => {
+    static deleteUserProfileImage = async (req, res) => {
 
         try {
             // call the deleteOnCloudinary function and pass the public id
             const imageDeleted = await deleteOnCloudinary(req.body.public_id);
-            
+
             // if res is null then throw an error
-            if(imageDeleted.result !== "ok"){
+            if (imageDeleted.result !== "ok") {
                 throw new Error("Error while deleting the image");
             }
 
@@ -309,13 +309,13 @@ class UserController {
             const user = await UserModel.findByIdAndUpdate(
                 req.id,
                 {
-                    $set:{
+                    $set: {
                         profilePicture: {
                             public_id: "",
                         }
                     }
                 },
-                {new: true}
+                { new: true }
             ).select("-password");
 
             // return the updated user with update profile image
@@ -325,7 +325,7 @@ class UserController {
                 user
             })
 
-            
+
         } catch (error) {
             return res.status(500).json({
                 msg: error.message,
@@ -334,9 +334,9 @@ class UserController {
         }
 
     }
-  
-  
-   static getUserUploads = async (req, res) => {
+
+    // get user uploaded resources==========
+    static getUserUploads = async (req, res) => {
         try {
             const { userId } = req.params;
             // console.log(userId)
@@ -346,21 +346,51 @@ class UserController {
             if (!userUploads) throw new Error(" erros in finding user uploads");
 
             return res.status(200).json({
-                msg:" user uploads found",
-                success:true,
+                msg: " user uploads found",
+                success: true,
                 userUploads
             })
-            
+
 
         } catch (err) {
-            console.log("err in getUserUploads",err)
+            console.log("err in getUserUploads", err)
             return res.status(400).json({
-                msg:" internal server error",
-                success:false,
-                
+                msg: " internal server error",
+                success: false,
+
             })
         }
 
+    }
+
+    static getUserPublicProfile = async (req, res) => {
+        // console.log(req.params)
+        try {
+            const { userId } = req.params
+
+            const user = await UserModel.findById(userId).select("name username bio profilePicture")
+            const resources =  ResourceModel.find({ uploadedBy: userId }).select("thumbnail comments likes")
+            const userData = await Promise.all([user, resources])
+
+            console.log(userData.length)
+
+            // if (!userData) throw new Error("error in handling promises");
+
+            return res.status(200).json({
+                msg:"user found with data",
+                user:userData[0],
+                resources:userData[1],
+                success:true
+            })
+            
+
+    } catch (err) {
+            console.log(err)
+            return res.status(200).json({
+                msg:"internal server error",
+                success:false
+            })
+        }
     }
 
 

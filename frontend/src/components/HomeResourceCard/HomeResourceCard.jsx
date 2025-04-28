@@ -174,6 +174,10 @@ const HomeResourceCard = ({ data }) => {
 
                     <b>By {data?.uploadedBy?.name?.toUpperCase()}<b> • </b>{formatDate(data?.createdAt)}</b>
                     <img className="h-8 w-8 bg-gray rounded-full mr-3 object-scale-down shadow-sm shadow-black"
+                    onClick={(e)=>{
+                        e.stopPropagation();
+                        navigate(`/user/publicProfile/${data?.uploadedBy?._id}`)
+                    }}
                         src={data?.uploadedBy?.profilePicture?.url || defaultUserAvatar}
                     ></img>
 
