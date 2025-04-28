@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import toast, {} from "react-hot-toast"
 
@@ -53,4 +53,4 @@ const TagsBar = ({list,setList}) => {
         </div>
     )
 }
-export default TagsBar
+export default React.memo(TagsBar)

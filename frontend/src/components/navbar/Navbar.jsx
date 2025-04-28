@@ -3,7 +3,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { CgMenuCheese } from "react-icons/cg";
 import { IoIosNotifications } from "react-icons/io";
 import "./navbar.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 // import { FaCloudUploadAlt } from "react-icons/fa";
@@ -31,7 +31,7 @@ const Navbar = () => {
       </nav>
 
 
-      <nav className={`slideAnime mobile-nav h-55 w-2/3 max-w-70 rounded-bl-3xl bg-black  flex flex-col items-center justify-center gap-5 absolute top-16 right-0 ${toggle ? "flex" : "hidden"}`}
+      <nav id="mobile-nav" className={`slideLeft mobile-nav h-55 w-2/3 max-w-70 rounded-bl-3xl bg-black  flex flex-col items-center justify-center gap-5 absolute top-16 right-0 ${toggle ? "flex" : "hidden"}`}
         onClick={() => setToggle(false)}
         style={{ backgroundColor: currentTheme.background, border: `1px solid ${currentTheme.line}` }}
       >

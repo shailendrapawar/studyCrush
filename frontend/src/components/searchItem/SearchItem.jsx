@@ -1,3 +1,4 @@
+import React from "react";
 import { FaHeart } from "react-icons/fa";
 
 import { useSelector } from "react-redux"
@@ -49,4 +50,4 @@ const SearchItem = ({ data }) => {
     </div>
   )
 }
-export default SearchItem
+export default React.memo(SearchItem)

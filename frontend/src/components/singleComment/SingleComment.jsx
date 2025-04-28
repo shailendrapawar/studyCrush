@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
-import defaultAvatar from "./defaultAvatar.avif";
 import "./singleComment.css"
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 
 const SingleComment = ({ data,isNew }) => {
@@ -43,7 +42,7 @@ const navigate=useNavigate()
       {/* Avatar */}
       <div className="flex-shrink-0">
         <img 
-          src={data?.user?.profilePicture?.url || defaultAvatar}
+          src={data?.user?.profilePicture?.url}
           alt={data?.user?.name}
           className="w-10 h-10 rounded-full object-cover bg-gray-200"
           onClick={()=>navigate(`/user/publicProfile/${data?.user?._id}`)}
@@ -78,4 +77,4 @@ const navigate=useNavigate()
   );
 };
 
-export default SingleComment;
+export default React.memo(SingleComment);
