@@ -60,24 +60,30 @@ class ResourceController {
             const userId = req.id;
             const { resourceId } = req.params
 
-            if (!resourceId) throw new Error(" resource id not found");
+            const resource=await ResourceModel.findById(resourceId).select("_id uploadedBy");
 
-            const isExist = await ResourceModel.findById(resourceId);
-
-            if (!isExist) {
-                return res.status(400).json({
-                    msg: "resource not found or deleted",
-                    success: false
-                })
+            //return response if resource not found=====
+            if (!resource) {
+                return res.status(404).json({ message: "Resource not found" });
             }
 
+            if (resource.uploadedBy.toString() !== userId) {
+                return res.status(403).json({ message: "Not authorized to delete this resource" });
+            }
 
-            //   check if user is owner of reosurce========
-            if (isExist.uploadedBy.toString() == !userId) throw new Error(" not allowed");
+            console.log(resource)
 
-            await resourceModel.findByIdAndDelete(resourceId);
+            const isResourceDelete=await resource.deleteOne();
+            const isCommentesDeleted=await CommentModel.deleteMany({resourceId:resourceId});
 
-            return res.status(200).json({ message: "Resource deleted successfully" });
+            
+            await Promise.all([isResourceDelete,isCommentesDeleted]);
+
+            return res.status(200).json({
+                msg:"resource deleted",
+                succes:true
+            })
+
 
         } catch (err) {
 
