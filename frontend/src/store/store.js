@@ -14,7 +14,7 @@ import sessionStorage from "redux-persist/lib/storage/session"
 const persistConfig={
     key:"root",
     storage:sessionStorage,
-    blacklist:"searchResource"
+    blacklist:"searchResource socket"
 }
 
 const rootReducer=combineReducers({

@@ -5,6 +5,7 @@ import {Toaster} from "react-hot-toast"
 import { useDispatch, useSelector } from "react-redux"
 import useGetHomeResources from "../hooks/useGetHomeResources"
 import useGetUserNotifications from "../hooks/useGetUserNotifications"
+import useSetSocketConnection from "../hooks/useSetSocketConnection"
 
 const PageLayout = () => {
 
@@ -25,6 +26,8 @@ const PageLayout = () => {
   },[])
 
   useGetUserNotifications()
+
+  useSetSocketConnection()
 
   
   return (

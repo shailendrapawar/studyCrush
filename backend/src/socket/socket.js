@@ -17,6 +17,9 @@ const io =new Server(myHttpServer,{
 
 io.on("connection",(socket)=>{
     console.log("socket connected:-",socket.id)
+    const {userId}=socket.handshake.query;
+
+    console.log(userId)
 
     socket.on("disconnect",()=>{
         console.log("scoket disconnected",socket.id)
