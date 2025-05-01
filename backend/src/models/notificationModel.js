@@ -22,6 +22,10 @@ const notificationSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    resourceId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Resource"
+    }
 },{
     timestamps:true
 })
