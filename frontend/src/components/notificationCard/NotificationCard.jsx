@@ -3,12 +3,13 @@ import defaultUserAvatar from "../../assets/defaultAvatar.avif"
 import { getTimeAgo } from "../../utils/timeAgo"
 import React from "react"
 
-function NotificationCard({notify}) {
+function NotificationCard({notify,handleClick}) {
   // console.log(notify)
   const {currentTheme}=useSelector(s=>s.theme)
   return (
-    <div className="w-full max-w-150 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200 cursor-pointer"
+    <div className="w-full max-w-150 rounded-xl shadow-md overflow-hidden hover:shadow-black hover:shadow-md active:shadow-none transition-shadow duration-200 cursor-pointer"
     style={{backgroundColor:currentTheme.cardBackground}}
+    onClick={()=>handleClick(notify.resourceId)}
     >
       <div className="flex p-3">
         {/* Avatar */}

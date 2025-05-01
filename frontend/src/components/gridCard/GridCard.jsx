@@ -8,7 +8,7 @@ import { FaBookmark } from "react-icons/fa";
 
 import axios from "axios"
 import { useDispatch } from "react-redux";
-import { unsaveResource } from "../../store/slices/userSlice";
+import { unsaveResource,removeUploadedResource } from "../../store/slices/userSlice";
 
 import { AiFillDelete } from "react-icons/ai";
 import React from "react";
@@ -31,7 +31,25 @@ const GridCard = ({ data, source }) => {
     }
 
     const deleteResource = async () => {
-        alert("resource delted")
+        const choice = confirm(`delete resource?`)
+        console.log(choice)
+
+        if (!choice) return;
+
+        try{
+            const res=await axios.post(import.meta.env.VITE_API_URL+`/resource/deleteResource/${data._id}`,{},{
+                withCredentials:true
+           })
+   
+           if(res){
+               console.log(res)
+               dispatch(removeUploadedResource(data._id))
+           }
+
+        }catch(err){
+            console.log(err)
+        }
+
     }
 
 

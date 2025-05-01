@@ -138,7 +138,7 @@ const HomeResourceCard = ({ data }) => {
     }, [commentToggle])
 
     return (
-        <div className=" homeResource-card h-65 w-full max-w-150 bg-green-500 rounded-md p-1.5 flex gap-2 cursor-pointer shadow-sm transition-all shadow-black hover:shadow-md"
+        <div className=" homeResource-card h-65 w-full max-w-160 bg-green-500 rounded-md p-1.5 flex gap-2 cursor-pointer shadow-sm transition-all shadow-black hover:shadow-md"
             style={{ backgroundColor: currentTheme.cardBackground, border: `0px solid ${currentTheme.line}` }}
             onClick={() => navigate(`/user/resource/${data._id}`)}
         >

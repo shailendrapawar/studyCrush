@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
-
+import {toast} from "react-hot-toast"
 const slice=createSlice({
     name:"user",
     initialState:{
@@ -50,9 +50,22 @@ const slice=createSlice({
             }
         },
 
+
+        removeUploadedResource:(state,action)=>{
+
+            const resourceId=action.payload;
+            const index=state.userUploadedResources.findIndex((item)=>item._id===resourceId);
+
+            if(index!=-1){
+                state.userUploadedResources.splice(index,1);
+                toast.success("Resource deleted");
+            }
+
+        }
+
     }
 })
 
-export const {setAuthUser,setUserNotification,unsaveResource,saveResource,setSavedResourcesDetails,setUserUploadedResources}=slice.actions
+export const {setAuthUser,setUserNotification,unsaveResource,saveResource,setSavedResourcesDetails,setUserUploadedResources,removeUploadedResource}=slice.actions
 
 export default slice.reducer;
