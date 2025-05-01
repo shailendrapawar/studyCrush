@@ -15,6 +15,14 @@ const io =new Server(myHttpServer,{
 })
 
 
+io.on("connection",(socket)=>{
+    console.log("socket connected:-",socket.id)
+
+    socket.on("disconnect",()=>{
+        console.log("scoket disconnected",socket.id)
+    })
+})
+
 
 
 export {io,app,myHttpServer}

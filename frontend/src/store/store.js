@@ -6,7 +6,7 @@ import userReducer from "./slices/userSlice.js"
 import resourceReducer from "./slices/resourceSlice.js"
 import searchReducer from "./slices/searchResourcesSlice.js"
 import singleResourceReducer from "./slices/singleResourceSlice.js"
-
+import socketReducer from "./slices/socketSlice.js"
 // === configs for  persistence=============
 import {persistReducer, persistStore} from "redux-persist"
 import sessionStorage from "redux-persist/lib/storage/session"
@@ -22,7 +22,9 @@ const rootReducer=combineReducers({
     user:userReducer,
     resource:resourceReducer,
     searchResource:searchReducer,
-    singleResource:singleResourceReducer
+    singleResource:singleResourceReducer,
+    //socket reducer====
+    socket:socketReducer
 })
 
 
