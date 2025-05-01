@@ -196,8 +196,11 @@ class ResourceController {
             })
             // console.log(resource);
 
-            if (!resource) throw new Error("Error finding resource");
-
+            
+            if (!resource) {
+                
+                return res.status(404).json({ msg: "Resource not found" });
+            }
             return res.status(200).json({
                 msg: "resource found",
                 success: true,

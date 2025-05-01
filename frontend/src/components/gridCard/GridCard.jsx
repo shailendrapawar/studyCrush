@@ -42,7 +42,7 @@ const GridCard = ({ data, source }) => {
            })
    
            if(res){
-               console.log(res)
+            //    console.log(res)
                dispatch(removeUploadedResource(data._id))
            }
 

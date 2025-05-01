@@ -14,6 +14,7 @@ import SingleComment from "../../components/singleComment/SingleComment"
 
 import { IoArrowBackCircle } from "react-icons/io5";
 
+
 const SingleResourcePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,14 +27,22 @@ const SingleResourcePage = () => {
 
   const [inputComment, setInputComment] = useState("")
 
+  const[isFound,setIsFound]=useState(true);
+
 
   // ==fetching resources data===========
   const fetchResourceData = async () => {
-    const resource = await axios.get(import.meta.env.VITE_API_URL + `/resource/getSingleResource/${resourceId}`, {
-      withCredentials: true
-    })
-    if (resource) {
-      dispatch(setSingleResource(resource.data.resource))
+    try{
+      const resource = await axios.get(import.meta.env.VITE_API_URL + `/resource/getSingleResource/${resourceId}`, {
+        withCredentials: true
+      })
+      
+        return dispatch(setSingleResource(resource.data.resource))
+    
+      
+    }catch(err){
+      setIsFound(false);
+      toast.error(err.response.data.msg)
     }
   }
 
@@ -122,6 +131,11 @@ const SingleResourcePage = () => {
 
 
   if (!currentResource) return <div className="flex justify-center items-center h-screen">Loading...</div>
+
+  if(!isFound) return <div className="h-50 w-full flex justify-center items-center">
+    <IoArrowBackCircle className="h-8 w-8 mr-5 hover:shadow-md active:shadow-none shadow-black rounded-full" onClick={()=>navigate(-1)}/>
+     Resource not found 😕
+     </div>
 
   return (
     <div className="min-h-screen pb-10" style={{ backgroundColor: currentTheme?.background }}>
