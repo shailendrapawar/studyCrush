@@ -36,11 +36,13 @@ const NotificationPage = () => {
     }
   }, [])
 
-  
+
+  //onCLick for naviagting to resource===
   const handleClick=(userId)=>{
     if(userId){
       navigate(`/user/resource/${userId}`)
     }
+    return
   }
 
   return (
