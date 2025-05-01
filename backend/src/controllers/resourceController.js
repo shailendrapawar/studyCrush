@@ -71,22 +71,26 @@ class ResourceController {
                 return res.status(403).json({ message: "Not authorized to delete this resource" });
             }
 
-            console.log(resource)
+            // console.log(resource)
 
             const isResourceDelete=await resource.deleteOne();
             const isCommentesDeleted=await CommentModel.deleteMany({resourceId:resourceId});
 
+            //unsaving from those user who have saved it
+            const isUnsaved=await UserModel.updateMany({savedResources:resourceId},{
+                $pull:{savedResources:resourceId}
+            })
+
             
-            await Promise.all([isResourceDelete,isCommentesDeleted]);
+            await Promise.all([isResourceDelete,isCommentesDeleted,isUnsaved]);
 
             return res.status(200).json({
                 msg:"resource deleted",
                 succes:true
             })
 
-
+            
         } catch (err) {
-
             return res.status(400).json({
                 msg: "something went wrong",
                 success: false,

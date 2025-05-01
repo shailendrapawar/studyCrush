@@ -26,6 +26,7 @@ const UploadedResourcesPage = () => {
     }
   }
 
+
   useEffect(() => {
     if(authUser){
       searchUserUploads()
@@ -39,7 +40,7 @@ const UploadedResourcesPage = () => {
     <div className="w-full h-auto grid grid-cols-2 gap-1 sm:grid-cols-3 ">
 
       {userUploadedResources?.map((item,i)=>{
-        return <GridCard key={i} data={item} source="uploaded"/>
+        return <GridCard key={i} data={item} source="uploaded" />
       })}
 
     </div>
