@@ -254,7 +254,7 @@ class ResourceController {
             const isUpdated = await ResourceModel.findByIdAndUpdate({ _id: resourceId }, {
                 $push: { comments: isSaved._id }
             })
-            console.log(isUpdated)
+            // console.log(isUpdated)
 
             if (!isUpdated) throw new Error(" comment id not added in resource");
 

@@ -14,8 +14,10 @@ const useSingleResourceEvents = (resourceId) => {
     useEffect(()=>{
         if(!socket||!resourceId)return
 
+        // #= joining single reosurce room=========
         socket?.emit("join-singleResource-room",resourceId)
 
+        // 1:- for getting real time comments=======
         socket?.on("singleResource-newComment",(newComment)=>{
             console.log(newComment)
             if(newComment&&(newComment?.user?._id!=authUser?._id)){
@@ -25,12 +27,14 @@ const useSingleResourceEvents = (resourceId) => {
         })
 
 
+        // 2:- for liking in real times=========
         socket?.on("singleResource-like",(userId)=>{
             if(userId&&(authUser?._id!==userId)){
                 dispatch(likeCurrentResource({resourceId,userId}))
             }
         })
 
+        // 3:- for unliking inreal time=========
         socket?.on("singleResource-unlike",(userId)=>{
             if(userId&&(authUser?._id!==userId)){
                 dispatch(unlikeCurrentResource({resourceId,userId}))
@@ -39,7 +43,7 @@ const useSingleResourceEvents = (resourceId) => {
 
         return ()=>{
             socket?.emit("leave-singleResource-room",resourceId)
-            socket?.off("join-singleResource-room")
+            // socket?.off("join-singleResource-room")
             socket.off("singleResource-newComment")
 
             socket.off("singleResource-like");
