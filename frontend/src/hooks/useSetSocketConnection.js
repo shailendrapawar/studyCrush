@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { io } from "socket.io-client"
 // import {} from "react-redux"
-
+import { addUserNotification } from "../store/slices/userSlice";
 import { setSocket } from "../store/slices/socketSlice";
 function useSetSocketConnection() {
 
@@ -25,17 +25,21 @@ function useSetSocketConnection() {
         
         if (socket) {
             dispatch(setSocket(socket));
-            // socket.emit
         }
 
 
-        socket.on("notification",(msg)=>{
-            console.log(msg)
+        //listening and adding new notification====
+        socket.on("notification",(newNotification)=>{
+            // console.log(newNotification)
+            if(newNotification){
+                dispatch(addUserNotification(newNotification))
+            }
         })
 
         return () => {
             if(socket.connected){
-                socket?.disconnect()
+                
+            socket?.disconnect()
             dispatch(setSocket(null))
             }
         }
