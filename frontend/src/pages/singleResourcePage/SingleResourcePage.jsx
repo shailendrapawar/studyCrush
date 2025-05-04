@@ -104,6 +104,7 @@ const SingleResourcePage = () => {
 
       if (isCommented) {
         toast.success("Comment added")
+        setInputComment("")
         dispatch(addCommentCurrentResource({ resourceId, newComment: isCommented.data.newComment }))
       }
 

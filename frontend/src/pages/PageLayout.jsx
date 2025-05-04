@@ -29,7 +29,7 @@ const PageLayout = () => {
 
   useSetSocketConnection()
 
-  
+
   return (
     // y kuch erro h yaha
     <div className=" w-full h-auto min-h-full  flex justify-center" style={{backgroundColor:currentTheme.background, color:currentTheme.textPrimary}}>

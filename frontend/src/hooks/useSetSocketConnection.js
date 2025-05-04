@@ -9,11 +9,9 @@ function useSetSocketConnection() {
     const { authUser } = useSelector(s => s.user);
     const dispatch = useDispatch();
 
-
-
-
     useEffect(() => {
-        const socket = io(import.meta.env.VITE_API_URL, {
+
+        const socket = io("http://localhost:3000", {
             query: {
                 userId: authUser?._id
             },
@@ -23,15 +21,23 @@ function useSetSocketConnection() {
             reconnectionDelay: 1000, // Delay between retries in ms
             reconnectionDelayMax: 5000,
         })
+    
         
-
         if (socket) {
             dispatch(setSocket(socket));
+            // socket.emit
         }
 
 
+        socket.on("notification",(msg)=>{
+            console.log(msg)
+        })
+
         return () => {
-            socket?.disconnect()
+            if(socket.connected){
+                socket?.disconnect()
+            dispatch(setSocket(null))
+            }
         }
 
     }, [authUser])

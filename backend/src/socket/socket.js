@@ -10,7 +10,8 @@ import {createServer} from "http"
 import {Server} from "socket.io"
 const io =new Server(myHttpServer,{
     cors:{
-        origin:["*"]
+        origin:["*","http://localhost:5173"],
+    
     }
 })
 
@@ -19,7 +20,11 @@ io.on("connection",(socket)=>{
     console.log("socket connected:-",socket.id)
     const {userId}=socket.handshake.query;
 
-    console.log(userId)
+    if(userId){
+        socket.join(userId);
+        console.log(`socket joined room ${userId}`)
+    }
+
 
     socket.on("disconnect",()=>{
         console.log("scoket disconnected",socket.id)
