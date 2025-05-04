@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { addCommentCurrentResource } from "../store/slices/singleResourceSlice";
+import { addCommentCurrentResource,likeCurrentResource,unlikeCurrentResource } from "../store/slices/singleResourceSlice";
+
 const useSingleResourceEvents = (resourceId) => {
 
     const{socket}=useSelector(s=>s.socket);
@@ -23,10 +24,27 @@ const useSingleResourceEvents = (resourceId) => {
             }
         })
 
+
+        socket?.on("singleResource-like",(userId)=>{
+            if(userId&&(authUser?._id!==userId)){
+                dispatch(likeCurrentResource({resourceId,userId}))
+            }
+        })
+
+        socket?.on("singleResource-unlike",(userId)=>{
+            if(userId&&(authUser?._id!==userId)){
+                dispatch(unlikeCurrentResource({resourceId,userId}))
+            }
+        })
+
         return ()=>{
             socket?.emit("leave-singleResource-room",resourceId)
             socket?.off("join-singleResource-room")
             socket.off("singleResource-newComment")
+
+            socket.off("singleResource-like");
+            socket.off("singleResource-unlike");
+
         }
     },[socket,resourceId])
 }

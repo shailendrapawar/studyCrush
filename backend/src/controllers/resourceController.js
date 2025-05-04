@@ -207,7 +207,8 @@ class ResourceController {
             return res.status(200).json({
                 msg: "resource found",
                 success: true,
-                resource
+                resource,
+                
             })
 
         } catch (err) {
@@ -253,6 +254,7 @@ class ResourceController {
             const isUpdated = await ResourceModel.findByIdAndUpdate({ _id: resourceId }, {
                 $push: { comments: isSaved._id }
             })
+            console.log(isUpdated)
 
             if (!isUpdated) throw new Error(" comment id not added in resource");
 
@@ -268,8 +270,9 @@ class ResourceController {
 
            
             const new_comment=await isSaved.populate({ path: "user", select: " name profilePicture " })
-            // 4:- socket event for single resource page====
 
+
+            // 4:- socket event for single resource page====
             io.to(resourceId).emit("singleResource-newComment",new_comment)
 
 
@@ -299,7 +302,7 @@ class ResourceController {
             const comments = await CommentModel.find({ resourceId }).populate({
                 path: "user",
                 select: " profilePicture name"
-            }).sort({ createdAt: -1 })
+            }).sort({ createdAt: -1 }).limit(20)
 
             return res.status(200).json({
                 msg: " comments found",
@@ -334,6 +337,7 @@ class ResourceController {
 
             if (hasLike) {
                 resource.likes.pull(userId)
+                io.to(resourceId).emit("singleResource-unlike",userId)
 
             } else {
                 resource.likes.push(userId)
@@ -346,10 +350,8 @@ class ResourceController {
                     resourceId:resource._id
                  })
 
-                //  console.log(newNotification)
+                 io.to(resourceId).emit("singleResource-like",userId)
 
-                //  4:- socket event for notififcation======
-                //return the new notification for events
             }
 
 
@@ -370,9 +372,7 @@ class ResourceController {
                 success: true
             })
         }
-
     }
-
 
 
 }

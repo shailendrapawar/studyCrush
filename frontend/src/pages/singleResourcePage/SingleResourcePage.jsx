@@ -275,8 +275,8 @@ const SingleResourcePage = () => {
             border: `1px solid ${currentTheme?.line}`
           }}>
           <div className="p-4 border-b" style={{ borderColor: currentTheme?.line }}>
-            <h3 className="font-medium" style={{ color: currentTheme?.textPrimary }}>
-              Comments ( {currentResource?.comments?.length || 0} )
+            <h3 className="font-medium text-md md:text-2xl" style={{ color: currentTheme?.textPrimary }}>
+              Comments
             </h3>
           </div>
 
