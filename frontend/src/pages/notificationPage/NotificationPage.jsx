@@ -1,6 +1,7 @@
 import { } from "@reduxjs/toolkit"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import NotificationCard from "../../components/notificationCard/NotificationCard"
+import { markUsernotificationRead } from "../../store/slices/userSlice"
 import { useEffect } from "react"
 import axios from "axios"
 
@@ -9,7 +10,7 @@ import { useNavigate } from "react-router"
 const NotificationPage = () => {
   const { currentTheme } = useSelector(s => s.theme)
   const { userNotifications } = useSelector(s => s.user)
-
+const dispatch=useDispatch()
   const navigate=useNavigate();
 
   // console.log(userNotifications)
@@ -20,7 +21,10 @@ const NotificationPage = () => {
       const isRead = await axios.post(import.meta.env.VITE_API_URL + `/auth/markNotificationRead`, {}, {
         withCredentials: true
       })
-      console.log(isRead);
+      // console.log(isRead);
+      if(isRead){
+        dispatch(markUsernotificationRead())
+      }
 
     } catch (err) {
       console.log(err)
@@ -32,7 +36,7 @@ const NotificationPage = () => {
     return () => {
       //===handle notification read==========
 
-      // markNotificationRead()
+      markNotificationRead()
     }
   }, [])
 

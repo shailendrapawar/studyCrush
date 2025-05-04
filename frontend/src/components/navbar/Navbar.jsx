@@ -14,9 +14,20 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
 
-  const { currentTheme } = useSelector(s => s.theme)
-  const { userNotifications } = useSelector(s => s.user)
+  const [unRead, setUnread] = useState([]);
 
+  const { currentTheme } = useSelector(s => s.theme)
+  const { userNotifications } = useSelector((s) => s.user)
+
+  const calculateUnread = () => {
+    const notifications = userNotifications.filter((item) => item.isRead === false);
+    setUnread(notifications)
+    // console.log(notifications.length)
+  }
+
+  useEffect(() => {
+    calculateUnread()
+  }, [userNotifications])
 
   return (
     <nav className=" h-16 flex justify-between pl-4 pr-4 items-center relative z-10 " style={{ backgroundColor: currentTheme.background, color: currentTheme.textPrimary, borderBottom: `1px solid ${currentTheme.line}` }}
@@ -44,12 +55,12 @@ const Navbar = () => {
 
       <span className=" absolute right-20" onClick={() => { navigate("/user/notification"); setToggle(false) }}>
         <IoIosNotifications className="w-5 h-5" />
-        <i className="absolute text-xs -top-1 -right-2">{userNotifications?.length}</i>
+        <i className="absolute text-xs -top-1 -right-2  rounded-md" style={{backgroundColor:currentTheme.background}}>{unRead?.length>9?"9+":unRead?.length}</i>
       </span>
 
 
       {toggle ? <RxCross1 className="nav-toggle mobileNav-icon h-8 w-8 active:scale-80 active:opacity-0 ease-in-out" onClick={() => setToggle(!toggle)} /> : <CgMenuCheese className="nav-toggle mobileNav-icon h-8 w-8 active:scale-80 active:opacity-0 ease-in-out" onClick={() => setToggle(!toggle)} />}
-       <FaUserCircle className=" userProfile-icon h-8 w-8" onClick={() => navigate("/user/userProfile")} />
+      <FaUserCircle className=" userProfile-icon h-8 w-8" onClick={() => navigate("/user/userProfile")} />
 
     </nav>
   )

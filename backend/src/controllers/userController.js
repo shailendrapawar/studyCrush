@@ -174,7 +174,7 @@ class UserController {
         try {
             const userId = req.id;
 
-            await NotificationModel.updateMany({ receiver: userId }, {
+            await NotificationModel.updateMany({ receiverId: userId }, {
                 $set: { isRead: true }
             })
 
@@ -196,7 +196,7 @@ class UserController {
             const userNotifications = await NotificationModel.find({ receiverId: userId }).populate({
                 path: "senderId",
                 select: "name profilePicture"
-            }).sort({ createdAt: -1 }).limit(5);
+            }).sort({ createdAt: -1 }).limit(10);
             // console.log(userNotifications)
 
             return res.status(200).json({

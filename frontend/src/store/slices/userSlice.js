@@ -16,9 +16,23 @@ const slice=createSlice({
         setAuthUser:(state,action)=>{
             state.authUser=action.payload;
         },
+        //set initial notification======
         setUserNotification:(state,action)=>{
             state.userNotifications=action.payload;
         },
+
+        //add new notification=====
+        addUserNotification:(state,action)=>{
+            state.userNotifications.unshift(action.payload)
+        },
+
+        //mark notifications read=========
+        markUsernotificationRead:(state,action)=>{
+            state.userNotifications.forEach((notify)=>{
+                notify.isRead=true;
+            })
+        },
+
 
         setUserUploadedResources:(state,action)=>{
             state.userUploadedResources=action.payload
@@ -66,6 +80,6 @@ const slice=createSlice({
     }
 })
 
-export const {setAuthUser,setUserNotification,unsaveResource,saveResource,setSavedResourcesDetails,setUserUploadedResources,removeUploadedResource}=slice.actions
+export const {setAuthUser,setUserNotification,addUserNotification,markUsernotificationRead,unsaveResource,saveResource,setSavedResourcesDetails,setUserUploadedResources,removeUploadedResource}=slice.actions
 
 export default slice.reducer;

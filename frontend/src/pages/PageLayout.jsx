@@ -5,6 +5,7 @@ import {Toaster} from "react-hot-toast"
 import { useDispatch, useSelector } from "react-redux"
 import useGetHomeResources from "../hooks/useGetHomeResources"
 import useGetUserNotifications from "../hooks/useGetUserNotifications"
+import useSetSocketConnection from "../hooks/useSetSocketConnection"
 
 const PageLayout = () => {
 
@@ -26,7 +27,9 @@ const PageLayout = () => {
 
   useGetUserNotifications()
 
-  
+  useSetSocketConnection()
+
+
   return (
     // y kuch erro h yaha
     <div className=" w-full h-auto min-h-full  flex justify-center" style={{backgroundColor:currentTheme.background, color:currentTheme.textPrimary}}>
