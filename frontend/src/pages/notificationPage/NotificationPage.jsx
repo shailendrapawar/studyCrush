@@ -21,7 +21,7 @@ const dispatch=useDispatch()
       const isRead = await axios.post(import.meta.env.VITE_API_URL + `/auth/markNotificationRead`, {}, {
         withCredentials: true
       })
-      console.log(isRead);
+      // console.log(isRead);
       if(isRead){
         dispatch(markUsernotificationRead())
       }
