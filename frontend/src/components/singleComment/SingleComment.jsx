@@ -24,8 +24,6 @@ const navigate=useNavigate()
     void commentRef.current.offsetWidth;
     
     commentRef.current.classList.add("loadCommentAnime");
-  
-
     }
   },[data])
 

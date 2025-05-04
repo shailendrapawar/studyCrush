@@ -3,20 +3,21 @@ import defaultUserAvatar from "../../assets/defaultAvatar.avif"
 import { getTimeAgo } from "../../utils/timeAgo"
 import React from "react"
 
-function NotificationCard({notify,handleClick}) {
+function NotificationCard({notify}) {
   // console.log(notify)
   const {currentTheme}=useSelector(s=>s.theme)
   return (
     <div className="w-full max-w-150 rounded-xl shadow-md overflow-hidden hover:shadow-black hover:shadow-md active:shadow-none transition-shadow duration-200 cursor-pointer"
     style={{backgroundColor:currentTheme.cardBackground}}
     onClick={()=>handleClick(notify.resourceId)}
+
     >
       <div className="flex p-3">
         {/* Avatar */}
         <div className="flex-shrink-0 mr-3">
           <img
             className="h-12 w-12 rounded-full "
-            src={notify?.senderId?.avatar||defaultUserAvatar}
+            src={notify?.senderId?.profilePicture?.url}
             alt="User avatar"
           />
         </div>

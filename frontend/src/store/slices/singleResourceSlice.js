@@ -27,6 +27,7 @@ const slice =createSlice({
                 state.currentResource.likes.splice(index,1);
             }
         },
+        
 
         addCommentCurrentResource:(state,action)=>{
             const{resourceId,newComment}=action.payload;

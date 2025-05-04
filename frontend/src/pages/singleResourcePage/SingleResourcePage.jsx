@@ -13,17 +13,21 @@ import { FaBookmark, FaRegBookmark, FaExternalLinkAlt } from "react-icons/fa";
 import SingleComment from "../../components/singleComment/SingleComment"
 
 import { IoArrowBackCircle } from "react-icons/io5";
+import useSingleResourceEvents from "../../hooks/useSingleResourceEvents"
 
 
 const SingleResourcePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { resourceId } = useParams();
+
+
   const { currentTheme } = useSelector(s => s.theme)
   const { currentResource } = useSelector(s => s.singleResource)
   const { authUser } = useSelector(s => s.user)
-
   const {userSavedResources}=useSelector(s=>s.user)
+
+  // const{socket}=useSelector(s=>s.socket);
 
   const [inputComment, setInputComment] = useState("")
 
@@ -37,11 +41,12 @@ const SingleResourcePage = () => {
         withCredentials: true
       })
       
+      if(resource){
         return dispatch(setSingleResource(resource.data.resource))
-    
-      
+      }    
     }catch(err){
       setIsFound(false);
+      dispatch(setSingleResource(null))
       toast.error(err.response.data.msg)
     }
   }
@@ -49,6 +54,7 @@ const SingleResourcePage = () => {
   //===toggling like==========
 
   const toggleLike = async (e) => {
+    e.preventDefault()
     e.stopPropagation();
     try {
       const isToggled = await axios.post(import.meta.env.VITE_API_URL + `/resource/toggleLike/${resourceId}`, {}, {
@@ -87,7 +93,9 @@ const SingleResourcePage = () => {
     }
   }
 
-  const handlePostComment = async () => {
+  const handlePostComment = async (e) => {
+    e.preventDefault();
+
     if (inputComment === "") {
       return
     }
@@ -113,6 +121,8 @@ const SingleResourcePage = () => {
     }
   }
 
+  // hook for handling socket events for single resource====
+  useSingleResourceEvents(currentResource?._id);
 
   useEffect(() => {
     fetchResourceData()
@@ -227,7 +237,7 @@ const SingleResourcePage = () => {
             border: `1px solid ${currentTheme?.line}`
           }}>
           <div className="flex items-center gap-4">
-            <button className="flex items-center gap-1" onClick={toggleLike}>
+            <button className="flex items-center gap-1" onClick={(e)=>toggleLike(e)}>
               {isLiked ? (
                 <GoHeartFill className="w-6 h-6 text-pink-600" />
               ) : (
@@ -265,8 +275,8 @@ const SingleResourcePage = () => {
             border: `1px solid ${currentTheme?.line}`
           }}>
           <div className="p-4 border-b" style={{ borderColor: currentTheme?.line }}>
-            <h3 className="font-medium" style={{ color: currentTheme?.textPrimary }}>
-              Comments ( {currentResource?.comments?.length || 0} )
+            <h3 className="font-medium text-md md:text-2xl" style={{ color: currentTheme?.textPrimary }}>
+              Comments
             </h3>
           </div>
 
@@ -285,6 +295,7 @@ const SingleResourcePage = () => {
           <div className="p-4 border-t" style={{ borderColor: currentTheme?.line }}>
             <div className="flex gap-2">
               <input
+              value={inputComment}
                 className="flex-1 px-4 py-2 rounded-full text-sm outline-none"
                 style={{ backgroundColor: currentTheme?.background }}
                 placeholder="Add a comment..."
@@ -293,7 +304,7 @@ const SingleResourcePage = () => {
               <button
                 className="px-4 py-2 rounded-full text-sm font-medium"
                 style={{ backgroundColor: currentTheme?.accent, color: '#fff' }}
-                onClick={handlePostComment}
+                onClick={(e)=>handlePostComment(e)}
               >
                 Post
               </button>

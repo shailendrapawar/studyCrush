@@ -5,6 +5,8 @@ import NotificationModel from "../models/notificationModel.js";
 import UserModel from "../models/userModel.js";
 import NotificationCreator from "../services/notificationCreator.js";
 
+import { io } from "../socket/socket.js";
+
 class ResourceController {
 
     static createResource = async (req, res) => {
@@ -189,7 +191,8 @@ class ResourceController {
                 populate: {
                     path: "user", select: " name profilePicture"
                 },
-                limit: 10
+                options:{sort:{createdAt:-1}},
+                limit: 10,
             }).populate({
                 path:"uploadedBy",
                 select :"name profilePicture"
@@ -204,7 +207,8 @@ class ResourceController {
             return res.status(200).json({
                 msg: "resource found",
                 success: true,
-                resource
+                resource,
+                
             })
 
         } catch (err) {
@@ -250,6 +254,7 @@ class ResourceController {
             const isUpdated = await ResourceModel.findByIdAndUpdate({ _id: resourceId }, {
                 $push: { comments: isSaved._id }
             })
+            // console.log(isUpdated)
 
             if (!isUpdated) throw new Error(" comment id not added in resource");
 
@@ -263,16 +268,18 @@ class ResourceController {
                 resourceId:isUpdated._id
             })
 
-            // console.log(newNotification)
+           
+            const new_comment=await isSaved.populate({ path: "user", select: " name profilePicture " })
 
-            // 4:- socket event for notification=============
 
+            // 4:- socket event for single resource page====
+            io.to(resourceId).emit("singleResource-newComment",new_comment)
 
 
             return res.status(200).json({
                 msg: "comment added",
                 success: true,
-                newComment: await isSaved.populate({ path: "user", select: " name profilePicture " })
+                newComment:new_comment
             })
 
         } catch (err) {
@@ -295,7 +302,7 @@ class ResourceController {
             const comments = await CommentModel.find({ resourceId }).populate({
                 path: "user",
                 select: " profilePicture name"
-            }).sort({ createdAt: -1 })
+            }).sort({ createdAt: -1 }).limit(20)
 
             return res.status(200).json({
                 msg: " comments found",
@@ -330,6 +337,7 @@ class ResourceController {
 
             if (hasLike) {
                 resource.likes.pull(userId)
+                io.to(resourceId).emit("singleResource-unlike",userId)
 
             } else {
                 resource.likes.push(userId)
@@ -342,10 +350,8 @@ class ResourceController {
                     resourceId:resource._id
                  })
 
-                //  console.log(newNotification)
+                 io.to(resourceId).emit("singleResource-like",userId)
 
-                //  4:- socket event for notififcation======
-                //return the new notification for events
             }
 
 
@@ -366,9 +372,7 @@ class ResourceController {
                 success: true
             })
         }
-
     }
-
 
 
 }
