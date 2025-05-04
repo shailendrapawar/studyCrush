@@ -20,13 +20,16 @@ const Navbar = () => {
   const { userNotifications } = useSelector((s) => s.user)
 
   const calculateUnread = () => {
-    const notifications = userNotifications.filter((item) => item.isRead === false);
+    const notifications = userNotifications?.filter((item) => item.isRead === false);
     setUnread(notifications)
     // console.log(notifications.length)
   }
 
   useEffect(() => {
-    calculateUnread()
+    if(userNotifications){
+      calculateUnread()
+    }
+    
   }, [userNotifications])
 
   return (

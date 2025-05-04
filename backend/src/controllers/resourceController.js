@@ -5,6 +5,8 @@ import NotificationModel from "../models/notificationModel.js";
 import UserModel from "../models/userModel.js";
 import NotificationCreator from "../services/notificationCreator.js";
 
+import { io } from "../socket/socket.js";
+
 class ResourceController {
 
     static createResource = async (req, res) => {
@@ -189,7 +191,8 @@ class ResourceController {
                 populate: {
                     path: "user", select: " name profilePicture"
                 },
-                limit: 10
+                options:{sort:{createdAt:-1}},
+                limit: 10,
             }).populate({
                 path:"uploadedBy",
                 select :"name profilePicture"
@@ -263,16 +266,17 @@ class ResourceController {
                 resourceId:isUpdated._id
             })
 
-            // console.log(newNotification)
+           
+            const new_comment=await isSaved.populate({ path: "user", select: " name profilePicture " })
+            // 4:- socket event for single resource page====
 
-            // 4:- socket event for notification=============
-
+            io.to(resourceId).emit("singleResource-newComment",new_comment)
 
 
             return res.status(200).json({
                 msg: "comment added",
                 success: true,
-                newComment: await isSaved.populate({ path: "user", select: " name profilePicture " })
+                newComment:new_comment
             })
 
         } catch (err) {
