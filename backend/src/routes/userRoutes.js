@@ -54,4 +54,9 @@ userRouter.delete(
   UserController.deleteUserProfileImage
 );
 
+userRouter.post(
+  "/edit-profile",
+  authMiddleware,
+  UserController.editUserProfile
+)
 export default userRouter;

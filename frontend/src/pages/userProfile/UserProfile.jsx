@@ -3,7 +3,7 @@ import defaultAvatar from "../../assets/defaultAvatar.avif";
 import { IoMdLogOut } from "react-icons/io";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router";
 import { useEffect, useRef, useState } from "react";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiEdit, FiSave, FiTrash2, FiX } from "react-icons/fi";
 import ConfirmDialog from "../../components/Dialog/Dialog";
 import { setAuthUser } from "../../store/slices/userSlice";
 import axios from "axios";
@@ -11,19 +11,40 @@ import toast from "react-hot-toast";
 
 const UserProfile = () => {
   const { currentTheme } = useSelector((s) => s.theme);
-
   const { authUser } = useSelector((s) => s.user);
   const dispatch = useDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // file upload reference
+  const [isEditing, setIsEditing] = useState(false);
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    bio: "",
+    phone: "",
+    location: ""
+  });
   const fileUploadRef = useRef(null);
-
   const location = useLocation();
   const navigate = useNavigate();
 
-  //====handling redirect======
+
+  const user = useSelector((state) => state.user.authUser);
+  console.log("User Profile:", user);
+
+  // Initialize user data
+  useEffect(() => {
+    if (authUser) {
+      setUserData({
+        name: authUser.name || "",
+        email: authUser.email || "",
+        bio: authUser.bio || "",
+        phone: authUser.phone || "",
+        location: authUser.location || ""
+      });
+    }
+  }, [authUser]);
+
+  // Handle redirect
   useEffect(() => {
     if (
       location.pathname == "/user/userProfile/" ||
@@ -34,24 +55,19 @@ const UserProfile = () => {
     }
   }, [location.pathname]);
 
-  // handle the profile image delete
+  // Handle profile image delete
   const handleDeleteProfileImage = async () => {
     try {
-      // call the delete profile image api
       const response = await axios.delete(
         import.meta.env.VITE_API_URL + `/auth/delete-profile-image`,
         {
           data: {
-            // <-- Note the 'data' field
             public_id: authUser?.profilePicture?.public_id,
           },
           withCredentials: true,
         }
       );
-
-      // show toast if profile is deleted successfully
       toast.success(response.data.msg);
-      // update the auth user in redux store
       dispatch(setAuthUser(response.data.user));
     } catch (error) {
       console.log("Error deleting profile image:", error);
@@ -61,15 +77,12 @@ const UserProfile = () => {
   const handleProfileUpload = (e) => {
     e.preventDefault();
     fileUploadRef.current?.click();
-
   }
 
   const updateImageOnServer = async () => {
-    
     const uploadedFile = fileUploadRef.current.files[0];
-    if (!uploadedFile) return; // No file selected
+    if (!uploadedFile) return;
 
-    // Create a FormData object to send the file
     const formData = new FormData();
     formData.append("profileImage", uploadedFile);
 
@@ -79,13 +92,34 @@ const UserProfile = () => {
         formData,
         { withCredentials: true }
       );
-
-      // show toast if profile is updated successfully
       toast.success(response.data.msg);
-      // update the auth user in redux store
       dispatch(setAuthUser(response.data.user));
     } catch (error) {
       console.log("Error uploading profile image:", error);
+    }
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+
+  const handleSave = async () => {
+    try {
+      const response = await axios.put(
+        import.meta.env.VITE_API_URL + `/auth/update-profile`,
+        userData,
+        { withCredentials: true }
+      );
+      toast.success(response.data.msg);
+      dispatch(setAuthUser(response.data.user));
+      setIsEditing(false);
+    } catch (error) {
+      console.log("Error updating profile:", error);
+      toast.error("Failed to update profile");
     }
   }
 
@@ -105,18 +139,20 @@ const UserProfile = () => {
       {/* Profile Card */}
       <section className="mx-auto">
         <div
-          className=" bg-white/10 backdrop-blur-lg rounded-2xl p-6 shadow-lg relative overflow-hidden"
+          className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 shadow-lg relative overflow-hidden"
           style={{
             backgroundColor: currentTheme?.cardBackground,
             border: `1px solid ${currentTheme?.line}`,
           }}
         >
-          {/* Logout Button */}
+          {/* Edit/Save Button */}
           <button
             className="absolute right-6 top-6 p-2 rounded-full hover:bg-white/10 transition-all"
             style={{ color: currentTheme?.textPrimary }}
+            onClick={() => setIsEditing(!isEditing)}
+            title={isEditing ? "Save Changes" : "Edit Profile"}
           >
-            <IoMdLogOut className="h-6 w-6" />
+            {isEditing ? <FiX className="h-6 w-6 cursor-pointer" /> : <FiEdit className="h-6 w-6 cursor-pointer" />}
           </button>
 
           {/* Profile Content */}
@@ -126,28 +162,20 @@ const UserProfile = () => {
               <div className="relative group">
                 <img
                   src={authUser?.profilePicture?.url || defaultAvatar}
-                  className="cursor-pointer w-32 h-32 object-cover rounded-full border-4"
+                  className="w-32 h-32 object-cover rounded-full border-4"
                   style={{ borderColor: currentTheme?.accent }}
                   alt="Profile"
                 />
-                <div className="cursor-pointer absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                {isEditing && <div className="cursor-pointer absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <form id="form" encType="multipart/form-data">
-                    <span onClick={handleProfileUpload}  className="text-white text-sm">Change Photo</span>
+                    <span onClick={handleProfileUpload} className="text-white text-sm">Change Photo</span>
                     <input onChange={updateImageOnServer} type="file" id="file" hidden ref={fileUploadRef}/>
                   </form>
-                </div>
+                </div> }
               </div>
 
-              {/* Edit/Delete Icons */}
-              <div className="flex gap-4">
-                <button
-                  className="p-2 rounded-full hover:bg-white/10 transition-colors"
-                  style={{ color: currentTheme?.textPrimary }}
-                  title="Edit Profile"
-                  onClick={()=>navigate("/user/userProfileEdit")}
-                >
-                  <FiEdit className="h-5 w-5" />
-                </button>
+              {/* Delete Icon */}
+              {isEditing && (
                 <button
                   onClick={() => setIsModalOpen(true)}
                   className="p-2 rounded-full hover:bg-white/10 transition-colors"
@@ -156,36 +184,124 @@ const UserProfile = () => {
                 >
                   <FiTrash2 className="h-5 w-5 text-red-500" />
                 </button>
+              )}
 
-                <ConfirmDialog
-                  openModal={isModalOpen}
-                  closeModal={() => setIsModalOpen(false)}
-                  onConfirm={handleDeleteProfileImage}
-                  title="Delete Profile"
-                >
-                  <p>Are you sure you want to delete your profile?</p>
-                </ConfirmDialog>
-              </div>
+              <ConfirmDialog
+                openModal={isModalOpen}
+                closeModal={() => setIsModalOpen(false)}
+                onConfirm={handleDeleteProfileImage}
+                title="Delete Profile"
+              >
+                <p>Are you sure you want to delete your profile picture?</p>
+              </ConfirmDialog>
             </div>
 
             {/* User Info */}
-            <div className="text-center space-y-1">
-              <h2
-                className="text-2xl font-semibold"
-                style={{ color: currentTheme?.textPrimary }}
-              >
-                {authUser?.name}
-              </h2>
-              <p
-                className="text-sm max-w-md italic"
-                style={{ color: currentTheme?.textSecondary }}
-              >
-                {authUser?.bio || "No bio yet"}
-              </p>
+            <div className="w-full space-y-4">
+              <div className="space-y-1">
+                <label 
+                  className="text-sm"
+                  style={{ color: currentTheme?.textSecondary }}
+                >
+                  Name
+                </label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="name"
+                    value={userData.name}
+                    onChange={handleInputChange}
+                    className="w-full p-2 rounded bg-white/5 border"
+                    style={{
+                      color: currentTheme?.textPrimary,
+                      borderColor: currentTheme?.line
+                    }}
+                  />
+                ) : (
+                  <h2
+                    className="text-2xl font-semibold"
+                    style={{ color: currentTheme?.textPrimary }}
+                  >
+                    {userData.name}
+                  </h2>
+                )}
+              </div>
+
+              <div className="space-y-1">
+                <label 
+                  className="text-sm"
+                  style={{ color: currentTheme?.textSecondary }}
+                >
+                  Email
+                </label>
+                {isEditing ? (
+                  <input
+                    type="email"
+                    name="email"
+                    value={userData.email}
+                    onChange={handleInputChange}
+                    className="w-full p-2 rounded bg-white/5 border"
+                    style={{
+                      color: currentTheme?.textPrimary,
+                      borderColor: currentTheme?.line
+                    }}
+                  />
+                ) : (
+                  <p style={{ color: currentTheme?.textPrimary }}>
+                    {userData.email}
+                  </p>
+                )}
+              </div>
+
+              <div className="space-y-1">
+                <label 
+                  className="text-sm"
+                  style={{ color: currentTheme?.textSecondary }}
+                >
+                  Bio
+                </label>
+                {isEditing ? (
+                  <textarea
+                    name="bio"
+                    value={userData.bio}
+                    onChange={handleInputChange}
+                    className="w-full p-2 rounded bg-white/5 border"
+                    style={{
+                      color: currentTheme?.textPrimary,
+                      borderColor: currentTheme?.line
+                    }}
+                    rows={3}
+                  />
+                ) : (
+                  <p 
+                    className="italic"
+                    style={{ color: currentTheme?.textPrimary }}
+                  >
+                    {userData.bio || "No bio yet"}
+                  </p>
+                )}
+              </div>
+
+              {/* Save Button (shown only in edit mode at bottom) */}
+              {isEditing && (
+                <div className="flex justify-center pt-4">
+                  <button
+                    onClick={handleSave}
+                    className="px-6 py-2 rounded-lg font-medium flex items-center gap-2"
+                    style={{
+                      backgroundColor: currentTheme?.accent,
+                      color: "white"
+                    }}
+                  >
+                    <FiSave /> Save Changes
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </section>
+
       {/* Navigation Tabs */}
       <nav className="max-w-6xl mx-auto mt-8">
         <div
@@ -235,7 +351,6 @@ const UserProfile = () => {
         </div>
       </nav>
 
-
       {/* Content Section */}
       <section className="max-w-6xl mx-auto mt-6">
         <div
@@ -248,8 +363,8 @@ const UserProfile = () => {
           <Outlet />
         </div>
       </section>
-      
     </div>
   );
 };
+
 export default UserProfile;
