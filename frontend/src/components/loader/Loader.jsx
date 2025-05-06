@@ -1,11 +1,11 @@
 import React from "react";
 
-const Loader = ({ show }) => {
-  if (!show) return null;
+const Loader = ({ value }) => {
+  if (!value) return ;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+    <div className="h-full w-full flex items-center justify-center bg-black bg-opacity-30 z-1">
+      <div className="animate-spin rounded-full h-13 w-13 border-t-3 border-b-3 border-purple-500"></div>
     </div>
   );
 };
