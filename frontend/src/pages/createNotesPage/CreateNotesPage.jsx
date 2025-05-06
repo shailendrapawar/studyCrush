@@ -1,3 +1,4 @@
+import "./createNotes.css"
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
@@ -74,11 +75,12 @@ const CreateNotesPage = () => {
                     )}
 
                     {loading ? (
-                        <div className="flex justify-center items-center h-full">
+                        <div className="flex flex-col justify-center items-center h-full">
                             <Loader value={true} />
+                           <span className="animate-pulse duration-500  mt-2"> Generating..</span>
                         </div>
                     ) : (
-                        <pre className="whitespace-pre-wrap text-sm font-sans relative">
+                        <pre className=" anime whitespace-pre-wrap text-sm font-sans relative">
                             {generatedText || ""}
                         </pre>
                     )}
@@ -101,7 +103,7 @@ const CreateNotesPage = () => {
 
                     {!loading && (
                         <button
-                            className="px-6 py-3 rounded-lg text-sm font-medium transition-colors"
+                            className=" px-6 py-3 rounded-lg text-sm font-medium transition-colors"
                             style={{
                                 backgroundColor: currentTheme?.accent,
                                 color: currentTheme?.buttonText || "white"

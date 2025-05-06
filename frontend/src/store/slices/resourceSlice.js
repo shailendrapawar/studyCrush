@@ -18,10 +18,9 @@ const slice = createSlice({
 
         addHomeResources: (state, action) => {
             const { list, hasMore } = action.payload;
-            console.log(action.payload)
+            // console.log(action.payload)
             state.homeResources.list=[...state.homeResources.list,...list]
             state.homeResources.hasMore=hasMore
-
         },
 
         addUserResources: (state, action) => {
