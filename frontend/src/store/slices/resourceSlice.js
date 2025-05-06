@@ -17,18 +17,19 @@ const slice = createSlice({
         },
 
         addHomeResources: (state, action) => {
-            state.homeResources.list = [...state.homeResources, action.payload];
+            const { list, hasMore } = action.payload;
+            console.log(action.payload)
+            state.homeResources.list=[...state.homeResources.list,...list]
+            state.homeResources.hasMore=hasMore
+
         },
 
-        // setUserResources: (state, action) => {
-        //     state.userResources = action.payload;
-        // },
         addUserResources: (state, action) => {
             state.userResources = [...state.userResources, action.payload];
         },
 
-        // reducers for handling post update=
 
+        // reducers for handling post update===============
         likePost: (state, action) => {
             const { postId, userId } = action.payload
             const post = state.homeResources.list.find((item) => item._id === postId)

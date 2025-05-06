@@ -140,7 +140,7 @@ class ResourceController {
 
     static getAllResources = async (req, res) => {
         try {
-            const limit = 10;
+            const limit = 3;
             const { page = 1 } = req.query
 
             const skip = (limit * page) - limit;
