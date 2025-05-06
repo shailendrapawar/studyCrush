@@ -337,6 +337,7 @@ class ResourceController {
 
             if (hasLike) {
                 resource.likes.pull(userId)
+                // emitting event for reducing likes of the post
                 io.to(resourceId).emit("singleResource-unlike",userId)
 
             } else {
@@ -350,6 +351,7 @@ class ResourceController {
                     resourceId:resource._id
                  })
 
+                //  4:- emmiting event for increasing lieks of post
                  io.to(resourceId).emit("singleResource-like",userId)
 
             }

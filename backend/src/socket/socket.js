@@ -26,12 +26,12 @@ io.on("connection",(socket)=>{
     }
 
     socket.on("join-singleResource-room",(resourceId)=>{
-        console.log("singleResource joined",resourceId)
+        // console.log("singleResource joined",resourceId)
         socket.join(resourceId)
     })
 
     socket.on("leave-singleResource-room",(resourceId)=>{
-        console.log("singleResource room left",resourceId)
+        // console.log("singleResource room left",resourceId)
         socket.leave(resourceId)
     })
 
