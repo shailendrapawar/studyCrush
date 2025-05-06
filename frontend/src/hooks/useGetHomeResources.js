@@ -24,7 +24,7 @@ const useGetHomeResources = (page) => {
             }
         }
         fetchResources();
-    },[])
+    },[page])
 
 }
 export default useGetHomeResources

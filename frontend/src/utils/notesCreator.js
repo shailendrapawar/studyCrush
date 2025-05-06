@@ -10,7 +10,7 @@ const GenerateNote = async ({ prompt, setLoading, setGeneratedText }) => {
             {
                 model: 'command',
                 prompt: `Generate bullet-point notes for the following:\n\n${prompt}`,
-                max_tokens: 400,
+                max_tokens: 500,
                 temperature: 0.5
             },
             {
