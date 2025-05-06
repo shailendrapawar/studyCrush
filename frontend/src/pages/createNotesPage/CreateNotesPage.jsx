@@ -13,6 +13,8 @@ const CreateNotesPage = () => {
     const [generatedText, setGeneratedText] = useState("");
     const [loading, setLoading] = useState(false);
 
+    const[isCopied,setIsCopied]=useState(false);
+
     useEffect(() => {
         // GenerateNote("code for uploading file using multer")
     }, []);
@@ -25,11 +27,29 @@ const CreateNotesPage = () => {
             return;
         }
 
+        setIsCopied(false)
         GenerateNote({ prompt, setLoading, setGeneratedText });
     };
 
+
+    const handleCopy = async () => {
+
+        if (generatedText.length < 10||isCopied) {
+            return
+        }
+        try {
+            setIsCopied(true)
+            await navigator.clipboard.writeText(generatedText)
+            toast.success(" copied...")
+
+        } catch (err) {
+            console.log(err)
+            setIsCopied(false)
+        }
+    }
+
     return (
-        <div 
+        <div
             className="w-full min-h-[90vh] h-auto flex flex-col items-center p-4 gap-5"
             style={{ backgroundColor: currentTheme?.background }}
         >
@@ -41,14 +61,15 @@ const CreateNotesPage = () => {
             <section className="w-full max-w-4xl flex flex-col items-center gap-4">
                 {/* Output Section */}
                 <section className="w-full min-h-64 px-3 pt-10 pb-2 rounded-lg overflow-y-auto relative"
-                style={{backgroundColor:currentTheme?.cardBackground}}
+                    style={{ backgroundColor: currentTheme?.cardBackground }}
                 >
-                     {generatedText.length>10&&(<span className=" absolute top-2.5 right-2.5 flex text-xs px-2 py-1 rounded-full"
-                     style={{backgroundColor:currentTheme.accent+`20`,color:currentTheme.accent}}
-                     >
-                        <IoCopy/>Copy
-                     </span>
-                     )}
+                    {generatedText.length > 10 && (<span className=" absolute top-2.5 right-2.5 flex text-xs px-2 py-1 rounded-full cursor-pointer"
+                        style={{ backgroundColor: currentTheme.accent + `20`, color: currentTheme.accent }}
+                        onClick={()=>handleCopy()}
+                    >
+                        <IoCopy />{isCopied?"Copied":"Copy"}
+                    </span>
+                    )}
 
                     {loading ? (
                         <div className="flex justify-center items-center h-full">
@@ -68,7 +89,7 @@ const CreateNotesPage = () => {
                         onChange={(e) => setPrompt(e.target.value)}
                         type="text"
                         className="flex-1 p-3 rounded-lg outline-none transition-all text-xs"
-                        style={{ 
+                        style={{
                             backgroundColor: currentTheme?.cardBackground,
                             color: currentTheme?.text
                         }}
@@ -79,7 +100,7 @@ const CreateNotesPage = () => {
                     {!loading && (
                         <button
                             className="px-6 py-3 rounded-lg text-sm font-medium transition-colors"
-                            style={{ 
+                            style={{
                                 backgroundColor: currentTheme?.accent,
                                 color: currentTheme?.buttonText || "white"
                             }}
