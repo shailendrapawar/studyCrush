@@ -19,9 +19,9 @@ const useSingleResourceEvents = (resourceId) => {
 
         // 1:- for getting real time comments=======
         socket?.on("singleResource-newComment",(newComment)=>{
-            console.log(newComment)
+            // console.log(newComment)
             if(newComment&&(newComment?.user?._id!=authUser?._id)){
-                console.log("daldo commment")
+                // console.log("daldo commment")
                 dispatch(addCommentCurrentResource({resourceId,newComment}))
             }
         })

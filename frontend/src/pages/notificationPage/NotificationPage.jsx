@@ -54,9 +54,9 @@ const dispatch=useDispatch()
 
       <h3 className="text-3xl mt-2 mb-2"><b style={{ color: currentTheme.accent }} >N</b>otifications</h3>
 
-      {userNotifications?.map((notify, i) => {
+      {userNotifications.length>0? userNotifications?.map((notify, i) => {
         return <NotificationCard notify={notify} key={i} handleClick={handleClick} />
-      })}
+      }) : ( <h3 style={{color:currentTheme.textSecondary}}> Your notifications will be shown here </h3>)}
 
     </div>
   )

@@ -4,6 +4,8 @@ import { io } from "socket.io-client"
 // import {} from "react-redux"
 import { addUserNotification } from "../store/slices/userSlice";
 import { setSocket } from "../store/slices/socketSlice";
+
+import noitifySound from "../assets/audio/ringtoneSound.mp3"
 function useSetSocketConnection() {
 
     const { authUser } = useSelector(s => s.user);
@@ -32,6 +34,8 @@ function useSetSocketConnection() {
         socket.on("notification",(newNotification)=>{
             // console.log(newNotification)
             if(newNotification){
+                const audio=new Audio(noitifySound);
+                audio.play()
                 dispatch(addUserNotification(newNotification))
             }
         })
