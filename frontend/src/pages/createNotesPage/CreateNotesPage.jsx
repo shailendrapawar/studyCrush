@@ -1,55 +1,97 @@
-import { useEffect, useState } from "react"
-import GenerateNote from "../../utils/notesCreator"
-import Loader from "../../components/loader/Loader";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import GenerateNote from "../../utils/notesCreator";
+import Loader from "../../components/loader/Loader";
+
+import { IoCopy } from "react-icons/io5";
+
+
 const CreateNotesPage = () => {
-
-    const { currentTheme } = useSelector(s => s.theme);
-
-
+    const { currentTheme } = useSelector((state) => state.theme);
     const [prompt, setPrompt] = useState("");
     const [generatedText, setGeneratedText] = useState("");
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         // GenerateNote("code for uploading file using multer")
-    }, [])
+    }, []);
 
     const handleGenerate = (e) => {
         e.preventDefault();
 
-        if (prompt === "" || prompt.length < 5) {
-            toast.error("enter a valid prompt")
-            return
+        if (!prompt || prompt.length < 5) {
+            toast.error("Please enter a valid prompt (min 5 characters)");
+            return;
         }
 
-        GenerateNote({ prompt, setLoading, setGeneratedText })
-    }
+        GenerateNote({ prompt, setLoading, setGeneratedText });
+    };
 
     return (
-        <div className="w-full min-h-[90vh] h-auto flex flex-col items-center p-1 gap-5 absolute">
+        <div 
+            className="w-full min-h-[90vh] h-auto flex flex-col items-center p-4 gap-5"
+            style={{ backgroundColor: currentTheme?.background }}
+        >
+            <h3 className="text-3xl text-center mt-5 mb-5">
+                <span style={{ color: currentTheme?.primary }}>G</span>enerate{" "}
+                <span style={{ color: currentTheme?.primary }}>N</span>otes
+            </h3>
 
-            <h3 className="text-3xl text-center mt-5 mb-5"><b style={{ color: currentTheme?.primary }}>G</b>enerate <b style={{ color: currentTheme?.primary }}> N</b>otes</h3>
+            <section className="w-full max-w-4xl flex flex-col items-center gap-4">
+                {/* Output Section */}
+                <section className="w-full min-h-64 px-3 pt-10 pb-2 rounded-lg overflow-y-auto relative"
+                style={{backgroundColor:currentTheme?.cardBackground}}
+                >
+                     {generatedText.length>10&&(<span className=" absolute top-2.5 right-2.5 flex text-xs px-2 py-1 rounded-full"
+                     style={{backgroundColor:currentTheme.accent+`20`,color:currentTheme.accent}}
+                     >
+                        <IoCopy/>Copy
+                     </span>
+                     )}
 
-            <section className="h-auto w-full max-h-100 max-w-150 min-w-[320px]  flex  flex-col justify-center items-center ">
-                <section className="h-auto w-full max-h-100 max-w-150 min-w-[320px]  overflow-y-auto">
-                    {loading && (<Loader value={loading || true} />)}
-                    <p className=" text-xs break-keep whitespace-break-spaces p-2">{generatedText}</p>
+                    {loading ? (
+                        <div className="flex justify-center items-center h-full">
+                            <Loader value={true} />
+                        </div>
+                    ) : (
+                        <pre className="whitespace-pre-wrap text-sm font-sans relative">
+                            {generatedText || ""}
+                        </pre>
+                    )}
                 </section>
 
-                <div className="min-h-10 w-full max-w-100 flex gap-1 rounded-md overflow-hidde mt-5">
-                    <input value={prompt} onChange={(e) => setPrompt(e.target.value)} type="text"
-                     className="min-h-full w-full text-xs outline-none p-1 text-center" style={{ backgroundColor: currentTheme.cardBackground }}
-                        placeholder=" enter prompt to generate notes...🤗"
-                    ></input>
+                {/* Input Section */}
+                <div className="w-full flex gap-2">
+                    <input
+                        value={prompt}
+                        onChange={(e) => setPrompt(e.target.value)}
+                        type="text"
+                        className="flex-1 p-3 rounded-lg outline-none transition-all text-xs"
+                        style={{ 
+                            backgroundColor: currentTheme?.cardBackground,
+                            color: currentTheme?.text
+                        }}
+                        placeholder="Enter your prompt to generate notes... 🤗"
+                        disabled={loading}
+                    />
 
-                    {!loading&&(<button className="w-[20%] min-h-full text-xs" style={{ backgroundColor: currentTheme.accent }} onClick={(e) => handleGenerate(e)}>Generate</button>)}
+                    {!loading && (
+                        <button
+                            className="px-6 py-3 rounded-lg text-sm font-medium transition-colors"
+                            style={{ 
+                                backgroundColor: currentTheme?.accent,
+                                color: currentTheme?.buttonText || "white"
+                            }}
+                            onClick={handleGenerate}
+                        >
+                            Generate
+                        </button>
+                    )}
                 </div>
-
             </section>
-
         </div>
-    )
-}
-export default CreateNotesPage
+    );
+};
+
+export default CreateNotesPage;
