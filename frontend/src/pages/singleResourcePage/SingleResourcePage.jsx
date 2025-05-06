@@ -237,7 +237,7 @@ const SingleResourcePage = () => {
             border: `1px solid ${currentTheme?.line}`
           }}>
           <div className="flex items-center gap-4">
-            <button className="flex items-center gap-1" onClick={(e)=>toggleLike(e)}>
+            <button className="flex items-center gap-1 heart" onClick={(e)=>toggleLike(e)}>
               {isLiked ? (
                 <GoHeartFill className="w-6 h-6 text-pink-600" />
               ) : (

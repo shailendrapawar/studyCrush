@@ -60,7 +60,7 @@
     display: inline-block;
     font-size: 40px;
      /* Blue color */
-    animation: swing 1s infinite ease-in-out, fadeOut 1s infinite ease-in-out;
+    animation: swing 0.8s infinite ease-in-out, fadeOut 1s infinite ease-in-out;
     transform-origin: top center;
   }
   

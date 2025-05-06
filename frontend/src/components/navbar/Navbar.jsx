@@ -58,7 +58,7 @@ const Navbar = () => {
 
       <span className=" absolute right-20" onClick={() => { navigate("/user/notification"); setToggle(false) }}>
         <IoIosNotifications className={unRead.length>0?"w-5 h-5 bell":"w-5 h-5"} />
-        <i className="absolute text-xs -top-1 -right-2  rounded-md" style={{backgroundColor:currentTheme.background}}>{unRead?.length>9?"9+":unRead?.length}</i>
+        <i className="absolute text-xs -top-1 -right-1 w-auto  rounded-md" style={{backgroundColor:currentTheme.background}}>{unRead?.length>9?"9+":unRead?.length}</i>
       </span>
 
 

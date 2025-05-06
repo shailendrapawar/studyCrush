@@ -21,6 +21,7 @@ import UploadedResourcesPage from './pages/userUploads/UploadedResourcesPage.jsx
 import SavedResourcesPage from './pages/savedResourcePage/SavedResourcesPage.jsx'
 import UserProfileEditPage from './pages/userProfile/UserProfileEditPage.jsx'
 import PublicProfilePage from './pages/publicProfilePage/PublicProfilePage.jsx'
+import CreateNotesPage from './pages/createNotesPage/CreateNotesPage.jsx'
 
 
 const myRouter = createBrowserRouter(
@@ -45,14 +46,18 @@ const myRouter = createBrowserRouter(
           <Route path='/user/userProfile/' element={<></>} />
           <Route path='/user/userProfile/savedResources' element={<SavedResourcesPage/>} />
           <Route path='/user/userProfile/uploadedResources' element={<UploadedResourcesPage />} />
+          {/* <Route path='/user/createNotes' element={<CreateNotesPage/>}></Route> */}
         </Route>
+
+
+        <Route path='/user/createNotes' element={<CreateNotesPage/>}/>
 
         <Route path='/user/userProfileEdit' element={<UserProfileEditPage/>}></Route>
 
         <Route path='/user/publicProfile/:userId' element={<PublicProfilePage/>}></Route>
 
-
         <Route path="/user/resource/:resourceId" element={<SingleResourcePage />}></Route>
+        
       </Route>
 
 
