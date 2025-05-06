@@ -1,6 +1,5 @@
 import axios from "axios"
 
-
 const GenerateNote = async ({ prompt, setLoading, setGeneratedText }) => {
 
     try {

@@ -2,14 +2,15 @@ import { useSelector } from "react-redux"
 import defaultUserAvatar from "../../assets/defaultAvatar.avif"
 import { getTimeAgo } from "../../utils/timeAgo"
 import React from "react"
-
+import { useNavigate } from "react-router"
 function NotificationCard({notify}) {
   // console.log(notify)
+  const navigate=useNavigate()
   const {currentTheme}=useSelector(s=>s.theme)
   return (
     <div className="w-full max-w-150 rounded-xl shadow-md overflow-hidden hover:shadow-black hover:shadow-md active:shadow-none transition-shadow duration-200 cursor-pointer"
     style={{backgroundColor:currentTheme.cardBackground}}
-    onClick={()=>handleClick(notify.resourceId)}
+    onClick={()=>navigate(`/user/resource/${notify?.resourceId}`)}
 
     >
       <div className="flex p-3">
