@@ -6,6 +6,7 @@ import "./navbar.css"
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+import { LuSquarePen } from "react-icons/lu";
 // import { FaCloudUploadAlt } from "react-icons/fa";
 
 import { RxCross1 } from "react-icons/rx";
@@ -56,11 +57,17 @@ const Navbar = () => {
       </nav>
 
 
-      <span className=" absolute right-20" onClick={() => { navigate("/user/notification"); setToggle(false) }}>
-        <IoIosNotifications className={unRead.length>0?"w-5 h-5 bell":"w-5 h-5"} />
-        <i className="absolute text-xs -top-1 -right-1 w-auto  rounded-md" style={{backgroundColor:currentTheme.background}}>{unRead?.length>9?"9+":unRead?.length}</i>
+      <span className=" absolute right-20 " onClick={() => { navigate("/user/notification"); setToggle(false) }}>
+        <IoIosNotifications className={unRead.length>0?"w-5 h-5 bell cursor-pointer  hover:scale-110 ":"w-5 h-5 cursor-pointer   hover:scale-110"} />
+        <i className="absolute text-xs -top-1 -right-1 w-auto  rounded-md " style={{backgroundColor:currentTheme.background}}>{unRead?.length>9?"9+":unRead?.length}</i>
       </span>
 
+      <LuSquarePen
+      onClick={()=>{
+        setToggle(false)
+        navigate("/user/generateNotes")
+      }}
+      className="absolute right-28 hover:scale-110 cursor-pointer "/>
 
       {toggle ? <RxCross1 className="nav-toggle mobileNav-icon h-8 w-8 active:scale-80 active:opacity-0 ease-in-out" onClick={() => setToggle(!toggle)} /> : <CgMenuCheese className="nav-toggle mobileNav-icon h-8 w-8 active:scale-80 active:opacity-0 ease-in-out" onClick={() => setToggle(!toggle)} />}
       <FaUserCircle className=" userProfile-icon h-8 w-8" onClick={() => navigate("/user/userProfile")} />

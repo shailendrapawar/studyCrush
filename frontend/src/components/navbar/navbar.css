@@ -19,7 +19,7 @@
 }
 
 
-@media  screen and (min-width:600px) {
+@media  screen and (min-width:680px) {
     .web-nav{
         display: flex;
     }
