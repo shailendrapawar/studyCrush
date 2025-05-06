@@ -22,13 +22,14 @@ const CreateNotesPage = () => {
     const handleGenerate = (e) => {
         e.preventDefault();
 
-        if (!prompt || prompt.length < 5) {
-            toast.error("Please enter a valid prompt (min 5 characters)");
+        if (!prompt || prompt.length < 3) {
+            toast.error("Please enter a valid topic (min 3 characters)");
             return;
         }
 
         setIsCopied(false)
         GenerateNote({ prompt, setLoading, setGeneratedText });
+        setPrompt("")
     };
 
 
@@ -53,17 +54,18 @@ const CreateNotesPage = () => {
             className="w-full min-h-[90vh] h-auto flex flex-col items-center p-4 gap-5"
             style={{ backgroundColor: currentTheme?.background }}
         >
-            <h3 className="text-3xl text-center mt-5 mb-5">
+            <h3 className="text-3xl text-center mt-5 mb-2">
                 <span style={{ color: currentTheme?.primary }}>G</span>enerate{" "}
                 <span style={{ color: currentTheme?.primary }}>N</span>otes
             </h3>
 
             <section className="w-full max-w-4xl flex flex-col items-center gap-4">
+                
                 {/* Output Section */}
-                <section className="w-full min-h-64 px-3 pt-10 pb-2 rounded-lg overflow-y-auto relative"
-                    style={{ backgroundColor: currentTheme?.cardBackground }}
+                <section className="w-full px-3 pt-10 pb-2 rounded-lg overflow-y-auto relative"
+                    // style={{ backgroundColor: currentTheme?.cardBackground }}
                 >
-                    {generatedText.length > 10 && (<span className=" absolute top-2.5 right-2.5 flex text-xs px-2 py-1 rounded-full cursor-pointer"
+                    {generatedText.length > 10 && (<span className=" absolute top-2.5 right-2.5 shadow-black shadow-md transition-normal active:shadow-none flex text-xs px-2 py-1 rounded-full cursor-pointer"
                         style={{ backgroundColor: currentTheme.accent + `20`, color: currentTheme.accent }}
                         onClick={()=>handleCopy()}
                     >
@@ -93,7 +95,7 @@ const CreateNotesPage = () => {
                             backgroundColor: currentTheme?.cardBackground,
                             color: currentTheme?.text
                         }}
-                        placeholder="Enter your prompt to generate notes... 🤗"
+                        placeholder="Enter your topic to generate short notes... 🤗"
                         disabled={loading}
                     />
 
