@@ -37,7 +37,9 @@ const Navbar = () => {
     <nav className=" h-16 flex justify-between pl-4 pr-4 items-center relative z-10 " style={{ backgroundColor: currentTheme.background, color: currentTheme.textPrimary, borderBottom: `1px solid ${currentTheme.line}` }}
     >
 
-      <span className="text-md font lg:text-2xl"><b className="text-blue-500 text-xl lg:text-3xl">S</b>tudy  <b className="text-blue-500 text-xl lg:text-3xl">C</b>rush</span>
+      <span className="text-md font lg:text-2xl cursor-pointer"
+        onClick={()=>navigate("/user/home")}
+      ><b className="text-blue-500 text-xl lg:text-3xl">S</b>tudy  <b className="text-blue-500 text-xl lg:text-3xl">C</b>rush</span>
 
       <nav className=" web-nav w-1/2 h-8 max-w-100 flex justify-evenly items-center gap-1.5" style={{}} >
         <NavLink to={"/user/home"} className={({ isActive }) => isActive ? "w-1/3 text-center text-blue-600" : "w-1/3 text-center"}>HOME</NavLink>
@@ -57,12 +59,13 @@ const Navbar = () => {
       </nav>
 
 
-      <span className=" absolute right-20 " onClick={() => { navigate("/user/notification"); setToggle(false) }}>
+      <span title="notifications" className=" absolute right-20 " onClick={() => { navigate("/user/notification"); setToggle(false) }}>
         <IoIosNotifications className={unRead.length>0?"w-5 h-5 bell cursor-pointer  hover:scale-110 ":"w-5 h-5 cursor-pointer   hover:scale-110"} />
         <i className="absolute text-xs -top-1 -right-1 w-auto  rounded-md " style={{backgroundColor:currentTheme.background}}>{unRead?.length>9?"9+":unRead?.length}</i>
       </span>
 
       <LuSquarePen
+      title="generate notes"
       onClick={()=>{
         setToggle(false)
         navigate("/user/generateNotes")
@@ -70,7 +73,7 @@ const Navbar = () => {
       className="absolute right-28 hover:scale-110 cursor-pointer "/>
 
       {toggle ? <RxCross1 className="nav-toggle mobileNav-icon h-8 w-8 active:scale-80 active:opacity-0 ease-in-out" onClick={() => setToggle(!toggle)} /> : <CgMenuCheese className="nav-toggle mobileNav-icon h-8 w-8 active:scale-80 active:opacity-0 ease-in-out" onClick={() => setToggle(!toggle)} />}
-      <FaUserCircle className=" userProfile-icon h-8 w-8" onClick={() => navigate("/user/userProfile")} />
+      <FaUserCircle title="user profile" className=" userProfile-icon h-8 w-8 cursor-pointer" onClick={() => navigate("/user/userProfile")} />
 
     </nav>
   )
