@@ -218,6 +218,7 @@ const HomeResourceCard = ({ data }) => {
                 onClick={(e) => e.stopPropagation()}
             >
                 <IoArrowBackCircle className="h-8 w-8 self-start" onClick={() => setCommentToggle(false)} />
+                    
 
                 <main className=" comments-list max-h-50 h-50  w-full max-w-120  gap-2 flex flex-col overflow-y-scroll"
 

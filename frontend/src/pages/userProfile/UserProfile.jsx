@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import defaultAvatar from "../../assets/defaultAvatar.avif";
 import { IoMdLogOut } from "react-icons/io";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router";
 import { useEffect, useRef, useState } from "react";
@@ -125,7 +124,7 @@ const UserProfile = () => {
             <div className="flex flex-col items-center gap-3">
               <div className="relative group">
                 <img
-                  src={authUser?.profilePicture?.url || defaultAvatar}
+                  src={authUser?.profilePicture?.url}
                   className="cursor-pointer w-32 h-32 object-cover rounded-full border-4"
                   style={{ borderColor: currentTheme?.accent }}
                   alt="Profile"
@@ -193,6 +192,7 @@ const UserProfile = () => {
           style={{ borderColor: currentTheme?.line }}
         >
           <NavLink
+          
             to="/user/userProfile/savedResources"
             className={({ isActive }) =>
               `text-sm px-4 py-3 md:text-lg font-medium rounded-t-lg transition-colors ${

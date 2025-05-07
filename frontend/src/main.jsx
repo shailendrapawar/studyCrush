@@ -22,6 +22,7 @@ import SavedResourcesPage from './pages/savedResourcePage/SavedResourcesPage.jsx
 import UserProfileEditPage from './pages/userProfile/UserProfileEditPage.jsx'
 import PublicProfilePage from './pages/publicProfilePage/PublicProfilePage.jsx'
 import CreateNotesPage from './pages/createNotesPage/CreateNotesPage.jsx'
+import ErrorPage from './pages/ErrorPage.jsx'
 
 
 const myRouter = createBrowserRouter(
@@ -59,6 +60,8 @@ const myRouter = createBrowserRouter(
         <Route path="/user/resource/:resourceId" element={<SingleResourcePage />}></Route>
         
       </Route>
+
+      <Route path='*' element={<ErrorPage/>}></Route>
 
 
 
