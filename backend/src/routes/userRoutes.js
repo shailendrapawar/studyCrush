@@ -54,7 +54,7 @@ userRouter.delete(
   UserController.deleteUserProfileImage
 );
 
-userRouter.post(
+userRouter.put(
   "/edit-profile",
   authMiddleware,
   UserController.editUserProfile

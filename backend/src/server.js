@@ -26,13 +26,10 @@ app.use("/auth", userRouter);
 app.use("/resource", resourceRouter);
 
 
-app.get("/", (req, res) => {
-    res.send("server listening")
-})
-
-
-
+// PORT
 const PORT = process.env.PORT || 5000;
+
+// call the connect DB
 connectDb().then((res) => {
         if(res){
             myHttpServer.listen(PORT, () => {

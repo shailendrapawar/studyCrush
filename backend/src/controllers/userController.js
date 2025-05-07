@@ -334,6 +334,42 @@ class UserController {
         }
 
     }
+
+
+    static editUserProfile = async (req, res) => {
+
+
+        try {
+
+            // get the id of the user
+            const id = req.id;
+
+            // check if user exist or not
+            const isUserExist = await UserModel.findOne({_id: id});
+            // throw error if user not exist
+            if(!isUserExist) throw new Error("User does not exist");
+
+            // get the updated user
+            const updatedUser = await UserModel.findByIdAndUpdate(id, req.body)
+            // throw error if unable to update user
+            if(!updatedUser) {
+                throw new Error("Unable to update user!");
+            }
+
+            res.status(200).json({
+                msg: "User updated successfully",
+                success: true,
+                data: updatedUser,
+            })
+            
+        } catch (error) {
+            res.status(400).json({
+                msg: error.message,
+                success: false,
+                data: {}
+            })
+        }
+    }
   
   
    static getUserUploads = async (req, res) => {

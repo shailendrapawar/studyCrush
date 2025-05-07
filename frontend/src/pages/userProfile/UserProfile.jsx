@@ -108,17 +108,18 @@ const UserProfile = () => {
   }
 
   const handleSave = async () => {
+
     try {
       const response = await axios.put(
-        import.meta.env.VITE_API_URL + `/auth/update-profile`,
+        import.meta.env.VITE_API_URL + `/auth/edit-profile`,
         userData,
         { withCredentials: true }
       );
-      toast.success(response.data.msg);
-      dispatch(setAuthUser(response.data.user));
+      toast.success(response?.data?.msg);
+      dispatch(setAuthUser(response?.data?.data));
       setIsEditing(false);
     } catch (error) {
-      console.log("Error updating profile:", error);
+      console.log("Error updating profile:", error);  
       toast.error("Failed to update profile");
     }
   }
@@ -205,26 +206,12 @@ const UserProfile = () => {
                 >
                   Name
                 </label>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    name="name"
-                    value={userData.name}
-                    onChange={handleInputChange}
-                    className="w-full p-2 rounded bg-white/5 border"
-                    style={{
-                      color: currentTheme?.textPrimary,
-                      borderColor: currentTheme?.line
-                    }}
-                  />
-                ) : (
                   <h2
                     className="text-2xl font-semibold"
                     style={{ color: currentTheme?.textPrimary }}
                   >
                     {userData.name}
                   </h2>
-                )}
               </div>
 
               <div className="space-y-1">
@@ -234,23 +221,9 @@ const UserProfile = () => {
                 >
                   Email
                 </label>
-                {isEditing ? (
-                  <input
-                    type="email"
-                    name="email"
-                    value={userData.email}
-                    onChange={handleInputChange}
-                    className="w-full p-2 rounded bg-white/5 border"
-                    style={{
-                      color: currentTheme?.textPrimary,
-                      borderColor: currentTheme?.line
-                    }}
-                  />
-                ) : (
                   <p style={{ color: currentTheme?.textPrimary }}>
                     {userData.email}
                   </p>
-                )}
               </div>
 
               <div className="space-y-1">
