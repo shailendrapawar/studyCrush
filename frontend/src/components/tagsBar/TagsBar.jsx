@@ -35,7 +35,7 @@ const TagsBar = ({list,setList}) => {
     }, [list])
 
     return (
-        <div className="h-12 pl-2 pr-2 w-full flex items-center" style={{ backgroundColor: currentTheme?.background }}
+        <div className="h-12 pl-2 pr-2 w-full flex items-center shadow-xs shadow-black" style={{ backgroundColor: currentTheme?.background }}
             onClick={() => inputRef?.current?.focus()}
         >
             <div className="w-auto flex  gap-1.5 overflow-x-scroll" >

@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux"
-import defaultUserAvatar from "../../assets/defaultAvatar.avif"
 import { getTimeAgo } from "../../utils/timeAgo"
 import React from "react"
 import { useNavigate } from "react-router"
@@ -8,7 +7,7 @@ function NotificationCard({notify}) {
   const navigate=useNavigate()
   const {currentTheme}=useSelector(s=>s.theme)
   return (
-    <div className="w-full max-w-150 rounded-xl shadow-md overflow-hidden hover:shadow-black hover:shadow-md active:shadow-none transition-shadow duration-200 cursor-pointer"
+    <div className="w-full max-w-150 rounded-xl shadow-xs shadow-black overflow-hidden hover:shadow-black hover:shadow-md active:shadow-none transition-shadow duration-200 cursor-pointer"
     style={{backgroundColor:currentTheme.cardBackground}}
     onClick={()=>navigate(`/user/resource/${notify?.resourceId}`)}
 
@@ -17,7 +16,7 @@ function NotificationCard({notify}) {
         {/* Avatar */}
         <div className="flex-shrink-0 mr-3">
           <img
-            className="h-12 w-12 rounded-full "
+            className="h-12 w-12 rounded-full shadow-xs shadow-black "
             src={notify?.senderId?.profilePicture?.url}
             alt="User avatar"
           />
@@ -37,7 +36,7 @@ function NotificationCard({notify}) {
           </p>
           
           <div className="mt-2 flex items-center">
-            <span className="inline-flex items-center px-3 py-2 rounded-full text-xs font-medium "
+            <span className="inline-flex items-center px-3 py-2 rounded-full  shadow-xs shadow-black text-xs font-medium "
             style={{backgroundColor:currentTheme.background,color:currentTheme.accent}}
             >
               {notify?.type}

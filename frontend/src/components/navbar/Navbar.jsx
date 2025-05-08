@@ -31,7 +31,7 @@ const Navbar = () => {
   
   const { userNotifications } = useSelector((s) => s.user)
 
-console.log(currentTheme.name)
+// console.log(currentTheme.name)
 
    const handleToggleTheme=()=>{
     dispatch(toggleTheme())
@@ -50,8 +50,8 @@ console.log(currentTheme.name)
     
   }, [userNotifications])
 
-  const isDark=currentTheme.name==="dark";
 
+  const isDarkMode=currentTheme.name==="light";
   return (
     <nav className=" h-16 flex justify-between pl-4 pr-4 items-center relative z-10 " style={{ backgroundColor: currentTheme.background, color: currentTheme.textPrimary, borderBottom: `1px solid ${currentTheme.line}` }}
     >
@@ -66,7 +66,9 @@ console.log(currentTheme.name)
         <NavLink to={"/user/home"} className={({ isActive }) => isActive ? "w-1/3 text-center text-blue-600" : "w-1/3 text-center"}>HOME</NavLink>
         <NavLink to={"/user/search"} className={({ isActive }) => isActive ? "w-1/3 text-center text-blue-600" : "w-1/3 text-center"}>Search</NavLink>
         <NavLink to={"/user/upload"} className={({ isActive }) => isActive ? "w-1/3 text-center text-blue-600" : "w-1/3 text-center"}>Upload</NavLink>
+
       </nav>
+
 
 
       {/* mobile-nav============== */}
@@ -79,20 +81,31 @@ console.log(currentTheme.name)
         <NavLink to={"/user/upload"} className={({ isActive }) => isActive ? "w-20 text-center text-blue-600" : "w-20 text-center"} >UPLOAD</NavLink>
         <NavLink to={"/user/userProfile"} className="w-20 text-center">Profile</NavLink>
 
-        <span className={`absolute top-1 right-3 w-12 h-7 px-1 rounded-full flex flex-row items-center ${isDark?"justify-end ":"justify-start "}`}
-
-        style={{border:`3px solid ${currentTheme.line}`,}}
-        onClick={()=>handleToggleTheme()}
+        <span
+        onClick={handleToggleTheme}
+        className="absolute top-2 right-2 rounded-full h-6 w-6 flex items-center justify-center"
+        style={{backgroundColor:isDarkMode?"black":"white"}}
+        title={isDarkMode?"switch to light mode":"switch to dark mode"}
         >
-          <span className={`h-5 w-5 rounded-full flex justify-center items-center ${isDark?"bg-white":"bg-yellow-500"}`}>{isDark?<IoMdMoon className="text-black"/>:<MdSunny className="text-white"/>}</span>
+          {isDarkMode?<IoMdMoon className="text-white"/>:<MdSunny className="text-yellow-500"/>}
+          
         </span>
-
       </nav>
 
 
       <span title="notifications" className=" absolute right-20 " onClick={() => { navigate("/user/notification"); setToggle(false) }}>
         <IoIosNotifications className={unRead.length>0?"w-5 h-5 bell cursor-pointer hover:scale-110 ":"w-5 h-5 cursor-pointer hover:scale-110"} />
         <i className="absolute text-xs -top-1 -right-1 w-auto  rounded-md " style={{backgroundColor:currentTheme.background}}>{unRead?.length>9?"9+":unRead?.length}</i>
+      </span>
+
+
+      <span
+        onClick={handleToggleTheme}
+        className={` web-themeToggle hidden absolute shadow-md shadow-black right-35 active:shadow-sm rounded-full h-6 w-10 flex items-center px-1 ${isDarkMode?"justify-start":"justify-end"} `}
+        style={{backgroundColor:isDarkMode?"white":"black", border:`2px solid ${currentTheme.line}`}}
+        title={isDarkMode?"switch to dark mode":"switch to light mode"}
+        >
+          {isDarkMode?<MdSunny className="text-yellow-500"/>:<IoMdMoon className="text-white themeToggle"/>}    
       </span>
 
       <LuSquarePen

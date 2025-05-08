@@ -51,7 +51,7 @@ const PublicProfilePage = () => {
       onClick={()=>navigate(-1)}
       />
 
-      <section className="max-w-100 w-full h-70 rounded-lg flex flex-col items-center justify-evenly mt-5"
+      <section className="max-w-100 w-full h-70 rounded-lg flex shadow-xs shadow-black flex-col items-center justify-evenly mt-5"
         style={{ backgroundColor: currentTheme.cardBackground }}
       >
 
