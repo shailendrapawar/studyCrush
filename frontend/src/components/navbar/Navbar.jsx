@@ -82,12 +82,15 @@ const Navbar = () => {
         <NavLink to={"/user/userProfile"} className="w-20 text-center">Profile</NavLink>
 
         <span
-        onClick={handleToggleTheme}
+        onClick={(e)=>{
+          e.stopPropagation();
+          handleToggleTheme()
+        }}
         className="absolute top-2 right-2 rounded-full h-6 w-6 flex items-center justify-center"
         style={{backgroundColor:isDarkMode?"black":"white"}}
         title={isDarkMode?"switch to light mode":"switch to dark mode"}
         >
-          {isDarkMode?<IoMdMoon className="text-white"/>:<MdSunny className="text-yellow-500"/>}
+          {isDarkMode?<IoMdMoon className="text-white themeToggleAnime"/>:<MdSunny className="text-yellow-500 themeToggleAnime"/>}
           
         </span>
       </nav>
@@ -105,7 +108,7 @@ const Navbar = () => {
         style={{backgroundColor:isDarkMode?"white":"black", border:`2px solid ${currentTheme.line}`}}
         title={isDarkMode?"switch to dark mode":"switch to light mode"}
         >
-          {isDarkMode?<MdSunny className="text-yellow-500"/>:<IoMdMoon className="text-white themeToggle"/>}    
+          {isDarkMode?<MdSunny className="text-yellow-500"/>:<IoMdMoon className="text-white themeToggleAnime"/>}    
       </span>
 
       <LuSquarePen

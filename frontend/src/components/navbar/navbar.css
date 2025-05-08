@@ -17,7 +17,7 @@
 .slideLeft{
     animation: slideLeft 0.1s linear;
 }
-.themeToggle{
+.themeToggleAnime{
     animation: themeToggle 0.1s  linear ;
 }
 
