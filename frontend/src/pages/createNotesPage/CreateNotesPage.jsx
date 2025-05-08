@@ -87,7 +87,7 @@ const CreateNotesPage = () => {
                 </section>
 
                 {/* Input Section */}
-                <div className="w-full flex gap-2">
+                <div className="w-full flex gap-2 shadow-black shadow-md rounded-full overflow-hidden ">
                     <input
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
@@ -103,7 +103,7 @@ const CreateNotesPage = () => {
 
                     {!loading && (
                         <button
-                            className=" px-6 py-3 rounded-lg text-sm font-medium transition-colors"
+                            className=" px-6 py-3 text-sm font-medium transition-colors"
                             style={{
                                 backgroundColor: currentTheme?.accent,
                                 color: currentTheme?.buttonText || "white"
