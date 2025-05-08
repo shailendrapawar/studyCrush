@@ -4,21 +4,38 @@ import { CgMenuCheese } from "react-icons/cg";
 import { IoIosNotifications } from "react-icons/io";
 import "./navbar.css"
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
+import {toggleTheme} from "../../store/slices/themeSlice"
 import { LuSquarePen } from "react-icons/lu";
 // import { FaCloudUploadAlt } from "react-icons/fa";
 
 import { RxCross1 } from "react-icons/rx";
 
+//theme icons==================
+// import { CiLight } from "react-icons/ci";
+import { MdSunny } from "react-icons/md";
+import { IoMdMoon } from "react-icons/io";
+// import { MdOutlineDarkMode } from "react-icons/md";
+import ThemeToggle from "../themeToggle/ThemeToggle";
+
 const Navbar = () => {
+  const dispatch=useDispatch();
+
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
 
   const [unRead, setUnread] = useState([]);
 
   const { currentTheme } = useSelector(s => s.theme)
+  
   const { userNotifications } = useSelector((s) => s.user)
+
+console.log(currentTheme.name)
+
+   const handleToggleTheme=()=>{
+    dispatch(toggleTheme())
+   }
 
   const calculateUnread = () => {
     const notifications = userNotifications?.filter((item) => item.isRead === false);
@@ -33,6 +50,8 @@ const Navbar = () => {
     
   }, [userNotifications])
 
+  const isDark=currentTheme.name==="dark";
+
   return (
     <nav className=" h-16 flex justify-between pl-4 pr-4 items-center relative z-10 " style={{ backgroundColor: currentTheme.background, color: currentTheme.textPrimary, borderBottom: `1px solid ${currentTheme.line}` }}
     >
@@ -41,14 +60,17 @@ const Navbar = () => {
         onClick={()=>navigate("/user/home")}
       ><b className="text-blue-500 text-xl lg:text-3xl">S</b>tudy  <b className="text-blue-500 text-xl lg:text-3xl">C</b>rush</span>
 
-      <nav className=" web-nav w-1/2 h-8 max-w-100 flex justify-evenly items-center gap-1.5" style={{}} >
+
+    {/* web -nav============= */}
+      <nav className=" web-nav w-1/2 h-8 mr-15 max-w-100 flex justify-evenly items-center gap-1.5" style={{}} >
         <NavLink to={"/user/home"} className={({ isActive }) => isActive ? "w-1/3 text-center text-blue-600" : "w-1/3 text-center"}>HOME</NavLink>
         <NavLink to={"/user/search"} className={({ isActive }) => isActive ? "w-1/3 text-center text-blue-600" : "w-1/3 text-center"}>Search</NavLink>
         <NavLink to={"/user/upload"} className={({ isActive }) => isActive ? "w-1/3 text-center text-blue-600" : "w-1/3 text-center"}>Upload</NavLink>
       </nav>
 
 
-      <nav id="mobile-nav" className={`slideLeft mobile-nav h-55 w-2/3 max-w-70 rounded-bl-3xl bg-black  flex flex-col items-center justify-center gap-5 absolute top-16 right-0 ${toggle ? "flex" : "hidden"}`}
+      {/* mobile-nav============== */}
+      <nav id="mobile-nav" className={`slideLeft mobile-nav h-55 w-2/3 max-w-70 rounded-bl-3xl bg-black shadow-md shadow-black flex flex-col items-center justify-center gap-5 absolute top-16 right-0 ${toggle ? "flex" : "hidden"}`}
         onClick={() => setToggle(false)}
         style={{ backgroundColor: currentTheme.background, border: `1px solid ${currentTheme.line}` }}
       >
@@ -56,11 +78,20 @@ const Navbar = () => {
         <NavLink to={"/user/search"} className={({ isActive }) => isActive ? "w-20 text-center text-blue-600" : "w-20 text-center"} >SEARCH</NavLink>
         <NavLink to={"/user/upload"} className={({ isActive }) => isActive ? "w-20 text-center text-blue-600" : "w-20 text-center"} >UPLOAD</NavLink>
         <NavLink to={"/user/userProfile"} className="w-20 text-center">Profile</NavLink>
+
+        <span className={`absolute top-1 right-3 w-12 h-7 px-1 rounded-full flex flex-row items-center ${isDark?"justify-end ":"justify-start "}`}
+
+        style={{border:`3px solid ${currentTheme.line}`,}}
+        onClick={()=>handleToggleTheme()}
+        >
+          <span className={`h-5 w-5 rounded-full flex justify-center items-center ${isDark?"bg-white":"bg-yellow-500"}`}>{isDark?<IoMdMoon className="text-black"/>:<MdSunny className="text-white"/>}</span>
+        </span>
+
       </nav>
 
 
       <span title="notifications" className=" absolute right-20 " onClick={() => { navigate("/user/notification"); setToggle(false) }}>
-        <IoIosNotifications className={unRead.length>0?"w-5 h-5 bell cursor-pointer  hover:scale-110 ":"w-5 h-5 cursor-pointer   hover:scale-110"} />
+        <IoIosNotifications className={unRead.length>0?"w-5 h-5 bell cursor-pointer hover:scale-110 ":"w-5 h-5 cursor-pointer hover:scale-110"} />
         <i className="absolute text-xs -top-1 -right-1 w-auto  rounded-md " style={{backgroundColor:currentTheme.background}}>{unRead?.length>9?"9+":unRead?.length}</i>
       </span>
 
