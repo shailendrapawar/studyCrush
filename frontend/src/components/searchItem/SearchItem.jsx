@@ -10,8 +10,8 @@ const SearchItem = ({ data }) => {
   const navigate=useNavigate();
 
   return (
-    <div className="w-full h-30 bg-green-300 rounded-md p-1  flex flex-row items-center gap-5 relative z-0 cursor-pointer"
-      style={{ backgroundColor: `${currentTheme?.cardBackground}` }}
+    <div className="w-full h-30 bg-green-300 rounded-md p-1  flex flex-row items-center gap-5 relative z-0 shadow-xs shadow-black cursor-pointer"
+      style={{ backgroundColor: `${currentTheme?.cardBackground}` ,border:`1px solid ${currentTheme.line}`}}
       onClick={()=>navigate(`/user/resource/${data._id}`)}
     >
 
@@ -30,7 +30,7 @@ const SearchItem = ({ data }) => {
             return <div
             key={i}
             style={{backgroundColor:currentTheme?.accent}}
-            className="  w-auto rounded-md  pl-2 pr-2 flex items-center text-xs  whitespace-nowrap">{tag}
+            className="  w-auto rounded-md  pl-2 pr-2 flex items-center text-xs text-white  whitespace-nowrap">{tag}
             </div>
           })}
         </section>

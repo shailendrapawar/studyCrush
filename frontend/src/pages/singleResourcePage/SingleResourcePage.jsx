@@ -206,7 +206,7 @@ const SingleResourcePage = () => {
 
 
         {/* Author and Date */}
-        <div className="flex items-center justify-between mb-6 p-4 rounded-lg cursor-pointer"
+        <div className="flex items-center justify-between mb-6 p-4 shadow-xs shadow-black rounded-lg cursor-pointer"
           style={{ backgroundColor: currentTheme?.cardBackground }}
           onClick={()=>navigate(`/user/publicProfile/${currentResource?.uploadedBy?._id}`)}
           >
@@ -231,7 +231,7 @@ const SingleResourcePage = () => {
 
 
         {/* Action Bar */}
-        <div className="flex items-center justify-between p-4 mb-6 rounded-lg"
+        <div className="flex items-center justify-between p-4 mb-6 rounded-lg shadow-xs shadow-black"
           style={{
             backgroundColor: currentTheme?.cardBackground,
             border: `1px solid ${currentTheme?.line}`
@@ -269,7 +269,7 @@ const SingleResourcePage = () => {
         </div>
 
         {/* Comments Section */}
-        <div className="rounded-lg overflow-hidden"
+        <div className="rounded-lg overflow-hidden shadow-xs shadow-black"
           style={{
             backgroundColor: currentTheme?.cardBackground,
             border: `1px solid ${currentTheme?.line}`
@@ -292,17 +292,17 @@ const SingleResourcePage = () => {
             )}
           </div>
 
-          <div className="p-4 border-t" style={{ borderColor: currentTheme?.line }}>
-            <div className="flex gap-2">
+          <div className="p-4 " style={{ borderColor: currentTheme?.line }}>
+            <div className="flex gap-2 rounded-full  ">
               <input
               value={inputComment}
-                className="flex-1 px-4 py-2 rounded-full text-sm outline-none"
+                className="flex-1 px-4 py-2 rounded-full text-sm outline-none shadow-xs shadow-black"
                 style={{ backgroundColor: currentTheme?.background }}
                 placeholder="Add a comment..."
                 onChange={(e) => setInputComment(e.target.value)}
               />
               <button
-                className="px-4 py-2 rounded-full text-sm font-medium"
+                className="px-4 py-2 rounded-full text-sm font-medium shadow-xs shadow-black"
                 style={{ backgroundColor: currentTheme?.accent, color: '#fff' }}
                 onClick={(e)=>handlePostComment(e)}
               >

@@ -17,6 +17,9 @@
 .slideLeft{
     animation: slideLeft 0.1s linear;
 }
+.themeToggleAnime{
+    animation: themeToggle 0.1s  linear ;
+}
 
 
 @media  screen and (min-width:680px) {
@@ -32,6 +35,20 @@
     .mobileNav-icon{
         display: none;
     }
+    .web-themeToggle{
+        display: flex;
+
+    }
+}
+
+
+@keyframes themeToggle{
+    0%{
+        transform: rotate(-180deg);
+    }
+    100%{
+        transform: rotate(0deg);
+    } 
 }
 
 @keyframes rotate {

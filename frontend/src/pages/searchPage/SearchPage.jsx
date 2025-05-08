@@ -46,7 +46,7 @@ const SearchPage = () => {
       }
 
     } catch (err) {
-      console.log("err")
+      console.log("err",err)
       toast.error("Some error while search")
     }
   }
@@ -67,10 +67,10 @@ const SearchPage = () => {
       <h1 className="text-3xl mt-5 mb-5"><b style={{ color: currentTheme.accent }}>S</b>EARCH</h1>
 
       {/* ======input area ================ */}
-      <div className="h-10 w-[80%] max-w-150 flex  justify-between rounded-md  overflow-hidden"
-
+      <div className="h-10 w-[80%] max-w-150 flex shadow-xs shadow-black rounded-full justify-between  overflow-hidden"
+      // style={{border:`0px solid ${currentTheme.line}`}}
       >
-        <input className="h-full w-[80%] pl-2 pr-2 outline-none text-sm md:text-lg" type="text" placeholder="enter tag, subject, title"
+        <input className="h-full w-[80%] pl-5 pr-2 outline-none text-sm md:text-lg" type="text" placeholder="enter tag, subject, title"
           style={{ backgroundColor: currentTheme.cardBackground }}
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
