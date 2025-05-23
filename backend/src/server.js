@@ -1,6 +1,6 @@
+import express from "express"
 import { app, myHttpServer } from "./socket/socket.js";
 import connectDb from "./configs/dbConnect.js";
-import express from "express"
 import { configDotenv } from "dotenv";
 import cors from "cors"
 import cookieParser from "cookie-parser";
