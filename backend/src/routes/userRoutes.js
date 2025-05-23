@@ -8,6 +8,8 @@ const userRouter = express.Router();
 // auth routes
 userRouter.post("/register", UserController.register);
 userRouter.post("/login", UserController.login);
+userRouter.post("/logout",UserController.logout);
+
 
 // resource routes
 userRouter.post(

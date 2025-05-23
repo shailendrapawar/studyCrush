@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useNavigate } from "react-router"
 import Navbar from "../components/navbar/Navbar"
 import { useEffect } from "react"
-import {Toaster} from "react-hot-toast"
+import toast, {Toaster} from "react-hot-toast"
 import { useDispatch, useSelector } from "react-redux"
 import useGetHomeResources from "../hooks/useGetHomeResources"
 import useGetUserNotifications from "../hooks/useGetUserNotifications"
@@ -13,12 +13,18 @@ const PageLayout = () => {
 
 
   const {currentTheme}=useSelector(s=>s.theme)
+  const {authUser}=useSelector(s=>s.user)
+
   const location=useLocation();
   
   useGetHomeResources(1)
 
   useEffect(()=>{
     // console.log(location.pathname)
+    if(!authUser){
+      navigate("/login")
+      toast.error("user not logged in")
+    }
     if(location.pathname==="/user/"||location.pathname==="/user"){
       navigate("/user/home")
     }

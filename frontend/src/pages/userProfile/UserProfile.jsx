@@ -7,6 +7,7 @@ import ConfirmDialog from "../../components/Dialog/Dialog";
 import { setAuthUser } from "../../store/slices/userSlice";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { persistor } from "../../store/store";
 
 const UserProfile = () => {
   const { currentTheme } = useSelector((s) => s.theme);
@@ -64,7 +65,7 @@ const UserProfile = () => {
   }
 
   const updateImageOnServer = async () => {
-    
+
     const uploadedFile = fileUploadRef.current.files[0];
     if (!uploadedFile) return; // No file selected
 
@@ -85,6 +86,38 @@ const UserProfile = () => {
       dispatch(setAuthUser(response.data.user));
     } catch (error) {
       console.log("Error uploading profile image:", error);
+    }
+  }
+
+
+  // handing logout button==================
+
+  const handleLogout = async () => {
+    const choice = confirm("logout of this account ?")
+
+    if (choice) {
+      try {
+        const isLogout = await axios.post(import.meta.env.VITE_API_URL + "/auth/logout", {}, {
+          withCredentials: true
+        })
+
+        if (isLogout) {
+          sessionStorage.clear();
+          localStorage.clear();
+
+          await persistor.pause();  // pause persisting
+          await persistor.flush(); // flush pending changes
+          await persistor.purge();
+
+          navigate("/login")
+          window.location.reload();
+          toast.success("Logged out successfully")
+        }
+
+      } catch (err) {
+        toast.error("some problem loggin-out")
+        console.log(err)
+      }
     }
   }
 
@@ -114,6 +147,7 @@ const UserProfile = () => {
           <button
             className="absolute right-6 top-6 p-2 rounded-full hover:bg-white/10 transition-all"
             style={{ color: currentTheme?.textPrimary }}
+            onClick={handleLogout}
           >
             <IoMdLogOut className="h-6 w-6" />
           </button>
@@ -131,8 +165,8 @@ const UserProfile = () => {
                 />
                 <div className="cursor-pointer absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <form id="form" encType="multipart/form-data">
-                    <span onClick={handleProfileUpload}  className="text-white text-sm">Change Photo</span>
-                    <input onChange={updateImageOnServer} type="file" id="file" hidden ref={fileUploadRef}/>
+                    <span onClick={handleProfileUpload} className="text-white text-sm">Change Photo</span>
+                    <input onChange={updateImageOnServer} type="file" id="file" hidden ref={fileUploadRef} />
                   </form>
                 </div>
               </div>
@@ -143,7 +177,7 @@ const UserProfile = () => {
                   className="p-2 rounded-full hover:bg-white/10 transition-colors"
                   style={{ color: currentTheme?.textPrimary }}
                   title="Edit Profile"
-                  onClick={()=>navigate("/user/userProfileEdit")}
+                  onClick={() => navigate("/user/userProfileEdit")}
                 >
                   <FiEdit className="h-5 w-5" />
                 </button>
@@ -192,13 +226,12 @@ const UserProfile = () => {
           style={{ borderColor: currentTheme?.line }}
         >
           <NavLink
-          
+
             to="/user/userProfile/savedResources"
             className={({ isActive }) =>
-              `text-sm px-4 py-3 md:text-lg font-medium rounded-t-lg transition-colors ${
-                isActive
-                  ? "text-white border-b-2"
-                  : "text-gray-500 hover:text-white"
+              `text-sm px-4 py-3 md:text-lg font-medium rounded-t-lg transition-colors ${isActive
+                ? "text-white border-b-2"
+                : "text-gray-500 hover:text-white"
               }`
             }
             style={({ isActive }) => ({
@@ -215,10 +248,9 @@ const UserProfile = () => {
           <NavLink
             to="/user/userProfile/uploadedResources"
             className={({ isActive }) =>
-              `text-sm px-4 py-3 md:text-lg font-medium rounded-t-lg transition-colors ${
-                isActive
-                  ? "text-white border-b-2"
-                  : "text-gray-500 hover:text-white"
+              `text-sm px-4 py-3 md:text-lg font-medium rounded-t-lg transition-colors ${isActive
+                ? "text-white border-b-2"
+                : "text-gray-500 hover:text-white"
               }`
             }
             style={({ isActive }) => ({
@@ -248,7 +280,7 @@ const UserProfile = () => {
           <Outlet />
         </div>
       </section>
-      
+
     </div>
   );
 };

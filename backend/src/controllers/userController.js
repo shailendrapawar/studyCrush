@@ -130,7 +130,20 @@ class UserController {
 
     // logout api ===================================
 
-    
+    static logout = async (req, res) => {
+
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: true,     // Set to true if using HTTPS
+            sameSite: "None", // Adjust based on frontend/backend hosting
+        });
+        console.log("cookies cleared")
+
+         res.status(200).json({ message: "Logged out successfully" });
+
+    }
+
+
 
 
     // 3:-  saving or unsaving resource ==================
