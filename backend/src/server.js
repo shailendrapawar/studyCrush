@@ -34,6 +34,7 @@ app.get("/", (req, res) => {
 
 
 const PORT = process.env.PORT || 5000;
+
 connectDb().then((res) => {
         if(res){
             myHttpServer.listen(PORT, () => {
@@ -41,6 +42,7 @@ connectDb().then((res) => {
             })
         }
 }).catch((err)=>{
+    console.log(err)
     console.log("error in listening server")
 })
 
