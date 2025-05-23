@@ -95,7 +95,7 @@ const UserProfile = () => {
     >
       {/* Header Section */}
       <header className="max-w-6xl mx-auto">
-        <h1 className="text-2xl font-bold mb-8 text-center md:text-3xl">
+        <h1 className="text-2xl font- mb-8 text-center md:text-3xl">
           <span style={{ color: currentTheme?.accent }}>U</span>ser{" "}
           <span style={{ color: currentTheme?.accent }}>P</span>rofile
         </h1>

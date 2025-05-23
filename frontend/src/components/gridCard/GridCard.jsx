@@ -54,7 +54,7 @@ const GridCard = ({ data, source }) => {
 
 
     return (
-        <div className="h-40 w-auto sm:h-45 relative rounded-md overflow-hidden cursor-pointer "
+        <div className="h-40 w-auto sm:h-45 relative rounded-md overflow-hidden cursor-pointer shadow-black shadow-md "
             onClick={() => navigate(`/user/resource/${data._id}`)}
         >
             <img src={data?.thumbnail} className="h-full w-full object-cover"></img>

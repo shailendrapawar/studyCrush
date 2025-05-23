@@ -13,7 +13,7 @@ const TagsBar = ({list,setList}) => {
 
     const addTag = (e) => {
         if (e.key === "Enter") {
-            if(list.length>5){
+            if(list.length>4){
                 toast.error(" you can only add 5 tags")
                 return
             }
@@ -41,8 +41,8 @@ const TagsBar = ({list,setList}) => {
             <div className="w-auto flex  gap-1.5 overflow-x-scroll" >
                 {list?.map((tag,i) => {
                     return <div key={i} index={i} className=" min-w-auto  pl-3 pr-3 h-9 rounded-md  relative cursor-pointer " style={{backgroundColor:currentTheme.primary}}>
-                        <section className=" whitespace-nowrap text-[12px] h-5 max-h-5 mt-3">{tag}</section>
-                        <b className=" absolute top-0 right-1 text-[10px]" onClick={()=>removeTag(i)}>X</b>
+                        <section className=" whitespace-nowrap text-[12px] h-5 max-h-5 mt-3 text-white">{tag}</section>
+                        <b className=" absolute top-0 right-1 text-[10px] text-white" onClick={()=>removeTag(i)}>X</b>
                     </div>
                     
                 })}

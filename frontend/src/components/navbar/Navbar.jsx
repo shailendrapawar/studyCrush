@@ -52,6 +52,7 @@ const Navbar = () => {
 
 
   const isDarkMode=currentTheme.name==="light";
+
   return (
     <nav className=" h-16 flex justify-between pl-4 pr-4 items-center relative z-10 " style={{ backgroundColor: currentTheme.background, color: currentTheme.textPrimary, borderBottom: `1px solid ${currentTheme.line}` }}
     >
@@ -63,9 +64,9 @@ const Navbar = () => {
 
     {/* web -nav============= */}
       <nav className=" web-nav w-1/2 h-8 mr-15 max-w-100 flex justify-evenly items-center gap-1.5" style={{}} >
-        <NavLink to={"/user/home"} className={({ isActive }) => isActive ? "w-1/3 text-center text-blue-600" : "w-1/3 text-center"}>HOME</NavLink>
-        <NavLink to={"/user/search"} className={({ isActive }) => isActive ? "w-1/3 text-center text-blue-600" : "w-1/3 text-center"}>Search</NavLink>
-        <NavLink to={"/user/upload"} className={({ isActive }) => isActive ? "w-1/3 text-center text-blue-600" : "w-1/3 text-center"}>Upload</NavLink>
+        <NavLink to={"/user/home"} className={({ isActive }) => isActive ? "w-1/3 text-center text-blue-600 font-bold transition ease-out" : "w-1/3 text-center"}>HOME</NavLink>
+        <NavLink to={"/user/search"} className={({ isActive }) => isActive ? "w-1/3 text-center text-blue-600 font-bold transition ease-out" : "w-1/3 text-center"}>Search</NavLink>
+        <NavLink to={"/user/upload"} className={({ isActive }) => isActive ? "w-1/3 text-center text-blue-600 font-bold transition ease-out" : "w-1/3 text-center"}>Upload</NavLink>
 
       </nav>
 

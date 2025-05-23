@@ -128,6 +128,9 @@ class UserController {
         }
     }
 
+    // logout api ===================================
+
+    
 
 
     // 3:-  saving or unsaving resource ==================
@@ -369,7 +372,7 @@ class UserController {
             const { userId } = req.params
 
             const user = await UserModel.findById(userId).select("name username bio profilePicture")
-            const resources =  ResourceModel.find({ uploadedBy: userId }).select("thumbnail comments likes")
+            const resources = ResourceModel.find({ uploadedBy: userId }).select("thumbnail comments likes")
             const userData = await Promise.all([user, resources])
 
             console.log(userData.length)
@@ -377,21 +380,24 @@ class UserController {
             // if (!userData) throw new Error("error in handling promises");
 
             return res.status(200).json({
-                msg:"user found with data",
-                user:userData[0],
-                resources:userData[1],
-                success:true
+                msg: "user found with data",
+                user: userData[0],
+                resources: userData[1],
+                success: true
             })
-            
 
-    } catch (err) {
+
+        } catch (err) {
             console.log(err)
             return res.status(200).json({
-                msg:"internal server error",
-                success:false
+                msg: "internal server error",
+                success: false
             })
         }
     }
+
+
+
 
 
 }

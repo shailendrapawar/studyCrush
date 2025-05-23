@@ -51,11 +51,11 @@ const PublicProfilePage = () => {
       onClick={()=>navigate(-1)}
       />
 
-      <section className="max-w-100 w-full h-70 rounded-lg flex shadow-xs shadow-black flex-col items-center justify-evenly mt-5"
+      <section className="max-w-100 w-full h-70 rounded-lg flex shadow-md shadow-black flex-col items-center justify-evenly mt-5"
         style={{ backgroundColor: currentTheme.cardBackground }}
       >
 
-        <img className="h-30 w-30 rounded-full bg-white object-cover"
+        <img className="h-30 w-30 rounded-full bg-white object-cover border-2 border-blue-500"
           src={userData?.profilePicture?.url || defaultAvatar}
         ></img>
 
@@ -68,7 +68,7 @@ const PublicProfilePage = () => {
 
       <h1 className="text-xl mt-5 text-center"><b style={{ color: currentTheme.accent }}>S</b>hared <b style={{ color: currentTheme.accent }}>R</b>esources ( {resourceList.length || 0} )</h1>
 
-      <div className="mt-5 w-full h-auto grid grid-cols-2 gap-1 sm:grid-cols-3 ">
+      <div className="mt-5 w-full h-auto  gap-1 flex justify-evenly ">
 
         {resourceList?.map((item, i) => {
           return <GridCard key={i} data={item} source="public" />

@@ -158,7 +158,7 @@ const UploadPage = () => {
         {/* ======for tags============== */}
         <TagsBar list={taglist} setList={setTaglist} />
 
-        <button onClick={handleSubmit} className="h-10 w-20 rounded-md self-end mt-2 mb-2" style={{ backgroundColor: currentTheme.primary }}>UPLOAD</button>
+        <button onClick={handleSubmit} className="h-10 w-20 text-white rounded-md self-end mt-2 mb-2" style={{ backgroundColor: currentTheme.primary }}>UPLOAD</button>
 
       </section>
 
