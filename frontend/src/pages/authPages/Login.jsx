@@ -6,25 +6,26 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 
 import { setAuthUser, setUserNotification } from '../../store/slices/userSlice';
+import Loader from '../../components/loader/Loader';
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   const { currentTheme } = useSelector(s => s.theme)
   // console.log(currentTheme)
 
   const [identifier, setIdentifier] = useState("shailu")
   const [password, setPassword] = useState("shailu")
-    const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
 
 
   const handleLogin = async (e) => {
-    if(identifier==''||password==''){
+    if (identifier == '' || password == '') {
       toast.error("all fields required")
-      return ;
+      return;
     }
-    if(loading){
+    if (loading) {
       return
     }
 
@@ -47,8 +48,8 @@ const Login = () => {
       }
     } catch (err) {
       console.log(err)
-      toast.error(err.response.data.msg||"something went wrong")
-    }finally{
+      toast.error(err.response.data.msg || "something went wrong")
+    } finally {
       setLoading(false)
     }
   }
@@ -64,7 +65,8 @@ const Login = () => {
         <form onSubmit={handleLogin} className='w-full h-auto flex flex-col items-center gap-3'>
           <input value={identifier} onChange={(e) => setIdentifier(e.target.value)} required type='text' className='h-12 w-[90%] outline-none pl-2  text-sm rounded-sm shadow-xs shadow-black' style={{ background: currentTheme.background, color: currentTheme.textPrimary, border: `1px solid ${currentTheme.line}` }} placeholder='enter you email or username'></input>
           <input value={password} onChange={(e) => setPassword(e.target.value)} required type='text' className='h-12 w-[90%] outline-none pl-2 text-sm  rounded-sm shadow-xs shadow-black' style={{ background: currentTheme.background, border: `1px solid ${currentTheme.line}` }} placeholder='enter you password'></input>
-          <button className='h-10 w-[90%] rounded-md mt-2 active:shadow-none shadow-xs shadow-black text-white' style={{ backgroundColor: currentTheme.accent }}>{loading?"loggin in...":"log-in"}</button>
+          {!loading && (<button className='h-10 w-[90%] rounded-md mt-2 active:shadow-none shadow-xs shadow-black text-white' style={{ backgroundColor: currentTheme.accent }}>{loading ? "loggin in..." : "log-in"}</button>)}
+          {loading && (<span className=''><Loader value={loading} /></span>)}
         </form>
 
         <span className='text-sm hover:underline text-center cursor-pointer' style={{ color: currentTheme.textPrimary }}

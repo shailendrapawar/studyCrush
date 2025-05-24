@@ -4,6 +4,7 @@ import { useNavigate } from "react-router"
 import { useSelector } from "react-redux"
 import toast from 'react-hot-toast';
 import axios from "axios"
+import Loader from '../../components/loader/Loader';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -33,12 +34,14 @@ const Register = () => {
     e.preventDefault(); // prevent page reload
     try {
       if (!userData.name || !userData.username || !userData.email || !userData.password) {
-        toast.error("All feilds are required");
+        toast.error("All fields are required");
         return
       }
       if(loading){
         return
       }
+
+      setLoading(true)
       
       const isRegistered = await axios.post(import.meta.env.VITE_API_URL + `/auth/register`, userData, {
         withCredentials: true
@@ -59,6 +62,8 @@ const Register = () => {
     } catch (err) {
       // console.log("error==",err)
       toast.error(err.response.data.msg)
+    }finally{
+      setLoading(false)
     }
   }
 
@@ -77,9 +82,11 @@ const Register = () => {
           <button className='h-10 w-[90%] rounded-md mt-2 shadow-xs shadow-black text-white' style={{ backgroundColor: currentTheme.accent }}>{loading?"Creating user...":"Sign Up"}</button>
         </form>
 
-        <span className='text-sm hover:underline text-center cursor-pointer' style={{ color: currentTheme.textPrimary }}
+        {!loading && (<span className='text-sm hover:underline text-center cursor-pointer' style={{ color: currentTheme.textPrimary }}
           onClick={() => navigate("/login")}
-        >Already a user? Log in instead</span>
+        >Already a user? Log in instead</span>)}
+
+        {loading && (<span className=''><Loader value={loading} /></span>)}
       </section>
     </div>
   )

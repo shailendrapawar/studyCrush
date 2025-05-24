@@ -6,12 +6,14 @@ import { RxCross2 } from "react-icons/rx";
 import toast from "react-hot-toast";
 
 import axios from "axios"
+import Loader from "../../components/loader/Loader.jsx";
 
 const UploadPage = () => {
 
   const { currentTheme } = useSelector(s => s.theme)
 
   const [taglist, setTaglist] = useState([]);
+  const [loading, setloading] = useState(false)
 
   const [resourceData, setResourceData] = useState({
     title: "",
@@ -74,11 +76,13 @@ const UploadPage = () => {
       toast.error(" All fields required");
       return
     }
-    console.log("all fields filled");
-    // console.log(resourceData)
+    if (loading) {
+      return
+    }
 
     try {
 
+      setloading(true);
       const res = await axios.post(import.meta.env.VITE_API_URL + `/resource/createResource`, resourceData, {
         withCredentials: true
       })
@@ -100,6 +104,8 @@ const UploadPage = () => {
 
     } catch (err) {
       console.log(err)
+    } finally {
+      setloading(false)
     }
   }
 
@@ -109,14 +115,14 @@ const UploadPage = () => {
       <h2 className="text-2xl  mt-10"> <b className="text-blue-500">U</b>pload <b className="text-blue-500">R</b>esource</h2>
 
       <section className=" h-auto max-w-120 w-full rounded-xl p-2 pt-5 flex flex-col gap-3 items-center mt-10 shadow-md shadow-black"
-        style={{ backgroundColor: currentTheme?.cardBackground,border:`1 px solid ${currentTheme.line}` }}
+        style={{ backgroundColor: currentTheme?.cardBackground, border: `1 px solid ${currentTheme.line}` }}
       >
 
         <div className="w-full flex gap-1 mt-3">
           <input value={resourceData.title}
             onChange={(e) => handleChange(e)}
             type="text" name="title" className="h-10 w-full outline-none pl-2 pr-1  text-xs  shadow-xs shadow-black" placeholder="enter title"
-            style={{ backgroundColor: currentTheme.background,  }}>
+            style={{ backgroundColor: currentTheme.background, }}>
           </input>
 
           <select
@@ -158,7 +164,10 @@ const UploadPage = () => {
         {/* ======for tags============== */}
         <TagsBar list={taglist} setList={setTaglist} />
 
-        <button onClick={handleSubmit} className="h-10 w-20 text-white rounded-md self-end mt-2 mb-2" style={{ backgroundColor: currentTheme.primary }}>UPLOAD</button>
+        {!loading && (<button onClick={handleSubmit} className="h-10 w-20 text-white rounded-md self-end mt-2 mb-2 cursor-pointer shadow-md shadow-black active:shadow-none" style={{ backgroundColor: currentTheme.primary }}>UPLOAD</button>
+        )}
+
+        {loading && (<span><Loader value={loading} /></span>)}
 
       </section>
 

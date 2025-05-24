@@ -22,6 +22,7 @@ import { useNavigate } from "react-router";
 
 
 import defaultUserAvatar from "../../assets/defaultAvatar.avif"
+import Loader from "../loader/Loader";
 const HomeResourceCard = ({ data }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -29,11 +30,13 @@ const HomeResourceCard = ({ data }) => {
     const { currentTheme } = useSelector(s => s.theme);
     const { authUser } = useSelector(s => s.user)
 
-    const{userSavedResources}=useSelector(s=>s.user);
+    const { userSavedResources } = useSelector(s => s.user);
 
 
     const [commentToggle, setCommentToggle] = useState(false)
     const [inputComment, setInputComment] = useState("");
+
+    const [loading, setloading] = useState(false);
 
 
 
@@ -99,11 +102,12 @@ const HomeResourceCard = ({ data }) => {
     }
 
     const handlePostComment = async (req, res) => {
-        if (inputComment === "") {
+        if (inputComment === "" || loading) {
             return
         }
 
         try {
+            setloading(true);
             const isCommented = await axios.post(import.meta.env.VITE_API_URL + "/resource/addComment", {
                 comment: inputComment,
                 resourceId: data._id
@@ -118,6 +122,8 @@ const HomeResourceCard = ({ data }) => {
 
         } catch (err) {
             console.log(err)
+        } finally {
+            setloading(false)
         }
     }
 
@@ -164,7 +170,7 @@ const HomeResourceCard = ({ data }) => {
                     {data?.tags?.map((tag, i) => {
                         return <div
                             key={i}
-                            style={{ backgroundColor: currentTheme?.background , color: currentTheme?.accent }}
+                            style={{ backgroundColor: currentTheme?.background, color: currentTheme?.accent }}
                             className="  w-auto rounded-full py-1 px-3 flex items-center justify-center text-xs  whitespace-nowrap">{tag}
                         </div>
                     })}
@@ -174,10 +180,10 @@ const HomeResourceCard = ({ data }) => {
 
                     <b>By {data?.uploadedBy?.name?.toUpperCase()}<b> • </b>{formatDate(data?.createdAt)}</b>
                     <img className="h-8 w-8 bg-gray rounded-full mr-3 object-scale-down shadow-sm shadow-black"
-                    onClick={(e)=>{
-                        e.stopPropagation();
-                        navigate(`/user/publicProfile/${data?.uploadedBy?._id}`)
-                    }}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/user/publicProfile/${data?.uploadedBy?._id}`)
+                        }}
                         src={data?.uploadedBy?.profilePicture?.url || defaultUserAvatar}
                     ></img>
 
@@ -218,7 +224,7 @@ const HomeResourceCard = ({ data }) => {
                 onClick={(e) => e.stopPropagation()}
             >
                 <IoArrowBackCircle className="h-8 w-8 self-start" onClick={() => setCommentToggle(false)} />
-                    
+
 
                 <main className=" comments-list max-h-50 h-50  w-full max-w-120  gap-2 flex flex-col overflow-y-scroll"
 
@@ -228,7 +234,7 @@ const HomeResourceCard = ({ data }) => {
                         data?.commentsData?.length > 0 ? (<>
                             {
                                 data?.commentsData?.map((item, i) => {
-                                    return <SingleComment data={item} key={i} isNew={i===0} />
+                                    return <SingleComment data={item} key={i} isNew={i === 0} />
                                 })
 
                             }
@@ -241,18 +247,19 @@ const HomeResourceCard = ({ data }) => {
 
                 </main>
 
-
-                <div className="h-[20%] min-h-10 w-full  flex items-center justify-evenly">
+                {!loading && (<div className="h-[20%] min-h-10 w-full  flex items-center justify-evenly">
                     <input className=" rounded-md min-h-9 w-[70%]  max-h-10 outline-none pl-2 pr-2 text-xs" placeholder="enter comment"
                         value={inputComment}
                         onChange={(e) => setInputComment(e.target.value)}
                         style={{ background: currentTheme?.background, color: currentTheme?.textPrimary }}
                     ></input>
-                    <button className="rounded-md w-[20%] min-h-8.5 max-h-10 text-sm "
+                    <button className="rounded-md w-[20%] min-h-8.5 max-h-10 text-sm shadow-md shadow-black active:shadow-none "
                         style={{ background: currentTheme?.accent, color: currentTheme?.textPrimary }}
                         onClick={handlePostComment}
-                    >POST</button>
-                </div>
+                    >{loading?"Posting":"POST"}</button>
+                </div>)}
+
+                {loading && (<span><Loader value={true} /></span>)}
 
             </section>
 
