@@ -16,11 +16,21 @@ const Login = () => {
 
   const [identifier, setIdentifier] = useState("shailu")
   const [password, setPassword] = useState("shailu")
+    const [loading,setLoading]=useState(false);
 
 
   const handleLogin = async (e) => {
+    if(identifier==''||password==''){
+      toast.error("all fields required")
+      return ;
+    }
+    if(loading){
+      return
+    }
+
     try {
       e.preventDefault();
+      setLoading(true);
       const isLogin = await axios.post(import.meta.env.VITE_API_URL + `/auth/login`, {
         identifier,
         password
@@ -38,6 +48,8 @@ const Login = () => {
     } catch (err) {
       console.log(err)
       toast.error(err.response.data.msg||"something went wrong")
+    }finally{
+      setLoading(false)
     }
   }
 
@@ -52,7 +64,7 @@ const Login = () => {
         <form onSubmit={handleLogin} className='w-full h-auto flex flex-col items-center gap-3'>
           <input value={identifier} onChange={(e) => setIdentifier(e.target.value)} required type='text' className='h-12 w-[90%] outline-none pl-2  text-sm rounded-sm shadow-xs shadow-black' style={{ background: currentTheme.background, color: currentTheme.textPrimary, border: `1px solid ${currentTheme.line}` }} placeholder='enter you email or username'></input>
           <input value={password} onChange={(e) => setPassword(e.target.value)} required type='text' className='h-12 w-[90%] outline-none pl-2 text-sm  rounded-sm shadow-xs shadow-black' style={{ background: currentTheme.background, border: `1px solid ${currentTheme.line}` }} placeholder='enter you password'></input>
-          <button className='h-10 w-[90%] rounded-md mt-2 active:shadow-none shadow-xs shadow-black text-white' style={{ backgroundColor: currentTheme.accent }}>Log in</button>
+          <button className='h-10 w-[90%] rounded-md mt-2 active:shadow-none shadow-xs shadow-black text-white' style={{ backgroundColor: currentTheme.accent }}>{loading?"loggin in...":"log-in"}</button>
         </form>
 
         <span className='text-sm hover:underline text-center cursor-pointer' style={{ color: currentTheme.textPrimary }}

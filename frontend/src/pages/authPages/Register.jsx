@@ -17,6 +17,8 @@ const Register = () => {
     password: ""
   })
 
+  const [loading,setLoading]=useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target
     // console.log(value)
@@ -32,9 +34,12 @@ const Register = () => {
     try {
       if (!userData.name || !userData.username || !userData.email || !userData.password) {
         toast.error("All feilds are required");
-
         return
       }
+      if(loading){
+        return
+      }
+      
       const isRegistered = await axios.post(import.meta.env.VITE_API_URL + `/auth/register`, userData, {
         withCredentials: true
       });
@@ -69,7 +74,7 @@ const Register = () => {
           <input value={userData.username} onChange={(e) => handleChange(e)} required type='text' name='username' className='h-12 w-[90%] outline-none pl-2 pr-1 text-sm  rounded-sm shadow-xs shadow-black' style={{ background: currentTheme.background, color: currentTheme.textPrimary, border: `1px solid ${currentTheme.line}` }} placeholder='enter you username'></input>
           <input value={userData.email} onChange={(e) => handleChange(e)} required type='email' name='email' className='h-12 w-[90%] outline-none pl-2 pr-1 text-sm  rounded-sm shadow-xs shadow-black' style={{ background: currentTheme.background, color: currentTheme.textPrimary, border: `1px solid ${currentTheme.line}` }} placeholder='enter you email'></input>
           <input value={userData.password} onChange={(e) => handleChange(e)} required type='text' name='password' className='h-12 w-[90%] outline-none pl-2 pr-1 text-sm  rounded-sm shadow-xs shadow-black' style={{ background: currentTheme.background, color: currentTheme.textPrimary, border: `1px solid ${currentTheme.line}` }} placeholder='enter you password'></input>
-          <button className='h-10 w-[90%] rounded-md mt-2 shadow-xs shadow-black text-white' style={{ backgroundColor: currentTheme.accent }}>Sign up</button>
+          <button className='h-10 w-[90%] rounded-md mt-2 shadow-xs shadow-black text-white' style={{ backgroundColor: currentTheme.accent }}>{loading?"Creating user...":"Sign Up"}</button>
         </form>
 
         <span className='text-sm hover:underline text-center cursor-pointer' style={{ color: currentTheme.textPrimary }}
