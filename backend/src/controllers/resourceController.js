@@ -1,9 +1,9 @@
-import resourceModel from "../models/resourceModel/resourceModel.js";
+// import resourceModel from "../models/resourceModel/resourceModel.js";
 import ResourceModel from "../models/resourceModel/resourceModel.js";
 import CommentModel from "../models/resourceModel/commentModel.js"
-import NotificationModel from "../models/notificationModel.js";
+// import NotificationModel from "../models/notificationModel.js";
 import UserModel from "../models/userModel.js";
-import NotificationCreator from "../services/notificationCreator.js";
+import NotificationCreator from "../services/NotificationCreator.js";
 
 import { io } from "../socket/socket.js";
 
