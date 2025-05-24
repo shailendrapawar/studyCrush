@@ -10,7 +10,9 @@ import {createServer} from "http"
 import {Server} from "socket.io"
 const io =new Server(myHttpServer,{
     cors:{
-        origin:["*","http://localhost:5173"],
+        origin: ["https://study-crush-git-main-shailendra-pawars-projects.vercel.app",
+        "https://study-crush-gikwnpxhq-shailendra-pawars-projects.vercel.app",
+        "http://localhost:5173"],
     
     }
 })
