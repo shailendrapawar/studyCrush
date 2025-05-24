@@ -17,7 +17,8 @@ import resourceRouter from "./routes/resourceRoutes.js";
 configDotenv()
 app.use(express.json());
 app.use(cors({
-    origin: ["*","http://localhost:5173"],
+    origin: ["https://study-crush-git-main-shailendra-pawars-projects.vercel.app/"
+        ,"http://localhost:5173"],
     // methods:["GET","POST"],
     credentials:true
 }))
