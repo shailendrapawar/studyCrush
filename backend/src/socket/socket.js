@@ -1,4 +1,6 @@
 import express from "express"
+import { configDotenv } from "dotenv";
+configDotenv()
 // import cors from "cors"
 
 const app=express();
@@ -10,9 +12,7 @@ import {createServer} from "http"
 import {Server} from "socket.io"
 const io =new Server(myHttpServer,{
     cors:{
-        origin: ["https://study-crush-git-main-shailendra-pawars-projects.vercel.app",
-        "https://study-crush-gikwnpxhq-shailendra-pawars-projects.vercel.app",
-        "http://localhost:5173"],
+        origin: [process.env.FRONTEN_URL],
     
     }
 })

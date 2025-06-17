@@ -7,7 +7,6 @@ import Loader from "../../components/loader/Loader";
 
 import { IoCopy } from "react-icons/io5";
 
-
 const CreateNotesPage = () => {
     const { currentTheme } = useSelector((state) => state.theme);
     const [prompt, setPrompt] = useState("");
