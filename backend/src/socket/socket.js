@@ -12,7 +12,7 @@ import {createServer} from "http"
 import {Server} from "socket.io"
 const io =new Server(myHttpServer,{
     cors:{
-        origin: [process.env.FRONTEN_URL],
+        origin: [process.env.FRONTEND_URL],
     
     }
 })

@@ -17,7 +17,7 @@ import resourceRouter from "./routes/resourceRoutes.js";
 configDotenv()
 app.use(express.json());
 app.use(cors({
-    origin: [process.env.FRONTED_URL],
+    origin: [process.env.FRONTEND_URL],
     // methods:["GET","POST"],
     credentials:true
 }))
