@@ -10,6 +10,13 @@ class SocialController {
         })
     }
 
+    // #===== standard fetch user block list ========
+    static getBlockedUser=async({targetUserId,currentUserId})=>{
+        const user=await UserModel.findById(currentUserId).select("blockedUsers");
+        const isBlocked=user.blockedUsers.includes(targetUserId)
+        return isBlocked;
+    }
+
     // A: send friend request=========
     static sendFriendRequest = async (req, res) => {
 
@@ -21,16 +28,22 @@ class SocialController {
                 return this.standardResponse(400, res, "You can't add yourself", null)
             }
 
-            //1: find both user
+            // 1: check for if blocked
+            const isBlocked= this.getBlockedUser({currentUserId:req.id,targetUserId:receiverId})
+            if(isBlocked){
+              return  this.standardResponse(400,"User is blocked , unblock to send friend request")
+            }
+
+            // 2: find both user
             const sender = await UserModel.findById(senderId);
             const receiver = await UserModel.findById(receiverId);
 
-            //2: check if request already sent or friend connected
+            // 3: check if request already sent or friend connected
             if (sender.friends.includes(receiverId) || sender.sentRequests.includes(receiverId) || receiver.friendRequests.includes(senderId)) {
                 return this.standardResponse(400, res, "Friend request sent or already connnected", null);
             }
 
-            // 3: update both user friend list===
+            // 4: update both user friend list===
 
             sender.sentRequests.push(receiverId);
             receiver.friendRequests.push(senderId);
@@ -38,7 +51,7 @@ class SocialController {
             await sender.save();
             await receiver.save();
 
-            //4: send notifications===
+            //5: send notifications===
             return this.standardResponse(200, res, "friend request sent", null);
 
         } catch (err) {
@@ -155,8 +168,8 @@ class SocialController {
         }
     }
 
+    
     // E: toggle block user 
-
     static toggleBlockUser = async (req, res) => {
 
         try {
