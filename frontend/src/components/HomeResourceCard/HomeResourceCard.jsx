@@ -23,6 +23,9 @@ import { useNavigate } from "react-router";
 
 import defaultUserAvatar from "../../assets/defaultAvatar.avif"
 import Loader from "../loader/Loader";
+
+import alternateImg from "/images/document-img.svg"
+
 const HomeResourceCard = ({ data }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -150,7 +153,12 @@ const HomeResourceCard = ({ data }) => {
         >
 
             <section className="image-container w-[40%]  h-full relative " style={commentToggle ? { display: "none" } : { display: "block" }}>
-                <img src={data?.thumbnail} className="bg-trasparent h-full w-full object-cover rounded-md">
+                <img src={data?.thumbnail} className="bg-trasparent h-full w-full object-cover rounded-md"
+                    onError={(e) => {
+                        e.target.onerror = null; // prevent infinite loop
+                        e.target.src = alternateImg;
+                    }}
+                >
                 </img>
 
             </section>
@@ -184,7 +192,7 @@ const HomeResourceCard = ({ data }) => {
                             e.stopPropagation();
                             navigate(`/user/publicProfile/${data?.uploadedBy?._id}`)
                         }}
-                        src={data?.uploadedBy?.profilePicture?.url || defaultUserAvatar}
+                        src={data?.uploadedBy?.profilePicture?.url}
                     ></img>
 
                 </span>
@@ -256,7 +264,7 @@ const HomeResourceCard = ({ data }) => {
                     <button className="rounded-md w-[20%] min-h-8.5 max-h-10 text-sm shadow-md shadow-black active:shadow-none "
                         style={{ background: currentTheme?.accent, color: currentTheme?.textPrimary }}
                         onClick={handlePostComment}
-                    >{loading?"Posting":"POST"}</button>
+                    >{loading ? "Posting" : "POST"}</button>
                 </div>)}
 
                 {loading && (<span><Loader value={true} /></span>)}

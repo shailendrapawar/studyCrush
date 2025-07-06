@@ -11,6 +11,7 @@ app.use(cookieParser());
 // ===========importing routes=============
 import userRouter from "./routes/userRoutes.js"
 import resourceRouter from "./routes/resourceRoutes.js";
+import socialRouter from "./routes/socialRoutes.js";
 // =========================================
 
 // config dot env
@@ -25,6 +26,7 @@ app.use(cors({
 // routes
 app.use("/auth", userRouter);
 app.use("/resource", resourceRouter);
+app.use("/social",socialRouter)
 
 
 app.get("/", (req, res) => {

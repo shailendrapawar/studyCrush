@@ -24,21 +24,18 @@ io.on("connection",(socket)=>{
 
     if(userId){
         socket.join(userId);
-        // console.log(`socket joined room ${userId}`)
     }
 
     socket.on("join-singleResource-room",(resourceId)=>{
-        // console.log("singleResource joined",resourceId)
         socket.join(resourceId)
     })
 
     socket.on("leave-singleResource-room",(resourceId)=>{
-        // console.log("singleResource room left",resourceId)
         socket.leave(resourceId)
     })
 
     socket.on("disconnect",()=>{
-        console.log("scoket disconnected",socket.id)
+        console.log("socket disconnected",socket.id)
     })
 })
 

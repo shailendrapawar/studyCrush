@@ -66,4 +66,6 @@ userRouter.get(
   UserController.getUserPublicProfile
 )
 
+
+
 export default userRouter;

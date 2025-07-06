@@ -15,6 +15,8 @@ import SingleComment from "../../components/singleComment/SingleComment"
 import { IoArrowBackCircle } from "react-icons/io5";
 import useSingleResourceEvents from "../../hooks/useSingleResourceEvents"
 
+import alternateImg from "/public/images/document-img.svg";
+
 
 const SingleResourcePage = () => {
   const dispatch = useDispatch();
@@ -25,26 +27,26 @@ const SingleResourcePage = () => {
   const { currentTheme } = useSelector(s => s.theme)
   const { currentResource } = useSelector(s => s.singleResource)
   const { authUser } = useSelector(s => s.user)
-  const {userSavedResources}=useSelector(s=>s.user)
+  const { userSavedResources } = useSelector(s => s.user)
 
   // const{socket}=useSelector(s=>s.socket);
 
   const [inputComment, setInputComment] = useState("")
 
-  const[isFound,setIsFound]=useState(true);
+  const [isFound, setIsFound] = useState(true);
 
 
   // ==fetching resources data===========
   const fetchResourceData = async () => {
-    try{
+    try {
       const resource = await axios.get(import.meta.env.VITE_API_URL + `/resource/getSingleResource/${resourceId}`, {
         withCredentials: true
       })
-      
-      if(resource){
+
+      if (resource) {
         return dispatch(setSingleResource(resource.data.resource))
-      }    
-    }catch(err){
+      }
+    } catch (err) {
       setIsFound(false);
       dispatch(setSingleResource(null))
       toast.error(err.response.data.msg)
@@ -127,6 +129,8 @@ const SingleResourcePage = () => {
   useEffect(() => {
     fetchResourceData()
     window.scroll(0, 0)
+
+    return ()=>{ dispatch(setSingleResource(null))}
   }, [resourceId])
 
   const formatDate = (date) => {
@@ -143,10 +147,10 @@ const SingleResourcePage = () => {
 
   if (!currentResource) return <div className="flex justify-center items-center h-screen">Loading...</div>
 
-  if(!isFound) return <div className="h-50 w-full flex justify-center items-center">
-    <IoArrowBackCircle className="h-8 w-8 mr-5 hover:shadow-md active:shadow-none shadow-black rounded-full" onClick={()=>navigate(-1)}/>
-     Resource not found 😕
-     </div>
+  if (!isFound) return <div className="h-50 w-full flex justify-center items-center">
+    <IoArrowBackCircle className="h-8 w-8 mr-5 hover:shadow-md active:shadow-none shadow-black rounded-full" onClick={() => navigate(-1)} />
+    Resource not found 😕
+  </div>
 
   return (
     <div className="min-h-screen pb-10" style={{ backgroundColor: currentTheme?.background }}>
@@ -159,9 +163,13 @@ const SingleResourcePage = () => {
         {/* Resource Thumbnail */}
         <div className="rounded-xl overflow-hidden shadow-lg mb-5">
           <img
-            src={currentResource?.thumbnail}
+            src={currentResource?.thumbnail || alternateImg}
             className="w-full h-64 sm:h-80 object-cover"
             alt={currentResource?.title}
+            onError={(e) => {
+              e.target.onerror = null; // prevent infinite loop
+              e.target.src = alternateImg;
+            }}
           />
         </div>
 
@@ -208,9 +216,9 @@ const SingleResourcePage = () => {
         {/* Author and Date */}
         <div className="flex items-center justify-between mb-6 p-4 shadow-xs shadow-black rounded-lg cursor-pointer"
           style={{ backgroundColor: currentTheme?.cardBackground }}
-          onClick={()=>navigate(`/user/publicProfile/${currentResource?.uploadedBy?._id}`)}
-          >
-            
+          onClick={() => navigate(`/user/publicProfile/${currentResource?.uploadedBy?._id}`)}
+        >
+
           <div className="flex items-center gap-3">
             <img
               src={currentResource?.uploadedBy.profilePicture?.url || defaultUserAvatar}
@@ -237,7 +245,7 @@ const SingleResourcePage = () => {
             border: `1px solid ${currentTheme?.line}`
           }}>
           <div className="flex items-center gap-4">
-            <button className="flex items-center gap-1 heart" onClick={(e)=>toggleLike(e)}>
+            <button className="flex items-center gap-1 heart" onClick={(e) => toggleLike(e)}>
               {isLiked ? (
                 <GoHeartFill className="w-6 h-6 text-pink-600" />
               ) : (
@@ -283,7 +291,7 @@ const SingleResourcePage = () => {
           <div className="max-h-96 overflow-y-auto p-4">
             {currentResource?.comments?.length > 0 ? (
               currentResource.comments.map((comment, i) => (
-                <SingleComment data={comment} key={i} isNew={i===0} />
+                <SingleComment data={comment} key={i} isNew={i === 0} />
               ))
             ) : (
               <p className="text-center py-4 text-2xl" style={{ color: currentTheme?.textSecondary }}>
@@ -295,7 +303,7 @@ const SingleResourcePage = () => {
           <div className="p-4 " style={{ borderColor: currentTheme?.line }}>
             <div className="flex gap-2 rounded-full  ">
               <input
-              value={inputComment}
+                value={inputComment}
                 className="flex-1 px-4 py-2 rounded-full text-sm outline-none shadow-xs shadow-black"
                 style={{ backgroundColor: currentTheme?.background }}
                 placeholder="Add a comment..."
@@ -304,7 +312,7 @@ const SingleResourcePage = () => {
               <button
                 className="px-4 py-2 rounded-full text-sm font-medium shadow-xs shadow-black"
                 style={{ backgroundColor: currentTheme?.accent, color: '#fff' }}
-                onClick={(e)=>handlePostComment(e)}
+                onClick={(e) => handlePostComment(e)}
               >
                 Post
               </button>
